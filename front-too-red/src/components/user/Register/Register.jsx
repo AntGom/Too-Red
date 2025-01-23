@@ -73,7 +73,7 @@ const Register = () => {
   return (
     <div className="mb-8">
       <header className="p-4 text-gray-900 text-center mt-2 w-full">
-        <h1 className="text-2xl font-bold">Registro</h1>
+        <h1 className="text-2xl font-bold">Forma parte de Too-Red</h1>
       </header>
 
       {/* Mostrar el Toast si show es true */}
@@ -128,7 +128,7 @@ const Register = () => {
           <input
             type="submit"
             value="Regístrate"
-            className="text-gray-900 border-2 font-bold border-red-600 rounded py-2 px-4 hover:scale-110 transition-all duration-300 cursor-pointer"
+            className="text-gray-900 border-2 font-bold border-red-600 rounded py-2 px-4 hover:scale-110 transition-all duration-300 cursor-pointer mt-4"
           />
         </form>
       </div>
