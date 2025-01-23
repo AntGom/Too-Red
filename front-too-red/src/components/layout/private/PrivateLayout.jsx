@@ -31,7 +31,7 @@ const PrivateLayout = () => {
   
       {/* Navbar pantallas pequeñas */}
       <div className="md:hidden fixed top-0 left-0 right-0 bg-white z-20 border-b-2 border-red-600 flex mb-2 items-center justify-between px-4 py-2">
-        <img src="/too-red-logo.jpg"
+        <img src="/copialogo.webp"
           alt="Logo de la Red Social"
           className=" h-12 rounded-xl border-2 border-red-600">
         </img>
