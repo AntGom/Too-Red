@@ -15,6 +15,7 @@ const {
     JWT_EXP,
     UPLOADS_DIR,
     CLIENT_URL,
+    MONGO_URI,
 } = process.env;
 
 export {
@@ -31,4 +32,5 @@ export {
     JWT_EXP,
     UPLOADS_DIR,
     CLIENT_URL,
+    MONGO_URI,
 };
