@@ -4,7 +4,7 @@ import { Global } from "../../../helpers/Global";
 
 const ConfirmAccount = () => {
   const { token } = useParams();
-  const [status, setStatus] = useState("loading"); // 'loading', 'success', 'error'
+  const [status, setStatus] = useState("loading");//loading, success, error
   const navigate = useNavigate();
 
   useEffect(() => {

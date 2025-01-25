@@ -35,7 +35,6 @@ const PasswordInput = ({ value, onChange, error }) => {
   );
 };
 
-// Agregar validación de props con PropTypes
 PasswordInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

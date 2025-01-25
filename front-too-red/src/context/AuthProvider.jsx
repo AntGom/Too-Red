@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const countersRequest = await fetch(
-        Global.url + "user/counters/" + userId,
+        `${Global.url}user/counters/${userId}`,
         {
           method: "GET",
           headers: {

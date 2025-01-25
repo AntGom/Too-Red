@@ -1,6 +1,7 @@
 import { HeartIcon } from "@heroicons/react/24/solid";
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Global } from "../../../helpers/Global";
 
 export default function LikeButton({ initialLikes, initialLiked, publicationId, onLikeChange }) {
   const [isLiked, setIsLiked] = useState(initialLiked);
@@ -15,7 +16,7 @@ export default function LikeButton({ initialLikes, initialLiked, publicationId, 
     setIsLoading(true);
     try {
       const method = isLiked ? 'DELETE' : 'POST';
-      const response = await fetch(`/api/publication/like/${publicationId}`, {
+      const response = await fetch(`${Global.url}publication/like/${publicationId}`, {
         method,
         headers: {
           'Content-Type': 'application/json',

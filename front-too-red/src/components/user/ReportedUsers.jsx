@@ -44,7 +44,7 @@ const ReportedUsers = () => {
     };
 
     fetchUsersWithReports();
-  }, [reportStatus]); // Cargar si filtros cambian
+  }, [reportStatus]); //Carga si filtros cambian
 
   if (loading) {
     return (

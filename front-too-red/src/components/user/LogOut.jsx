@@ -14,7 +14,6 @@ const LogOut = () => {
     setAuth({});
     setCounters({});
 
-    //Hacer navigate a login
     navigate("/login");
   });
 

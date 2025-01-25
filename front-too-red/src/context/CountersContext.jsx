@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Global } from '../helpers/Global';
 
 export const CountersContext = createContext();
 
@@ -25,7 +26,7 @@ export const CountersProvider = ({ children }) => {
         }
       
         try {
-          const response = await fetch(`http://localhost:3000/api/user/counters/${userId}`, {
+          const response = await fetch(`${Global.url}user/counters/${userId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
