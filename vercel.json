@@ -5,12 +5,8 @@
         "use": "@vercel/static"
       }
     ],
-    "redirects": [
-      {
-        "source": "/:path*",
-        "destination": "/index.html",
-        "permanent": false
-      }
+    "routes": [
+      { "src": "/(.*)", "dest": "/" }
     ]
   }
   
