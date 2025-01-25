@@ -14,7 +14,14 @@ conection();
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://too-red.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,5 +34,5 @@ app.use("/api/follow", followRoutes);
 const PORT = process.env.PORT || 3900;
 
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
