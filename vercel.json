@@ -1,0 +1,16 @@
+{
+    "builds": [
+      {
+        "src": "dist/**/*",
+        "use": "@vercel/static"
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/:path*",
+        "destination": "/index.html",
+        "permanent": false
+      }
+    ]
+  }
+  
