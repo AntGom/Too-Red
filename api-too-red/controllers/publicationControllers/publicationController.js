@@ -3,7 +3,6 @@ import detail from "./one.js";
 import remove from "./delete.js";
 import user from "./user.js";
 import upload from "./upload.js";
-import media from "./media.js";
 import feed from "./feed.js";
 import editPublication from "./editPublication.js";
 import addComment from "../comments/addComment.js";
@@ -22,7 +21,6 @@ export const publicationController =  {
     remove,
     user,
     upload,
-    media,
     feed,
     editPublication,
     addComment,
