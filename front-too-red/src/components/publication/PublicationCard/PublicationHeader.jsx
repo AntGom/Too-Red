@@ -3,17 +3,18 @@ import { NavLink } from "react-router-dom";
 import { PencilIcon, TrashIcon, FlagIcon } from "@heroicons/react/24/solid";
 import ReactTimeAgo from "react-time-ago";
 import avatar from "../../../assets/img/user.png";
-import { Global } from "../../../helpers/Global";
 import { useAuth } from "../../../hooks/UseAuth";
 
+//Usamos URL de BBDD
 const getUserImage = (image) => {
-  return image && image !== "default.png" ? `${Global.url}user/avatar/${image}` : avatar;
+  //Si image no contiene URL completa, entonces por defecto
+  return image && image !== "default.png" ? image : avatar;
 };
 
 const PublicationHeader = ({ publication, onEdit, onDelete, onReport }) => {
   const { auth } = useAuth();
 
-  // Usuario es propietario o admin
+  //Usuario propietario o admin
   const isUserOwnerOrAdmin = auth?._id === publication.user?._id || auth?.role === "admin";
 
   return (

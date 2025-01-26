@@ -1,25 +1,38 @@
-import fs from "fs";
-import path from "path";
+import User from "../../models/userModel.js";
 
 const avatar = async (req, res) => {
-  // Sacar el parámetro de la URL
-  const file = req.params.file;
+  try {
+    const userId = req.params.id;
 
-  // Montar el path real de la URL
-  const filePath =path.join( `./uploads/avatars/${file}`);
+    //Buscar  usuario en BBDD
+    const user = await User.findById(userId);
 
-  // Comprobar si existe el archivo
-  fs.stat(filePath, (error, stats) => {
-    if (error || !stats.isFile()) {
+    if (!user) {
       return res.status(404).json({
         status: "error",
-        message: "No existe el archivo",
+        message: "Usuario no encontrado",
       });
     }
 
-    // Devolver el archivo
-    res.status(200).sendFile(path.resolve(filePath));
-  });
+    //Si usuario tiene avatar, devolver URL de Cloudinary
+    if (user.image) {
+      return res.status(200).json({
+        status: "success",
+        avatarUrl: user.image,  //URL de Cloudinary  en BBDD
+      });
+    } else {
+      return res.status(404).json({
+        status: "error",
+        message: "El usuario no tiene avatar",
+      });
+    }
+  } catch (error) {
+    console.error("Error al obtener el avatar:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Error al obtener el avatar del usuario",
+    });
+  }
 };
 
 export default avatar;

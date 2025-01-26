@@ -1,13 +1,12 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { Global } from "../../../helpers/Global";
 import useForm from "../../../hooks/UseForm";
-import {useAuth} from "../../../hooks/UseAuth";
+import { useAuth } from "../../../hooks/UseAuth";
 import Modal from "./ModalNewPublication";
 import NotificationMessage from "./NotificationMessage";
 import FileInput from "./FileInput";
 import { CountersContext } from "../../../context/CountersContext";
 import { MegaphoneIcon } from "@heroicons/react/24/solid";
-
 
 const NewPublicationForm = () => {
   const { auth } = useAuth();
@@ -34,6 +33,7 @@ const NewPublicationForm = () => {
     const token = localStorage.getItem("token");
 
     try {
+      // Crear publicación sin imagen
       const newPublication = { ...form, user: auth._id };
 
       const request = await fetch(Global.url + "publication/save/", {
@@ -52,6 +52,7 @@ const NewPublicationForm = () => {
         updateCounters("publications", 1);
 
         if (selectedFile) {
+          // Subir el archivo al backend después de crear la publicación
           const formData = new FormData();
           formData.append("file0", selectedFile);
 
@@ -65,7 +66,11 @@ const NewPublicationForm = () => {
           );
 
           const uploadData = await uploadRequest.json();
-          setStored(uploadData.status === "success" ? "stored" : "error");
+          if (uploadData.status === "success") {
+            setStored("stored");
+          } else {
+            setStored("error");
+          }
         }
       }
 
@@ -90,13 +95,13 @@ const NewPublicationForm = () => {
 
   return (
     <>
-     <button
-  onClick={() => setShowForm(true)}
-  className="flex items-center gap-2 w-4/5 text-gray-900 font-bold text-xl rounded-lg hover:bg-gray-200 p-2 -mb-2 transition-all duration-300 hover:scale-110 text-left"
->
-  <MegaphoneIcon className="w-6 h-6 text-gray-900" />
-  Publicar
-</button>
+      <button
+        onClick={() => setShowForm(true)}
+        className="flex items-center gap-2 w-4/5 text-gray-900 font-bold text-xl rounded-lg hover:bg-gray-200 p-2 -mb-2 transition-all duration-300 hover:scale-110 text-left"
+      >
+        <MegaphoneIcon className="w-6 h-6 text-gray-900" />
+        Publicar
+      </button>
 
       <Modal
         isOpen={showForm}

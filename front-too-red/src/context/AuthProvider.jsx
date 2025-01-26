@@ -11,10 +11,10 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [counters, setCounters] = useState({});
   const [loading, setLoading] = useState(true);
-  const [showBanModal, setShowBanModal] = useState(false); // Estado del modal
+  const [showBanModal, setShowBanModal] = useState(false);
   const navigate = useNavigate();
 
-  // Autenticar usuario al cargar el componente
+  //Autenticar usuario al cargar componente
   useEffect(() => {
     authUser();
   }, []);

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { Global } from "../../../helpers/Global";
 import avatar from "../../../assets/img/user.png";
 import {
   EyeIcon,
@@ -132,6 +131,7 @@ const ProfileForm = ({
               </button>
             </div>
           </div>
+
           <div>
             <label
               htmlFor="file0"
@@ -142,8 +142,8 @@ const ProfileForm = ({
             <div className="flex items-center mt-2 space-x-4">
               <img
                 src={
-                  auth.image !== "default.png"
-                    ? `${Global.url}user/avatar/${auth.image}`
+                  auth.image && auth.image !== "default.png"
+                    ? auth.image // Ahora deberías recibir directamente la URL de Cloudinary
                     : avatar
                 }
                 alt="Avatar"
@@ -163,9 +163,7 @@ const ProfileForm = ({
                 onChange={handleFileChange}
               />
               {selectedFileName && (
-                <span className="text-sm text-gray-700">
-                  {selectedFileName}
-                </span> 
+                <span className="text-sm text-gray-700">{selectedFileName}</span>
               )}
             </div>
           </div>
@@ -191,7 +189,7 @@ ProfileForm.propTypes = {
     nick: PropTypes.string,
     bio: PropTypes.string,
     email: PropTypes.string,
-    image: PropTypes.string,
+    image: PropTypes.string, //URL de imagen en Cloudinary
     interests: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   setAuth: PropTypes.func.isRequired,

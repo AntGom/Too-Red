@@ -1,50 +1,43 @@
 import User from "../../models/userModel.js";
-import fs from "fs";
+import cloudinary from "../../config/cloudinayConfig.js"; 
 
 const upload = async (req, res) => {
     try {
-      // Recoger fichero de imagen y comprobar que existe
+      //Verificar si hay archivo
       if (!req.file) {
-        return res.status(404).json({
+        return res.status(400).json({
           status: "error",
           message: "No se ha incluido ninguna imagen para la actualización",
         });
       }
-  
-      // Conseguir el nombre del archivo y su extensión
-      const fileName = req.file.originalname;
-      const fileExtension = fileName.split(".").pop().toLowerCase();
-  
-      // Comprobar la extensión del archivo
-      const validExtensions = new Set(["png", "jpg", "jpeg", "gif","webp"]);
-      if (!validExtensions.has(fileExtension)) {
-        fs.unlinkSync(req.file.path); // Si extensión no es válida, borrar el archivo
-        return res.status(400).json({
-          status: "error",
-          message: "La extensión del archivo no es válida.",
-        });
-      }
-  
-      // Si la extensión es correcta, guardar la imagen en bbdd
+
+      //Subir imagen a Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "avatars",
+        use_filename: true,
+        unique_filename: false,
+      });
+
+      //Guardar  URL de  imagen en BBDD
       const user = await User.findOneAndUpdate(
         { _id: req.user.id },
-        { image: fileName },
+        { image: result.secure_url }, //Guardar  URL en vez del nombre del archivo
         { new: true }
       );
-  
+
       if (!user) {
         return res.status(404).json({
           status: "error",
           message: "Usuario no encontrado",
         });
       }
-  
-      // Devolver respuesta
+
+      //Responder con URL de imagen subida
       return res.status(200).json({
         status: "success",
         message: "Imagen subida correctamente",
         user: user,
-        file: req.file,
+        file: result.secure_url, //Devuelve URL de Cloudinary
       });
     } catch (error) {
       console.error("Error en la subida de imagen:", error);
@@ -53,6 +46,6 @@ const upload = async (req, res) => {
         message: "Error al procesar la subida de imagen",
       });
     }
-  };
+};
 
-  export default upload;
+export default upload;

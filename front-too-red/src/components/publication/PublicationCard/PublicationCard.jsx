@@ -6,7 +6,6 @@ import PublicationActions from "./PublicationActions";
 import EditPublication from "../EditPublication";
 import DeletePublication from "../DeletePublication";
 import ReportPublication from "../ReportedPublications/ReportPublication";
-import { Global } from "../../../helpers/Global";
 
 const PublicationCard = ({ publication, getPublications }) => {
   const [editing, setEditing] = useState(null);
@@ -72,7 +71,7 @@ const PublicationCard = ({ publication, getPublications }) => {
               &times;
             </button>
             <img
-              src={`${Global.url}publication/media/${viewingImage}`}
+              src={publication.file} 
               alt="Imagen en tamaño original"
               className="max-w-screen max-h-screen rounded-lg"
             />

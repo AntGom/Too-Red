@@ -1,7 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import avatar from "../../../assets/img/user.png";
-import { Global } from "../../../helpers/Global";
 
 const ProfileImage = ({ user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,7 +10,7 @@ const ProfileImage = ({ user }) => {
 
   const imageUrl =
     user.image && user.image !== "default.png"
-      ? `${Global.url}user/avatar/${user.image}`
+      ? `https://res.cloudinary.com/dfbbagtbv/image/upload/${user.image}`
       : avatar;
 
   return (

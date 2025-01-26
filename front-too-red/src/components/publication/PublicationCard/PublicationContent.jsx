@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { Global } from "../../../helpers/Global";
 
 const PublicationContent = ({ text, file, onViewImage }) => (
   <div>
@@ -7,7 +6,7 @@ const PublicationContent = ({ text, file, onViewImage }) => (
     {file && (
       <div className="mt-4 relative">
         <img
-          src={`${Global.url}publication/media/${file}`}
+          src={file}  //URL completa de Cloudinary
           alt="Imagen de la publicación"
           className="w-full max-h-96 rounded-lg object-cover cursor-pointer"
           style={{ aspectRatio: "16/9" }}

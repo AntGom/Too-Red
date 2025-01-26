@@ -11,7 +11,7 @@ export const CountersProvider = ({ children }) => {
     publications: 0,
   });
 
-  // Obtener el id del usuario desde localStorage
+  //Obtener id de usuario desde localStorage
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user ? user.id : null;
 
