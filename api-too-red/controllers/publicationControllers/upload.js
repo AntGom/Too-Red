@@ -1,5 +1,5 @@
 import Publication from "../../models/publicationModel.js";
-import cloudinary from "../../config/cloudinaryConfig.js";
+import cloudinary from "../../config/cloudinayConfig.js";
 
 const upload = async (req, res) => {
     try {
