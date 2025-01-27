@@ -79,7 +79,7 @@ const UserList = ({
                   <img
                     src={
                       user.image !== "default.png"
-                        ? `${Global.url}user/avatar/${user.image}`
+                        ? `${user.image}`
                         : avatar
                     }
                     alt="Foto de perfil"
