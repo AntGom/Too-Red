@@ -88,7 +88,7 @@ const CommentsList = ({ publicationId, likes, publicationUserId }) => {
               <img
                 src={
                   comment.user?.image && comment.user.image !== "default.png"
-                    ? `${Global.url}user/avatar/${comment.user.image}`
+                    ? `${comment.user.image}`
                     : `${Global.url}user/avatar/default.png`
                 }
                 alt="Avatar"
