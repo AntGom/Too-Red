@@ -55,7 +55,7 @@ const Config = () => {
     formData.append("file0", file); //Archivo que se selecciona
 
     try {
-      const uploadRequest = await fetch(Global.url + "upload", {
+      const uploadRequest = await fetch(Global.url + "user/upload", {
         method: "POST",
         body: formData,
         headers: {
