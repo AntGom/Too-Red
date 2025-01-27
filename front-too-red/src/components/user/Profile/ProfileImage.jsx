@@ -10,7 +10,7 @@ const ProfileImage = ({ user }) => {
 
   const imageUrl =
     user.image && user.image !== "default.png"
-      ? `https://res.cloudinary.com/dfbbagtbv/image/upload/${user.image}`
+      ? `${user.image}`
       : avatar;
 
   return (
