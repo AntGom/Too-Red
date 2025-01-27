@@ -6,7 +6,7 @@ import cloudinary from "./cloudinayConfig.js";
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "too-red", 
+    folder: "avatars", 
     format: async (req, file) => "png, jpg, webp",
     public_id: (req, file) => "file-" + Date.now() + "-" + file.originalname,
   },
