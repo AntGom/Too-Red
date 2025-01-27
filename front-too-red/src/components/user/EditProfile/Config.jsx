@@ -14,7 +14,7 @@ const Config = () => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     let newDataUser = SerializeForm(e.target, { interests: auth.interests });
-    delete newDataUser.file0; //Eliminamos file0 de datos JSON para no enviarlo en el PUT
+    delete newDataUser.file0;
 
     try {
       const request = await fetch(Global.url + "user/update", {
@@ -55,7 +55,7 @@ const Config = () => {
     formData.append("file0", file); //Archivo que se selecciona
 
     try {
-      const uploadRequest = await fetch(Global.url + "user/upload", {
+      const uploadRequest = await fetch(Global.url + "upload", {
         method: "POST",
         body: formData,
         headers: {

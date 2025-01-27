@@ -143,7 +143,7 @@ const ProfileForm = ({
               <img
                 src={
                   auth.image && auth.image !== "default.png"
-                    ? auth.image // Ahora deberías recibir directamente la URL de Cloudinary
+                    ? auth.image
                     : avatar
                 }
                 alt="Avatar"
@@ -189,7 +189,7 @@ ProfileForm.propTypes = {
     nick: PropTypes.string,
     bio: PropTypes.string,
     email: PropTypes.string,
-    image: PropTypes.string, //URL de imagen en Cloudinary
+    image: PropTypes.string,
     interests: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   setAuth: PropTypes.func.isRequired,
