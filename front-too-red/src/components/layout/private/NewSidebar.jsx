@@ -3,7 +3,6 @@ import { UsersIcon } from "@heroicons/react/24/solid";
 import avatar from "../../../assets/img/user.png";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../../hooks/UseAuth";
-import { Global } from "../../../helpers/Global";
 import UserCounters from "../../user/UserCounters";
 import NewPublicationForm from "../../publication/NewPublication/NewPublicationForm";
 
@@ -29,7 +28,7 @@ const NewSidebar = () => {
             <div className="flex justify-start gap-2 items-center">
               {auth.image !== "default.png" ? (
                 <img
-                  src={Global.url + "user/avatar/" + auth.image}
+                  src={auth.image}
                   alt="Foto de Perfil"
                   className="rounded-full w-12 h-12 border border-red-600 object-cover"
                 />
