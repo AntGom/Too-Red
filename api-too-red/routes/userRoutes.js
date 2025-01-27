@@ -26,7 +26,7 @@ router.get("/list/:page?", auth, userController.list);
 router.put("/update", auth, userController.update);
 
 // Subida de archivos
-router.post("/user/upload", [auth, upload.single("file0")], userController.upload);
+router.post("/upload", [auth, upload.single("file0")], userController.upload);
 
 // Contadores seguidores
 router.get("/counters/:id", auth, followControllers.counter);
