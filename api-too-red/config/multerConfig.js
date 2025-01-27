@@ -6,7 +6,6 @@ import cloudinary from "./cloudinayConfig.js";
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: (req, file) => {
-    let folderName = "too-red";
 
     //Determinar folder por tipo archivo
     if (req.body.type === "avatar") {

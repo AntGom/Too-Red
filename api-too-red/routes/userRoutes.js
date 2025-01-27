@@ -24,8 +24,14 @@ router.post("/recover-account", userController.recoverAccount);
 router.get("/profile/:id", auth, userController.profile);
 router.get("/list/:page?", auth, userController.list);
 router.put("/update", auth, userController.update);
+
+// Ruta para actualizar avatar o archivo (subida)
 router.post("/upload", [auth, upload.single("file0")], userController.upload);
+
+// Contadores de seguidores
 router.get("/counters/:id", auth, followControllers.counter);
+
+// Eliminar usuario
 router.delete("/delete/:id", auth, userController.deleteUser);
 
 // Solo Admins
