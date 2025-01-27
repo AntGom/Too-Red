@@ -5,21 +5,23 @@ import cloudinary from "./cloudinayConfig.js";
 // Configuración de almacenamiento en Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: (req, file) => {
-    let folderName = "uploads"; // Default folder
-    if (req.body.type === "avatar") {
+  params: async (req, file) => {
+    let folderName = "uploads"; // Carpeta por defecto
+
+    if (file.mimetype.startsWith("image")) {
       folderName = "avatars";
-    } else if (req.body.type === "publication") {
+    } else {
       folderName = "publications";
     }
 
     return {
-      folder: folderName, 
+      folder: folderName,
       format: "auto",
       public_id: "file-" + Date.now(),
     };
   },
 });
+
 
 const upload = multer({ storage });
 
