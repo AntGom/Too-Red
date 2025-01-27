@@ -2,6 +2,8 @@ import User from "../../models/userModel.js";
 
 const upload = async (req, res) => {
   try {
+    console.log("REQ FILE:", req.file); // 🔍 Verifica si multer recibe el archivo
+    console.log("REQ BODY:", req.body); // 🔍 Verifica si el body está llegando correctamente
     console.log("Archivo recibido:", req.file); // <-- Imprime el archivo recibido en los logs de Render
 
     // Verificar si hay archivo
@@ -24,7 +26,7 @@ const upload = async (req, res) => {
     // Guardar URL de imagen en la BBDD
     const user = await User.findOneAndUpdate(
       { _id: req.user.id },
-      { image: result.secure_url }, 
+      { image: result.secure_url },
       { new: true }
     );
 
@@ -50,6 +52,5 @@ const upload = async (req, res) => {
     });
   }
 };
-
 
 export default upload;
