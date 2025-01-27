@@ -4,10 +4,9 @@ import cloudinary from "./cloudinayConfig.js";
 
 // Configuración de almacenamiento en Cloudinary
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary,
   params: (req, file) => {
-
-    //Determinar folder por tipo archivo
+    let folderName = "uploads"; // Default folder
     if (req.body.type === "avatar") {
       folderName = "avatars";
     } else if (req.body.type === "publication") {
@@ -16,12 +15,8 @@ const storage = new CloudinaryStorage({
 
     return {
       folder: folderName, 
-      format: async (req, file) => {
-        // Permitir múltiples formatos
-        const allowedFormats = ["png", "jpg", "jpeg", "webp", "gif", "bmp"];
-        return allowedFormats.join(", ");
-      },
-      public_id: (req, file) => "file-" + Date.now() + "-" + file.originalname,
+      format: "auto",
+      public_id: "file-" + Date.now(),
     };
   },
 });

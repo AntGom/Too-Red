@@ -1,41 +1,47 @@
-import { Router } from "express";
-import { userController } from "../controllers/userControllers/userControllers.js";
-import { followControllers } from "../controllers/followControllers/followController.js";
-import auth from "../middlewares/auth.js";
-import upload from "../config/multerConfig.js";
+import User from "../../models/userModel.js";
 
-const router = Router();
+const upload = async (req, res) => {
+    try {
+        //Verificar si hay archivo
+        if (!req.file) {
+            return res.status(400).json({
+                status: "error",
+                message: "No se ha incluido ninguna imagen para la actualización",
+            });
+        }
 
-// Definir las rutas
-router.post("/register", userController.register);
-router.get("/confirm/:token", userController.confirmRegistration);
-router.post("/login", userController.login);
-router.get("/avatar/:file", userController.avatar);
+        //Obtener URL de imagen de Cloudinary (subida por Multer)
+        const imageUrl = req.file.path;
 
-// Rutas de recuperación de contraseña
-router.post("/forgot-password", userController.requestPasswordReset);
-router.post("/reset-password", userController.resetPassword);
+        //Guardar URL en BBDD
+        const user = await User.findOneAndUpdate(
+            { _id: req.user.id },
+            { image: imageUrl }, 
+            { new: true }
+        );
 
-// Rutas de recuperación de cuenta
-router.post("/request-recovery", userController.requestAccountRecovery);
-router.post("/recover-account", userController.recoverAccount);
+        if (!user) {
+            return res.status(404).json({
+                status: "error",
+                message: "Usuario no encontrado",
+            });
+        }
 
-// Auth Routes
-router.get("/profile/:id", auth, userController.profile);
-router.get("/list/:page?", auth, userController.list);
-router.put("/update", auth, userController.update);
+        //Responder con  URL de imagen
+        return res.status(200).json({
+            status: "success",
+            message: "Imagen subida correctamente",
+            user,
+            file: imageUrl,
+        });
 
-// Ruta para actualizar avatar o archivo (subida)
-router.post("/upload", [auth, upload.single("file")], userController.upload);
+    } catch (error) {
+        console.error("Error en la subida de imagen:", error);
+        return res.status(500).json({
+            status: "error",
+            message: "Error al procesar la subida de imagen",
+        });
+    }
+};
 
-// Contadores de seguidores
-router.get("/counters/:id", auth, followControllers.counter);
-
-// Eliminar usuario
-router.delete("/delete/:id", auth, userController.deleteUser);
-
-// Solo Admins
-router.put("/ban/:id", auth, userController.banUser);
-router.put("/unban/:id", auth, userController.unbanUser);
-
-export default router;
+export default upload;
