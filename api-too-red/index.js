@@ -14,7 +14,7 @@ conection();
 const app = express();
 
 const corsOptions = {
-  origin: "https://too-red.vercel.app",
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
