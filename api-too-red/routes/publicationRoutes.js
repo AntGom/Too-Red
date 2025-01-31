@@ -9,7 +9,7 @@ router.post("/save", auth, publicationController.save);
 router.get("/detail/:id", auth, publicationController.detail);
 router.delete("/remove/:id", auth, publicationController.remove);
 router.get("/user/:id/:page?", auth, publicationController.user);
-router.post("/upload/:id", [auth], publicationController.upload);
+router.post("/upload/:id", auth, publicationController.upload);
 router.get("/feed/:page?", auth, publicationController.feed);
 router.put("/edit/:id", auth, publicationController.editPublication);
 router.post("/comment/:publication_id", auth, publicationController.addComment);

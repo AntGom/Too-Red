@@ -1,29 +1,18 @@
 import Publication from "../../models/publicationModel.js";
-import cloudinary from "cloudinary";
+import { uploadPublicationImage } from "../../services/imgPublicationService.js";
 
 const upload = async (req, res) => {
     try {
         const publicationId = req.params.id;
+        const file = req.files?.file;
 
-        //Comprobar si hay un archivo cargado
-        if (!req.file) {
-            return res.status(400).json({
-                status: "error",
-                message: "No se ha incluido ninguna imagen",
-            });
-        }
+        // Subir imagen usando el servicio
+        const imageUrl = await uploadPublicationImage(file);
 
-        //Subir imagen a Cloudinary
-        const result = await cloudinary.v2.uploader.upload(req.file.path, {
-            folder: "publications",
-            use_filename: true,
-            unique_filename: false,
-        });
-
-        //Guardar la URL de Cloudinary en BBDD
+        // Guardar la URL en la base de datos
         const publication = await Publication.findOneAndUpdate(
-            { "user": req.user.id, "_id": publicationId },
-            { file: result.secure_url },
+            { user: req.user.id, _id: publicationId },
+            { file: imageUrl },
             { new: true }
         )
         .populate("user", "name")
@@ -43,13 +32,11 @@ const upload = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error en la subida de imagen:", error);
         return res.status(500).json({
             status: "error",
-            message: "Error al procesar la subida de imagen",
-            error: error.message,
+            message: error.message,
         });
     }
 };
 
-export default upload;
+export default upload ;

@@ -3,7 +3,6 @@ import User from '../../models/userModel.js';
 
 const uploadAvatarController = async (req, res) => {
   try {
-    console.log("Archivos recibidos:", req.files);  // Verifica los archivos
 
     if (!req.files || !req.files.avatar) {
       return res.status(400).send({ message: "No se ha enviado una imagen de avatar" });
@@ -11,12 +10,11 @@ const uploadAvatarController = async (req, res) => {
 
     const avatarFile = req.files.avatar;
 
-    // Subir la imagen a Cloudinary usando el servicio
     const imageUrl = await savePhotoService(avatarFile);
 
-    // Guardar la URL de la imagen en la base de datos
+    //Guarda URL en BBDD
     const user = await User.findByIdAndUpdate(
-      req.user.id,  // Suponiendo que `req.user.id` es el ID del usuario autenticado
+      req.user.id, 
       { image: imageUrl },
       { new: true }
     );
