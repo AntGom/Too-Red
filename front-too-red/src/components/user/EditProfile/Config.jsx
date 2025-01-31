@@ -41,18 +41,22 @@ const Config = () => {
   };
 
   const handleResponse = (data) => {
+    console.log("Respuesta del backend:", data); // Depuración
+  
     if (data.status === "success") {
       delete data.user.password;
-      setAuth(data.user); //Actualizamos información usuario en estado
+      setAuth(data.user); // Actualiza el estado del usuario
       setSaved("saved");
-    } else {
+    } else if (data.status === "error") {
       setSaved("error");
     }
   };
+  
+  
 
   const uploadImage = async (file, token) => {
     const formData = new FormData();
-    formData.append("file0", file); //Archivo que se selecciona
+    formData.append("avatar", file);//Archivo que se selecciona
 
     try {
       const uploadRequest = await fetch(Global.url + "user/upload", {
@@ -64,7 +68,7 @@ const Config = () => {
       });
 
       const uploadData = await uploadRequest.json();
-      handleResponse(uploadData); //Procesamos respuesta después de la subida
+      handleResponse(uploadData);
     } catch (error) {
       setSaved("error");
       console.error("Error al subir la imagen:", error);
@@ -81,8 +85,8 @@ const Config = () => {
         setAuth={setAuth}
         showPassword={showPassword}
         setShowPassword={setShowPassword}
-        onChange={updateUser} //Pasamos la función para manejar el submit del formulario
-        onFileChange={() => {}} //La función en este caso no hace nada porque la manejamos directamente
+        onChange={updateUser} 
+        onFileChange={() => {}} 
       />
       <UpdateMessage saved={saved} setSaved={setSaved} />
     </>

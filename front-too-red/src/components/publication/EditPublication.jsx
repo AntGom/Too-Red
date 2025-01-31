@@ -32,9 +32,9 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
 
       if (data.status === "success") {
         if (selectedFile) {
-          //Si hay archivo seleccionado, subimos a Cloudinary
+          // Si hay archivo seleccionado, subimos a Cloudinary
           const formData = new FormData();
-          formData.append("file0", selectedFile);
+          formData.append("file", selectedFile);
 
           const uploadResponse = await fetch(`${Global.url}publication/upload/${publication._id}`, {
             method: "POST",
@@ -47,19 +47,19 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
           const uploadData = await uploadResponse.json();
 
           if (uploadData.status === "success") {
-            setStatus("stored"); //Indicar imagen subida exitosamente
+            setStatus("stored"); // Indicar imagen subida exitosamente
           } else {
-            setStatus("error"); //Error si carga falla
+            setStatus("error"); // Error si carga falla
           }
         } else {
-          setStatus("stored"); //Si no hay archivo, solo actualiza texto
+          setStatus("stored"); // Si no hay archivo, solo actualiza texto
         }
 
         setTimeout(() => {
           onSave(); // Notificar que edición exitosa
         }, 1500);
       } else {
-        setStatus("error"); //Error si edición texto falla
+        setStatus("error"); // Error si edición texto falla
       }
     } catch (error) {
       setStatus("error");

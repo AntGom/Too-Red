@@ -54,7 +54,7 @@ const NewPublicationForm = () => {
         if (selectedFile) {
           // Subir el archivo al backend después de crear la publicación
           const formData = new FormData();
-          formData.append("file0", selectedFile);
+          formData.append("file", selectedFile);
 
           const uploadRequest = await fetch(
             Global.url + "publication/upload/" + data.publicationStored._id,
