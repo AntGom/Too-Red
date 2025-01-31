@@ -1,5 +1,12 @@
 import Publication from "../../models/publicationModel.js";
-import cloudinary from "../../config/cloudinayConfig.js";
+import cloudinary from "cloudinary";
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const upload = async (req, res) => {
     try {
@@ -14,8 +21,8 @@ const upload = async (req, res) => {
         }
 
         //Subir imagen a Cloudinary
-        const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: "publications", //Carpeta en Cloudinary
+        const result = await cloudinary.v2.uploader.upload(req.file.path, {
+            folder: "publications", // Carpeta en Cloudinary
             use_filename: true,
             unique_filename: false,
         });
