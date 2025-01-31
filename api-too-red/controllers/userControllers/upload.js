@@ -1,56 +1,40 @@
-import User from "../../models/userModel.js";
+import { savePhotoService } from '../../services/avatarService.js';
+import User from '../../models/userModel.js';
 
-const upload = async (req, res) => {
+const uploadAvatarController = async (req, res) => {
   try {
-    console.log("REQ FILE:", req.file); // 🔍 Verifica si multer recibe el archivo
-    console.log("REQ BODY:", req.body); // 🔍 Verifica si el body está llegando correctamente
-    console.log("Archivo recibido:", req.file); // <-- Imprime el archivo recibido en los logs de Render
+    console.log("Archivos recibidos:", req.files);  // Verifica los archivos
 
-    // Verificar si hay archivo
-    if (!req.file) {
-      return res.status(400).json({
-        status: "error",
-        message: "No se ha incluido ninguna imagen para la actualización",
-      });
+    if (!req.files || !req.files.avatar) {
+      return res.status(400).send({ message: "No se ha enviado una imagen de avatar" });
     }
 
-    // Subir imagen a Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "avatars",
-      use_filename: true,
-      unique_filename: false,
-    });
+    const avatarFile = req.files.avatar;
 
-    console.log("Cloudinary response:", result); // <-- Imprime la respuesta de Cloudinary en los logs
+    // Subir la imagen a Cloudinary usando el servicio
+    const imageUrl = await savePhotoService(avatarFile);
 
-    // Guardar URL de imagen en la BBDD
-    const user = await User.findOneAndUpdate(
-      { _id: req.user.id },
-      { image: result.secure_url },
+    // Guardar la URL de la imagen en la base de datos
+    const user = await User.findByIdAndUpdate(
+      req.user.id,  // Suponiendo que `req.user.id` es el ID del usuario autenticado
+      { image: imageUrl },
       { new: true }
     );
 
     if (!user) {
-      return res.status(404).json({
-        status: "error",
-        message: "Usuario no encontrado",
-      });
+      console.log("Usuario no encontrado:", req.user.id);
+      return res.status(404).send({ message: "Usuario no encontrado" });
     }
 
-    // Responder con la URL de la imagen subida
-    return res.status(200).json({
-      status: "success",
-      message: "Imagen subida correctamente",
+    return res.status(200).send({
+      message: "Imagen de avatar subida correctamente",
       user,
-      file: result.secure_url, // Devuelve URL de Cloudinary
+      imageUrl,
     });
-  } catch (error) {
-    console.error("Error en la subida de imagen:", error);
-    return res.status(500).json({
-      status: "error",
-      message: "Error al procesar la subida de imagen",
-    });
+  } catch (err) {
+    console.error("Error al subir la imagen:", err);
+    return res.status(500).send({ message: "Error al subir la imagen" });
   }
 };
 
-export default upload;
+export default uploadAvatarController;

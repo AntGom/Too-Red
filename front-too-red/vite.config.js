@@ -9,7 +9,7 @@ export default defineConfig({
     open: true,
     proxy: {
       "/api": {
-        target: "https://api-too-red.onrender.com",
+        target: "http://localhost:3900",
         changeOrigin: true,
         secure: false,
       },

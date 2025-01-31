@@ -1,5 +1,5 @@
 import Publication from "../../models/publicationModel.js";
-import cloudinary from "../../config/cloudinayConfig.js";
+import cloudinary from "cloudinary";
 
 const upload = async (req, res) => {
     try {
@@ -14,8 +14,8 @@ const upload = async (req, res) => {
         }
 
         //Subir imagen a Cloudinary
-        const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: "publications", //Carpeta en Cloudinary
+        const result = await cloudinary.v2.uploader.upload(req.file.path, {
+            folder: "publications",
             use_filename: true,
             unique_filename: false,
         });
@@ -23,7 +23,7 @@ const upload = async (req, res) => {
         //Guardar la URL de Cloudinary en BBDD
         const publication = await Publication.findOneAndUpdate(
             { "user": req.user.id, "_id": publicationId },
-            { file: result.secure_url },  //Guarda URL de Cloudinary
+            { file: result.secure_url },
             { new: true }
         )
         .populate("user", "name")

@@ -2,7 +2,6 @@ import { Router } from "express";
 import { userController } from "../controllers/userControllers/userControllers.js";
 import { followControllers } from "../controllers/followControllers/followController.js";
 import auth from "../middlewares/auth.js";
-import upload from "../config/multerConfig.js";
 
 const router = Router();
 
@@ -26,7 +25,7 @@ router.get("/list/:page?", auth, userController.list);
 router.put("/update", auth, userController.update);
 
 // Subida de archivos
-router.post("/upload", [auth, upload.single("file0")], userController.upload);
+router.post("/upload", [auth], userController.upload);
 
 // Contadores seguidores
 router.get("/counters/:id", auth, followControllers.counter);
