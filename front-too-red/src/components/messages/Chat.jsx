@@ -20,7 +20,7 @@ export default function Chat() {
     const getContacts = async () => {
       try {
         const response = await fetch(
-          `${Global}/follow/following/${userId}/`,
+          `${Global.url}/follow/following/${userId}/`,
           {
             method: "GET",
             headers: {
@@ -45,7 +45,7 @@ export default function Chat() {
 
       try {
         const response = await fetch(
-          `${Global}/messages/${userId}/${selectedUser._id}`,
+          `${Global.url}/messages/${userId}/${selectedUser._id}`,
           {
             method: "GET",
             headers: {
@@ -88,7 +88,7 @@ export default function Chat() {
     };
 
     try {
-      const response = await fetch(`${Global}/messages/new`, {
+      const response = await fetch(`${Global.url}/messages/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
