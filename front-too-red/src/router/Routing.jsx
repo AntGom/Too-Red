@@ -19,6 +19,7 @@ import Profile from "../components/user/Profile/Profile.jsx";
 import MyPublications from "../components/publication/MyPublications.jsx";
 import ReportedPublications from "../components/publication/ReportedPublications/ReportedPublications.jsx";
 import ReportedUsers from "../components/user/ReportedUsers.jsx";
+import Chat from "../components/messages/Chat";
 
 const Routing = () => {
   return (
@@ -48,6 +49,7 @@ const Routing = () => {
             <Route path="publications/:userId" element={<MyPublications />} />
             <Route path="admin/reported-publications" element={<ReportedPublications />}/>
             <Route path="admin/reported-users" element={<ReportedUsers />}/>
+            <Route path="messages" element={<Chat />} />
 
           </Route>
 

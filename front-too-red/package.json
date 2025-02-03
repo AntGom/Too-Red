@@ -20,6 +20,7 @@
     "react-router-dom": "^6.27.0",
     "react-select": "^5.8.3",
     "react-time-ago": "^7.3.3",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^3.4.15",
     "validator": "^13.12.0"
   },

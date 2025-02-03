@@ -1,5 +1,13 @@
-import { ArrowLeftStartOnRectangleIcon, FlagIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
-import { UsersIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
+import {
+  ChatBubbleLeftEllipsisIcon,
+} from "@heroicons/react/24/solid";
+import {
+  ArrowLeftStartOnRectangleIcon,
+  FlagIcon,
+  PencilSquareIcon,
+  UsersIcon,
+} from "@heroicons/react/24/solid";
 import avatar from "../../../assets/img/user.png";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../../hooks/UseAuth";
@@ -7,10 +15,16 @@ import UserCounters from "../../user/UserCounters";
 import NewPublicationForm from "../../publication/NewPublication/NewPublicationForm";
 
 const NewSidebar = () => {
+  const navigate = useNavigate();
   const { auth } = useAuth();
 
+  //Redirigir al chat
+  const handleOpenChat = () => {
+    navigate("/social/messages");
+  };
+
   return (
-    <aside className="bg-neutral-200">
+    <aside className="bg-neutral-200 relative">
       <section className="flex flex-col h-full">
         <article className="flex flex-col gap-4 items-center">
           <NavLink to="/social/feed" className="p-4">
@@ -54,23 +68,24 @@ const NewSidebar = () => {
             <div className="font-bold text-xl">Gente</div>
           </NavLink>
 
-          {/* Muestra componente o enlace según rol */}
-          {auth.role !== "admin" ? <UserCounters /> : (
+          {auth.role !== "admin" ? (
+            <UserCounters />
+          ) : (
             <>
-            <NavLink
-              to="/social/admin/reported-publications"
-              className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
-            >
-              <FlagIcon className="h-6 w-6  font-bold " />
-              <p className="font-bold text-xl">Publicac.</p>
-            </NavLink>
-            <NavLink
-              to="/social/admin/reported-users"
-              className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
-            >
-              <FlagIcon className="h-6 w-6  font-bold" />
-              <p className="font-bold text-xl">Usuarios</p>
-            </NavLink>
+              <NavLink
+                to="/social/admin/reported-publications"
+                className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
+              >
+                <FlagIcon className="h-6 w-6 font-bold" />
+                <p className="font-bold text-xl">Publicac.</p>
+              </NavLink>
+              <NavLink
+                to="/social/admin/reported-users"
+                className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
+              >
+                <FlagIcon className="h-6 w-6 font-bold" />
+                <p className="font-bold text-xl">Usuarios</p>
+              </NavLink>
             </>
           )}
 
@@ -82,7 +97,6 @@ const NewSidebar = () => {
           >
             <PencilSquareIcon className="h-6 w-6" />
             <p className="font-bold text-xl">Editar</p>
-
           </NavLink>
 
           <div>
@@ -94,6 +108,14 @@ const NewSidebar = () => {
               Salir
             </NavLink>
           </div>
+
+          {/* Botón para redirigir al chat */}
+          <button
+            className="fixed bottom-6 right-3 bg-red-600 p-2 rounded-full text-white shadow-lg hover:bg-red-500 transition-all duration-300 z-10"
+            onClick={handleOpenChat}
+          >
+            <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />
+          </button>
         </article>
       </section>
     </aside>
