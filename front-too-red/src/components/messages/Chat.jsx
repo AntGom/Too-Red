@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { io } from "socket.io-client";
 import ContactList from "./ContactList";
 import ChatWindow from "./ChatWindow";
+import { Global } from "../../helpers/Global";
 
 const socket = io("http://localhost:3900");
 
@@ -19,7 +20,7 @@ export default function Chat() {
     const getContacts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3900/api/follow/following/${userId}/`,
+          `${Global}/follow/following/${userId}/`,
           {
             method: "GET",
             headers: {
@@ -44,7 +45,7 @@ export default function Chat() {
 
       try {
         const response = await fetch(
-          `http://localhost:3900/api/messages/${userId}/${selectedUser._id}`,
+          `${Global}/messages/${userId}/${selectedUser._id}`,
           {
             method: "GET",
             headers: {
@@ -87,7 +88,7 @@ export default function Chat() {
     };
 
     try {
-      const response = await fetch("http://localhost:3900/api/messages/new", {
+      const response = await fetch(`${Global}/messages/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
