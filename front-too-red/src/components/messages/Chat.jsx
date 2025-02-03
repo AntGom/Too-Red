@@ -20,7 +20,7 @@ export default function Chat() {
     const getContacts = async () => {
       try {
         const response = await fetch(
-          `${Global.url}/follow/following/${userId}/`,
+          `${Global.url}follow/following/${userId}/`,
           {
             method: "GET",
             headers: {
