@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Global } from "../../helpers/Global";
@@ -6,6 +7,8 @@ export default function ContactList({ userId, selectedUser, setSelectedUser }) {
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
+    if (!userId || contacts.length > 0) return;
+  
     const getContacts = async () => {
       try {
         const response = await fetch(`${Global.url}follow/following/${userId}/`, {
@@ -15,15 +18,30 @@ export default function ContactList({ userId, selectedUser, setSelectedUser }) {
             Authorization: localStorage.getItem("token"),
           },
         });
+  
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+  
         const data = await response.json();
-        setContacts(data.follows.map((follow) => follow.followed));
+  
+        if (data.status === "success" && Array.isArray(data.follows)) {
+          const sortedContacts = data.follows
+            .map((follow) => follow.followed)
+            .sort((a, b) => a.name.localeCompare(b.name, "es", { sensitivity: "base" }));
+  
+          setContacts(sortedContacts);
+        } else {
+          setContacts([]);
+        }
       } catch (err) {
         console.error("Error obteniendo contactos:", err);
       }
     };
-
-    if (userId) getContacts();
+  
+    getContacts();
   }, [userId]);
+  
 
   return (
     <div className="h-full w-full max-w-md flex flex-col bg-white rounded-md overflow-hidden">
@@ -31,7 +49,7 @@ export default function ContactList({ userId, selectedUser, setSelectedUser }) {
         CONTACTOS
       </div>
 
-      <div className="flex flex-col gap-2 p-3 max-h-screen overflow-y-auto">
+      <div className="flex flex-col gap-2 p-3 max-h-full overflow-y-auto">
         {contacts.length > 0 ? (
           contacts.map((user) => (
             <div

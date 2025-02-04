@@ -9,16 +9,8 @@ const following = async (req, res) => {
     // Comprobar si me llega el id por params en la url
     if (req.params.id) userId = req.params.id;
 
-    // Comprobar si me llega la página, sino, la 1
-    let page = parseInt(req.params.page) || 1;
-
-    // Usuarios por página
-    const itemsPerPage = 5;
-
-    // Opciones de paginación
+    // Opciones de consulta
     const options = {
-      page: page,
-      limit: itemsPerPage,
       populate: [
         { path: "user", select: "-password -role -__v" },
         { path: "followed", select: "-password -role -__v" },
@@ -26,19 +18,16 @@ const following = async (req, res) => {
       sort: { created_at: -1 },
     };
 
-    // Find a follow, popular datos de user y paginar con mongoose paginate
-    const result = await Follow.paginate({ user: userId }, options);
+    // Find a follow, popular datos de user y no usar paginación
+    const result = await Follow.find({ user: userId }, null, options);
 
     // Sacar array de ids que me siguen y los que sigo yo
     let followUserIdsResult = await followUserIds(req.user.id);
 
     return res.status(200).send({
       status: "success",
-      message: "Lista de usuarios que estoy siguiendo",
-      total: result.totalDocs,
-      pages: result.totalPages,
-      follows: result.docs,
-
+      message: "Lista completa de usuarios que estoy siguiendo",
+      follows: result,
       user_following: followUserIdsResult.following,
       user_follow_me: followUserIdsResult.followers,
     });

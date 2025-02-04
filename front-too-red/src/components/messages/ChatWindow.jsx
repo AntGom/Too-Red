@@ -12,7 +12,7 @@ export default function ChatWindow({
     <div className="w-full md:w-3/4 flex flex-col p-4">
       {selectedUser ? (
         <>
-          <h2 className="text-lg font-bold mb-4">Chat con {selectedUser.name}</h2>
+          <h2 className="text-lg font-bold mb-4">Conversación con {selectedUser.name}</h2>
           <div className="flex-1 overflow-y-auto border p-2">
             {messages.length > 0 ? (
               messages.map((msg) => (
