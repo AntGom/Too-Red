@@ -3,42 +3,24 @@ import { followUserIds } from "../../services/followService.js";
 
 const followersList = async (req, res) => {
   try {
-    // Sacar id del usuario logueado
+    // Obtener el ID del usuario logueado o el que viene por params
     let userId = req.user.id;
-
-    // Comprobar si me llega el id por params en la url
     if (req.params.id) userId = req.params.id;
 
-    // Comprobar si me llega la página, sino, la 1
-    let page = parseInt(req.params.page) || 1;
+    // Obtener todos los seguidores sin paginación
+    const follows = await Follow.find({ followed: userId })
+      .populate("user", "-password -role -__v")
+      .populate("followed", "-password -role -__v")
+      .sort({ created_at: -1 });
 
-    // Usuarios por página
-    const itemsPerPage = 5;
-
-    // Opciones de paginación
-    const options = {
-      page: page,
-      limit: itemsPerPage,
-      populate: [
-        { path: "user", select: "-password -role -__v" },
-        { path: "followed", select: "-password -role -__v" },
-      ],
-      sort: { created_at: -1 },
-    };
-
-    // Find a follow, popular datos de user y paginar con mongoose paginate
-    const result = await Follow.paginate({ followed: userId }, options);
-
-    // Sacar array de ids que me siguen y los que sigo yo
-    let followUserIdsResult = await followUserIds(req.user.id);
+    // Obtener los IDs de los seguidores y seguidos
+    const followUserIdsResult = await followUserIds(req.user.id);
 
     return res.status(200).send({
       status: "success",
       message: "Lista de usuarios que me siguen",
-      total: result.totalDocs,
-      pages: result.totalPages,
-      follows: result.docs,
-
+      total: follows.length, // Cantidad total de seguidores
+      follows,
       user_following: followUserIdsResult.following,
       user_follow_me: followUserIdsResult.followers,
     });

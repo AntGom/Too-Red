@@ -8,7 +8,7 @@ const router = Router();
 router.post("/save", auth, followControllers.save);
 router.delete("/unfollow/:id", auth, followControllers.unfollow);
 router.get("/following/:id", auth, followControllers.followingList);
-router.get("/followers/:id?/:page?", auth, followControllers.followers);
+router.get("/followers/:id", auth, followControllers.followers);
 
 
 

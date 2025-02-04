@@ -13,21 +13,28 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../../hooks/UseAuth";
 import UserCounters from "../../user/UserCounters";
 import NewPublicationForm from "../../publication/NewPublication/NewPublicationForm";
+import PropTypes from "prop-types";
 
-const NewSidebar = () => {
+const NewSidebar = ({ onClose }) => {
   const navigate = useNavigate();
   const { auth } = useAuth();
 
-  //Redirigir al chat
+  // Redirigir al chat y cerrar el menú
   const handleOpenChat = () => {
     navigate("/social/messages");
+    onClose?.(); // Cerrar el menú si onClose está definido
   };
 
   return (
     <aside className="bg-neutral-200 relative">
       <section className="flex flex-col h-full">
         <article className="flex flex-col gap-4 items-center">
-          <NavLink to="/social/feed" className="p-4">
+          {/* Enlace al feed */}
+          <NavLink
+            to="/social/feed"
+            className="p-4"
+            onClick={onClose} // Cerrar el menú al hacer clic
+          >
             <img
               src="/copialogo.webp"
               alt="Logo de la Red Social"
@@ -35,9 +42,11 @@ const NewSidebar = () => {
             />
           </NavLink>
 
+          {/* Enlace al perfil */}
           <NavLink
             to={"/social/profile/" + auth._id}
             className="rounded-lg w-4/5 hover:bg-gray-200 transition-all duration-300 hover:scale-110"
+            onClick={onClose} // Cerrar el menú al hacer clic
           >
             <div className="flex justify-start gap-2 items-center">
               {auth.image !== "default.png" ? (
@@ -60,21 +69,25 @@ const NewSidebar = () => {
             </div>
           </NavLink>
 
+          {/* Enlace a gente */}
           <NavLink
             to="/social/people"
             className="w-4/5 p-2 flex items-center justify-start gap-2 -mb-2 hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
+            onClick={onClose} // Cerrar el menú al hacer clic
           >
             <UsersIcon className="h-6 w-6" />
             <div className="font-bold text-xl">Gente</div>
           </NavLink>
 
+          {/* Contenido adicional según el rol */}
           {auth.role !== "admin" ? (
-            <UserCounters />
+            <UserCounters onClose={onClose} />
           ) : (
             <>
               <NavLink
                 to="/social/admin/reported-publications"
                 className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
+                onClick={onClose} // Cerrar el menú al hacer clic
               >
                 <FlagIcon className="h-6 w-6 font-bold" />
                 <p className="font-bold text-xl">Publicac.</p>
@@ -82,6 +95,7 @@ const NewSidebar = () => {
               <NavLink
                 to="/social/admin/reported-users"
                 className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
+                onClick={onClose} // Cerrar el menú al hacer clic
               >
                 <FlagIcon className="h-6 w-6 font-bold" />
                 <p className="font-bold text-xl">Usuarios</p>
@@ -89,20 +103,25 @@ const NewSidebar = () => {
             </>
           )}
 
+          {/* Formulario de nueva publicación */}
           <NewPublicationForm />
 
+          {/* Enlace a configuración */}
           <NavLink
             to="/social/config"
             className="h-auto w-4/5 flex items-center justify-start gap-2 hover:bg-gray-200 p-2 -mt-2 -mb-2 transition-all duration-300 hover:scale-110 rounded-xl"
+            onClick={onClose} // Cerrar el menú al hacer clic
           >
             <PencilSquareIcon className="h-6 w-6" />
             <p className="font-bold text-xl">Editar</p>
           </NavLink>
 
+          {/* Botón de logout */}
           <div>
             <NavLink
               to="/social/logout"
               className="text-gray-900 font-bold border-2 border-red-600 rounded-lg p-2 flex transition-all duration-300 hover:scale-125"
+              onClick={onClose} // Cerrar el menú al hacer clic
             >
               <ArrowLeftStartOnRectangleIcon className="h-6 w-6 text-sm" />
               Salir
@@ -112,7 +131,7 @@ const NewSidebar = () => {
           {/* Botón para redirigir al chat */}
           <button
             className="fixed bottom-6 right-3 bg-red-600 p-2 rounded-full text-white shadow-lg hover:bg-red-500 transition-all duration-300 z-10"
-            onClick={handleOpenChat}
+            onClick={handleOpenChat} // Redirige y cierra el menú
           >
             <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />
           </button>
@@ -120,6 +139,10 @@ const NewSidebar = () => {
       </section>
     </aside>
   );
+};
+
+NewSidebar.propTypes = {
+  onClose: PropTypes.func, // onClose debe ser una función
 };
 
 export default NewSidebar;

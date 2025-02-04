@@ -6,63 +6,53 @@ import { useParams } from "react-router-dom";
 import { GetProfile } from "../../helpers/GetProfile";
 
 const Followers = () => {
-  //Estados
+  // Estados
   const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(1);
-  const [more, setMore] = useState(true);
   const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userProfile, SetUserProfile] = useState({});
+  const [userProfile, setUserProfile] = useState({});
 
   const params = useParams();
 
   useEffect(() => {
-    getUsers(1);
-    GetProfile(params.userId, SetUserProfile);
+    getUsers();
+    GetProfile(params.userId, setUserProfile);
   }, []);
 
-  const getUsers = async (nextPage = 1) => {
-    // Efecto de carga
+  const getUsers = async () => {
     setLoading(true);
-  
-    // Sacar userId de la URL
+
     const userId = params.userId;
-  
-    // Petición para obtener los seguidores
-    const request = await fetch(Global.url + "follow/followers/" + userId + "/" + nextPage, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-  
-    const data = await request.json();
-  
-    if (data.status === "success" && data.follows) {
-      // Procesar los usuarios que te siguen
-      const cleanUsers = data.follows.map((follow) => follow.user);
-      const newUsers = nextPage === 1 ? cleanUsers : [...users, ...cleanUsers];
-  
-      setUsers(newUsers);
-      setFollowing(data.user_following);
-      setLoading(false);
-  
-      // Verificar si hay más usuarios por cargar
-      if (newUsers.length >= data.total) {
-        setMore(false);
+
+    try {
+      const response = await fetch(`${Global.url}follow/followers/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success" && data.follows) {
+        const cleanUsers = data.follows.map((follow) => follow.user);
+        setUsers(cleanUsers);
+        setFollowing(data.user_following);
       }
-    } else {
-      setLoading(false);
-      setMore(false);
+    } catch (error) {
+      console.error("Error obteniendo los seguidores:", error);
     }
+
+    setLoading(false);
   };
-  
 
   return (
     <div className="max-w-7xl">
       <header className="mb-4">
-        <h1 className="text-xl font-bold text-gray-900 text-start">Seguidores de {userProfile.nick}</h1>
+        <h1 className="text-xl font-bold text-gray-900 text-start">
+          Seguidores de {userProfile.nick}
+        </h1>
       </header>
 
       <UserList
@@ -70,10 +60,7 @@ const Followers = () => {
         getUsers={getUsers}
         following={following}
         setFollowing={setFollowing}
-        more={more}
         loading={loading}
-        page={page}
-        setPage={setPage}
       />
     </div>
   );
