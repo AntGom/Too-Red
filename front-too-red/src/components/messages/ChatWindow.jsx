@@ -9,7 +9,7 @@ export default function ChatWindow({
   userId,
 }) {
   return (
-    <div className="w-3/4 flex flex-col p-4">
+    <div className="w-full md:w-3/4 flex flex-col p-4">
       {selectedUser ? (
         <>
           <h2 className="text-lg font-bold mb-4">Chat con {selectedUser.name}</h2>
@@ -61,13 +61,7 @@ ChatWindow.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.string,
   }),
-  messages: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      sender: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  messages: PropTypes.array.isRequired,
   newMessage: PropTypes.string.isRequired,
   setNewMessage: PropTypes.func.isRequired,
   sendMessage: PropTypes.func.isRequired,

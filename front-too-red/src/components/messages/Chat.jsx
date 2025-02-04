@@ -8,36 +8,13 @@ import { Global } from "../../helpers/Global";
 const socket = io("http://localhost:3900");
 
 export default function Chat() {
-  const [contacts, setContacts] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [showContacts, setShowContacts] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user.id : null;
-
-  useEffect(() => {
-    const getContacts = async () => {
-      try {
-        const response = await fetch(
-          `${Global.url}follow/following/${userId}/`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        );
-        const data = await response.json();
-        setContacts(data.follows.map((follow) => follow.followed));
-      } catch (err) {
-        console.error("Error obteniendo contactos:", err);
-      }
-    };
-
-    getContacts();
-  }, []);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -107,12 +84,43 @@ export default function Chat() {
   }, [newMessage, selectedUser]);
 
   return (
-    <div className="flex h-screen">
-      <ContactList
-        contacts={contacts}
-        selectedUser={selectedUser}
-        setSelectedUser={setSelectedUser}
-      />
+    <div className="flex h-screen flex-col md:flex-row">
+      <button
+        className="md:hidden p-2 bg-blue-500 text-white m-2 rounded"
+        onClick={() => setShowContacts(true)}
+      >
+        Ver Contactos
+      </button>
+
+      {showContacts && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center md:hidden"
+          onClick={() => setShowContacts(false)}
+        >
+          <div
+            className="bg-white w-3/4 h-3/4 rounded-lg p-4 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ContactList
+              userId={userId}
+              selectedUser={selectedUser}
+              setSelectedUser={(user) => {
+                setSelectedUser(user);
+                setShowContacts(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="hidden md:block md:w-1/4 bg-gray-200 border-red-600 border-2 rounded-lg">
+        <ContactList
+          userId={userId}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+        />
+      </div>
+
       <ChatWindow
         selectedUser={selectedUser}
         messages={messages}
