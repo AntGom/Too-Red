@@ -30,7 +30,7 @@ const PrivateLayout = () => {
       </main>
 
       {/* Navbar pantallas pequeñas */}
-      <div className="md:hidden fixed top-0 left-0 right-0 bg-neutral-200 z-20 border-b-2 border-red-600 flex mb-2 items-center justify-between px-4 py-2">
+      <div className="md:hidden fixed top-0 left-0 right-0 bg-gray-50 z-20 border-b-2 border-red-600 flex mb-2 items-center justify-between px-4 py-2">
         <img
           src="/nuevoLogoLargo.webp"
           alt="Logo de la Red Social"
@@ -56,7 +56,7 @@ const PrivateLayout = () => {
 
       {/* Menú deslizante pantallas pequeñas */}
       <div
-        className={`fixed top-0 right-0 z-30 bg-neutral-200 h-full w-2/3 shadow-lg border-l-2 border-red-600 md:hidden
+        className={`fixed top-0 right-0 z-30 bg-gary-50 h-full w-2/3 shadow-lg border-l-2 border-red-600 md:hidden
           transform transition-transform duration-300 ease-in-out
           ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >

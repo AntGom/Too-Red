@@ -9,11 +9,8 @@ const NavbarPublic = () => {
           <img
             src="/nuevoLogoLargo.webp"
             alt="Logo de Too-Red"
-            className="h-12 w-12 rounded-full border-2 border-red-600 transition-all duration-300 hover:scale-105"
+            className="h-12 w-full rounded-lg border-2 border-red-600 transition-all duration-300 hover:scale-105"
           />
-          <span className="ml-2 text-xl font-bold text-gray-900 hidden sm:inline-block">
-            Too-Red
-          </span>
         </NavLink>
 
         {/* Navegación */}

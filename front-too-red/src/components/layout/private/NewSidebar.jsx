@@ -20,7 +20,7 @@ const NewSidebar = ({ onClose }) => {
   // Redirigir al chat y cerrar menú
   const handleOpenChat = () => {
     navigate("/social/messages");
-    onClose?.(); // Cerrar el menú si onClose está definido
+    onClose?.();
   };
 
   return (
@@ -36,7 +36,7 @@ const NewSidebar = ({ onClose }) => {
             <img
               src="/nuevoLogoLargo.webp"
               alt="Logo de Too Red"
-              className="h-12 rounded-xl w-full object-cover border-2 border-red-600 hover:scale-110 transition-all duration-300"
+              className="h-12 py-1 rounded-xl w-full object-cover border-2 border-red-600 hover:scale-110 transition-all duration-300"
             />
           </NavLink>
 
