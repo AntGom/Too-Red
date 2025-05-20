@@ -2,29 +2,49 @@ import { NavLink } from "react-router-dom";
 
 const NavbarPublic = () => {
   return (
-    <nav className=" p-2 flex justify-around border-2 border-red-600 shadow-md">
-      <NavLink to="/social/feed" className="p-4 ">
-        <img
-          src="/copialogo.webp"
-          alt="Logo de la Red Social"
-          className=" h-20 rounded-xl border-2 border-red-600 hover:scale-110 transition-all duration-300"
-        />
-      </NavLink>
+    <nav className="bg-white border-b border-gray-200 shadow-sm py-3 px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex justify-between items-center">
+        {/* Logo */}
+        <NavLink to="/social/feed" className="flex items-center">
+          <img
+            src="/nuevoLogoLargo.webp"
+            alt="Logo de Too-Red"
+            className="h-12 w-12 rounded-full border-2 border-red-600 transition-all duration-300 hover:scale-105"
+          />
+          <span className="ml-2 text-xl font-bold text-gray-900 hidden sm:inline-block">
+            Too-Red
+          </span>
+        </NavLink>
 
-      <ul className="flex gap-4 items-center ">
-        <li className=" hover:scale-110 transition-all duration-300">
-          <NavLink to="/login"
-            className="text-gray-900 font-bold border-2 border-red-600 rounded-lg p-2">
-            <span>Entrar</span>
+        {/* Navegación */}
+        <div className="flex gap-3">
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-lg font-medium transition-all ${
+                isActive
+                  ? "bg-red-600 text-white"
+                  : "text-gray-700 border border-gray-300 hover:bg-gray-100"
+              }`
+            }
+          >
+            Entrar
           </NavLink>
-        </li>
-        <li className=" hover:scale-110 transition-all duration-300">
-          <NavLink to="/register"
-            className="text-wgray-900  font-bold  border-2 border-red-600 rounded-lg p-2">
-            <span>Registro</span>
+          
+          <NavLink
+            to="/register"
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-lg font-medium transition-all ${
+                isActive
+                  ? "bg-red-600 text-white"
+                  : "bg-gray-900 text-white hover:bg-gray-800"
+              }`
+            }
+          >
+            Registro
           </NavLink>
-        </li>
-      </ul>
+        </div>
+      </div>
     </nav>
   );
 };

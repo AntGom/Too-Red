@@ -19,47 +19,63 @@ const PublicationHeader = ({ publication, onEdit, onDelete, onReport }) => {
     auth?._id === publication.user?._id || auth?.role === "admin";
 
   return (
-    <section className="flex items-center justify-between">
-      <article className="flex text-sm text-gray-800">
-        <NavLink to={`/social/profile/${publication.user?._id}`}>
-          <img
-            src={getUserImage(publication.user?.image)}
-            alt="Foto de Perfil"
-            className="w-11 h-11 rounded-full object-cover transition-all border border-red-600 duration-300 hover:scale-110"
-          />
+    <section className="flex items-center justify-between mb-4">
+      <article className="flex items-center text-sm text-gray-800">
+        <NavLink 
+          to={`/social/profile/${publication.user?._id}`}
+          className="relative group"
+        >
+          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-red-600 group-hover:border-red-500 transition-all">
+            <img
+              src={getUserImage(publication.user?.image)}
+              alt="Foto de Perfil"
+              className="w-full h-full object-cover transition-all duration-300 group-hover:scale-110"
+            />
+          </div>
         </NavLink>
-        <div className="ml-4">
-          <p className="font-bold">{`${publication.user?.name} ${publication.user?.surname}`}</p>
-          <p className="text-gray-600">
+        <div className="ml-3">
+          <div className="flex items-center">
+            <p className="font-semibold text-gray-900">{`${publication.user?.name} ${publication.user?.surname}`}</p>
+            {isUserOwnerOrAdmin && (
+              <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700">
+                {auth?._id === publication.user?._id ? "Autor" : "Admin"}
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-gray-500">
             <ReactTimeAgo
               date={new Date(publication.createdAt).getTime()}
               locale="es-ES"
+              className="text-gray-500"
             />
           </p>
         </div>
       </article>
-      <article className="flex items-center space-x-4">
+      <article className="flex items-center space-x-2">
         {!isUserOwnerOrAdmin && (
           <button
             onClick={() => onReport(publication._id)}
-            className="text-gray-600 hover:text-red-700 transition-all duration-300"
+            className="text-gray-500 hover:text-red-600 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+            title="Reportar publicación"
           >
-            <FlagIcon className="h-6 w-6" />
+            <FlagIcon className="h-5 w-5" />
           </button>
         )}
         {isUserOwnerOrAdmin && (
           <>
             <button
               onClick={() => onEdit(publication._id)}
-              className="text-blue-600 hover:text-blue-800 hover:scale-125 transition-all duration-300"
+              className="text-gray-500 hover:text-blue-600 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+              title="Editar publicación"
             >
-              <PencilIcon className="h-6 w-6" />
+              <PencilIcon className="h-5 w-5" />
             </button>
             <button
               onClick={() => onDelete(publication._id)}
-              className="text-red-600 hover:text-red-800 hover:scale-125 transition-all duration-300"
+              className="text-gray-500 hover:text-red-600 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+              title="Eliminar publicación"
             >
-              <TrashIcon className="h-6 w-6" />
+              <TrashIcon className="h-5 w-5" />
             </button>
           </>
         )}

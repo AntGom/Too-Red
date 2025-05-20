@@ -14,7 +14,7 @@ const PublicationCard = ({ publication, getPublications }) => {
   const [reporting, setReporting] = useState(false);
 
   return (
-    <article className="flex flex-col relative bg-white rounded-lg border hover:bg-gray-100 p-3 -mb-4 ">
+    <article className="publication-card fadeIn hover:bg-gray-50">
       <PublicationHeader
         publication={publication}
         onEdit={setEditing}
@@ -62,18 +62,18 @@ const PublicationCard = ({ publication, getPublications }) => {
       )}
 
       {viewingImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
-          <div className="relative">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 fadeIn">
+          <div className="relative max-w-4xl mx-auto">
             <button
               onClick={() => setViewingImage(null)}
-              className="absolute top-3 right-4 text-red-600 font-semibold text-4xl"
+              className="absolute -top-12 right-0 text-white text-4xl hover:text-red-600 transition-colors"
             >
               &times;
             </button>
             <img
-              src={publication.file} 
+              src={viewingImage} // ✅ Aquí usamos la imagen clicada
               alt="Imagen en tamaño original"
-              className="max-w-screen max-h-screen rounded-lg"
+              className="max-w-screen max-h-screen rounded-lg shadow-lg"
             />
           </div>
         </div>

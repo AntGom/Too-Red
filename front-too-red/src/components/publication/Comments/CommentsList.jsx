@@ -53,16 +53,17 @@ const CommentsList = ({ publicationId, likes, publicationUserId }) => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center mt-4">
+      <div className="flex justify-center items-center my-3">
         <div className="spinner"></div>
       </div>
     );
+    
   return (
-    <section className="mt-1 w-full">
-      <article className="flex justify-between mx-2">
+    <section className="mt-3 w-full border-t pt-3">
+      <article className="flex justify-between items-center">
         <button
           onClick={toggleComments}
-          className="text-blue-600 font-semibold underline hover:text-blue-800"
+          className="text-blue-600 font-medium hover:text-blue-700 transition-colors focus:outline-none focus:underline"
         >
           {showComments
             ? `Ocultar comentarios (${comments.length})`
@@ -76,46 +77,52 @@ const CommentsList = ({ publicationId, likes, publicationUserId }) => {
         />
       </article>
 
-      {showComments &&
-        (comments.length === 0 ? (
-          <p className="text-gray-500">No hay comentarios aún.</p>
-        ) : (
-          comments.map((comment) => (
-            <article
-              key={comment._id}
-              className="flex items-start space-x-3 mt-2 bg-gray-50 border-2 border-red-300 p-2 rounded-lg"
-            >
-              <img
-                src={
-                  comment.user?.image && comment.user.image !== "default.png"
-                    ? `${comment.user.image}`
-                    : `${Global.url}user/avatar/default.png`
-                }
-                alt="Avatar"
-                className="w-8 h-8 rounded-full border-2 border-blue-500 object-cover"
-              />
-              <div className="flex-1">
-                <p className="font-semibold text-gray-800">
-                  {comment.user?.name} {comment.user?.surname}
-                  <span className="text-gray-600 text-xs md:text-md ml-2">
-                    <ReactTimeAgo
-                      date={new Date(comment.createdAt).getTime()}
-                      locale="es-ES"
-                    />
-                  </span>
-                </p>
-                <p className="text-gray-600 text-sm md:text-md">{comment.text}</p>
-              </div>
-              <DeleteComment
-                publicationId={publicationId}
-                publicationUserId={publicationUserId}
-                onDelete={handleCommentDelete}
-                commentId={comment._id}
-                commentUserId={comment.user._id}
-              />
-            </article>
-          ))
-        ))}
+      {showComments && (
+        <div className="mt-3 space-y-3">
+          {comments.length === 0 ? (
+            <p className="text-gray-500 italic text-center py-2">No hay comentarios aún.</p>
+          ) : (
+            comments.map((comment) => (
+              <article
+                key={comment._id}
+                className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-gray-200 transition-all"
+              >
+                <img
+                  src={
+                    comment.user?.image && comment.user.image !== "default.png"
+                      ? `${comment.user.image}`
+                      : `${Global.url}user/avatar/default.png`
+                  }
+                  alt="Avatar"
+                  className="w-8 h-8 rounded-full border border-blue-500 object-cover flex-shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline">
+                    <p className="font-medium text-gray-900 truncate">
+                      {comment.user?.name || "Usuario"}
+                    </p>
+                    <span className="text-gray-500 text-xs ml-2">
+                      <ReactTimeAgo
+                        date={new Date(comment.createdAt).getTime()}
+                        locale="es-ES"
+                        timeStyle="twitter"
+                      />
+                    </span>
+                  </div>
+                  <p className="text-gray-700 break-words">{comment.text}</p>
+                </div>
+                <DeleteComment
+                  publicationId={publicationId}
+                  publicationUserId={publicationUserId}
+                  onDelete={handleCommentDelete}
+                  commentId={comment._id}
+                  commentUserId={comment.user._id}
+                />
+              </article>
+            ))
+          )}
+        </div>
+      )}
     </section>
   );
 };

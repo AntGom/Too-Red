@@ -10,6 +10,8 @@ const LazyImage = ({
   width,
   height,
   loadingClassName = "opacity-30",
+  onClick,
+  ...rest
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -65,7 +67,9 @@ const LazyImage = ({
       height={height}
       onLoad={handleImageLoad}
       onError={handleImageError}
+      onClick={onClick}
       className={`${className} ${!isLoaded ? loadingClassName : ""}`}
+      {...rest}
     />
   );
 };
@@ -79,6 +83,7 @@ LazyImage.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   loadingClassName: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default LazyImage;

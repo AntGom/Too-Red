@@ -32,7 +32,7 @@ const Config = () => {
       
       if (data.status === "success") {
         delete data.user.password;
-        setAuth(data.user); // Actualiza el estado del usuario
+        setAuth(data.user);
 
         //Si hay archivo, subimos imagen
         const fileInput = document.querySelector("#fileInput");

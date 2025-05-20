@@ -40,7 +40,6 @@ const RevertReport = ({
           type: "success"
         });
         
-        // Esperar un momento para que el usuario vea el mensaje antes de cerrar
         setTimeout(() => {
           onRevertSuccess();
         }, 1500);

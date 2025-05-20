@@ -14,6 +14,7 @@ const NewPublicationForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [charCount, setCharCount] = useState(0);
   const formRef = useRef(null);
   const { showToast } = useToast();
 
@@ -22,6 +23,12 @@ const NewPublicationForm = () => {
   const resetForm = () => {
     if (formRef.current) formRef.current.reset();
     setSelectedFile(null);
+    setCharCount(0);
+  };
+
+  const handleTextChange = (e) => {
+    changed(e);
+    setCharCount(e.target.value.length);
   };
 
   const savePublication = async (e) => {
@@ -98,10 +105,10 @@ const NewPublicationForm = () => {
     <>
       <button
         onClick={() => setShowForm(true)}
-        className="flex items-center gap-2 w-4/5 text-gray-900 font-bold text-xl rounded-lg hover:bg-gray-200 p-2 -mb-2 transition-all duration-300 hover:scale-110 text-left"
+        className="flex items-center gap-1 px-2 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full shadow-sm hover:shadow-md transition-all duration-300 mt-4"
       >
-        <MegaphoneIcon className="w-6 h-6 text-gray-900" />
-        Publicar
+        <MegaphoneIcon className="w-5 h-5" />
+        <span className="font-medium">Crear publicación</span>
       </button>
 
       <Modal
@@ -110,22 +117,45 @@ const NewPublicationForm = () => {
         title="Nueva publicación"
       >
         <form ref={formRef} onSubmit={savePublication} className="space-y-4">
-          <textarea
-            name="text"
-            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none min-h-[120px]"
-            placeholder="¿Qué estás pensando?"
-            onChange={changed}
-          />
+          <div className="relative">
+            <textarea
+              name="text"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none min-h-[120px] text-gray-800"
+              placeholder="¿Qué estás pensando?"
+              onChange={handleTextChange}
+              maxLength={1000}
+            />
+            <div className="absolute bottom-2 right-2 text-xs text-gray-500">
+              {charCount}/1000
+            </div>
+          </div>
 
-          <div className="flex items-center justify-around">
+          <div className="flex items-center justify-between">
             <FileInput onFileSelect={setSelectedFile} />
-            <button
-              type="submit"
-              className="p-2 text-gray-900 font-medium rounded-lg border-2 border-red-600 hover:scale-105 transition-all duration-200"
-              disabled={loading}
-            >
-              {loading ? "Publicando..." : "Publicar"}
-            </button>
+            
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className={`px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    <span>Publicando...</span>
+                  </>
+                ) : (
+                  <span>Publicar</span>
+                )}
+              </button>
+            </div>
           </div>
         </form>
       </Modal>

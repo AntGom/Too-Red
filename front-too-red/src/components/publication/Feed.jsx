@@ -65,7 +65,7 @@ const Feed = () => {
   } catch (error) {
     console.error("Error al cargar publicaciones:", error);
   } finally {
-    if (shouldRefresh) setRefreshing(false); // ✅ ahora siempre se desactiva
+    if (shouldRefresh) setRefreshing(false);
   }
 };
 

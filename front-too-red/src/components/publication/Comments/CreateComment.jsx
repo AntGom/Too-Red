@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Global } from "../../../helpers/Global";
 import PropTypes from "prop-types";
 import { useToast } from "../../../hooks/useToast";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 const CreateComment = ({ publicationId }) => {
   const [commentText, setCommentText] = useState("");
@@ -65,23 +66,27 @@ const CreateComment = ({ publicationId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2 mt-3">
-      <textarea
-        value={commentText}
-        onChange={handleChange}
-        className="w-full p-2 border border-gray-300 rounded-lg"
-        placeholder="Escribe un comentario..."
-        rows="1"
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        className={`font-semibold border-2 border-red-600 p-1 rounded-lg hover:scale-105 transition-all gap-1 ${
-          loading ? "opacity-70 cursor-not-allowed" : ""
-        }`}
-      >
-        {loading ? "Enviando..." : "Comentar"}
-      </button>
+    <form onSubmit={handleSubmit} className="mt-3">
+      <div className="flex">
+        <textarea
+          value={commentText}
+          onChange={handleChange}
+          className="flex-grow p-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none text-gray-800 min-h-[50px]"
+          placeholder="Escribe un comentario..."
+          rows="1"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-red-600 text-white px-3 rounded-r-lg hover:bg-red-700 transition-all flex items-center justify-center"
+        >
+          {loading ? (
+            <span className="loader-sm"></span>
+          ) : (
+            <PaperAirplaneIcon className="h-5 w-5" />
+          )}
+        </button>
+      </div>
     </form>
   );
 };

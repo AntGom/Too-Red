@@ -14,19 +14,19 @@ const DeleteComment = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [canDelete, setCanDelete] = useState(false); // Variable de estado para permisos de eliminación
+  const [canDelete, setCanDelete] = useState(false); // Vrble de estado para permisos de eliminar
   const { showToast } = useToast();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // Decodificar token para obtener datos del usuario logueado
+      // Decodificar token y obtener datos de usuario logueado
       try {
-        const user = JSON.parse(atob(token.split(".")[1])); // Decodificar payload
-        // Verificar si el usuario es el propietario de la publicación, el autor del comentario o un admin
+        const user = JSON.parse(atob(token.split(".")[1]));
+        // Verificar si el usuario es el propietario/autor/admin
         setCanDelete(
-          user.id === commentUserId || // Autor del comentario
-          user.id === publicationUserId || // Propietario de la publicación
+          user.id === commentUserId || // Autor
+          user.id === publicationUserId || // Propietario
           user.role === "admin" // Admin
         );
       } catch (error) {
@@ -88,7 +88,7 @@ const DeleteComment = ({
   };
 
   if (!canDelete) {
-    return null; // No mostrar si el usuario no tiene permisos
+    return null; // No mostrar si usuario no tiene permiso
   }
 
   return (

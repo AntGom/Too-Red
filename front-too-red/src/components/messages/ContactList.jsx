@@ -79,7 +79,7 @@ useEffect(() => {
 }, [userId, token]);
 
 
-  // Escuchar eventos de socket para actualizar mensajes no leídos en tiempo real
+  // Escuchar eventos de socket para actualizar mensajes NO leídos
   useEffect(() => {
     if (!userId) return;
 
@@ -104,7 +104,7 @@ useEffect(() => {
     
     setSelectedUser(user);
     
-    // Marcar mensajes como leídos si hay no leídos de este usuario
+    // Marcar mensajes como leídos si hay NO leídos de este usuario
     if (unreadSenders.includes(user._id)) {
       try {
         await fetch(`${Global.url}messages/markAsRead/${user._id}`, {

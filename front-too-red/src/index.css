@@ -1,20 +1,149 @@
 /* Importaciones de Tailwind */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #d6300f;
+  --primary-hover: #b22c0e;
+  --secondary-color: #1e293b;
+  --light-bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+}
+
+body {
+  @apply bg-gray-50 font-sans text-gray-900 antialiased;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  transition: background-color 0.3s ease;
+}
 
 /* Spinner de carga */
 .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #d6300f;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos de tarjeta modernos */
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300;
+}
+
+.card:hover {
+  @apply shadow-md transform translate-y-[-2px];
+}
+
+/* Estilos de botones */
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg font-medium transition-colors 
+  focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.btn-primary {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-300 focus:ring-gray-500;
+}
+
+.btn-outline {
+  @apply border border-gray-300 bg-transparent hover:bg-gray-100 focus:ring-gray-500;
+}
+
+.btn-sm {
+  @apply text-sm px-3 py-1.5;
+}
+
+.btn-md {
+  @apply text-sm px-4 py-2;
+}
+
+.btn-lg {
+  @apply text-base px-5 py-2.5;
+}
+
+/* Estilos de inputs */
+.input {
+  @apply block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500
+  focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 sm:text-sm;
+}
+
+.input-error {
+  @apply border-red-500 focus:border-red-500 focus:ring-red-500;
+}
+
+/* Estilos para animaciones de transición */
+.fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.slideUp {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Estilo para navegación */
+.nav-link {
+  @apply relative px-3 py-2 text-gray-700 rounded-lg transition-colors hover:text-red-600 hover:bg-gray-100;
+}
+
+.nav-link.active {
+  @apply text-red-600 bg-red-50 font-medium;
+}
+
+.nav-link.active:before {
+  content: "";
+  @apply absolute left-0 top-1/2 w-1 h-1/2 bg-red-600 rounded-r transform -translate-y-1/2;
+}
+
+/* Tarjeta de publicación */
+.publication-card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-4 transition-all duration-300;
+}
+
+.publication-card:hover {
+  @apply shadow-md;
+}
+
+/* Ajustes para interacción */
+.interactive {
+  @apply transition-all duration-300;
+}
+
+.interactive:hover {
+  @apply scale-105;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-yellow-500;
+}
+
+/* Sombras personalizadas */
+.shadow-smooth {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 6px rgba(0,0,0,0.06);
+}
+
+.shadow-smooth-hover:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.1);
+}

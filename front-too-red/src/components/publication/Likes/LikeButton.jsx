@@ -9,7 +9,6 @@ export default function LikeButton({ initialLikes, initialLiked, publicationId, 
   const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem("token");
 
-
   const handleLikeClick = async () => {
     if (isLoading) return;
     
@@ -44,12 +43,17 @@ export default function LikeButton({ initialLikes, initialLiked, publicationId, 
     <button 
       onClick={handleLikeClick}
       disabled={isLoading}
-      className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors duration-200"
+      className="flex items-center space-x-1 text-gray-600 hover:text-red-500 transition-colors duration-200"
+      aria-label={isLiked ? "Quitar me gusta" : "Me gusta"}
     >
       <HeartIcon
-        className={`w-6 h-6 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} 
+        className={`w-6 h-6 transition-all duration-300 transform ${isLiked ? 'fill-red-500 text-red-500 scale-110' : 'fill-transparent'}`} 
+        stroke="currentColor"
+        strokeWidth={isLiked ? 0 : 1.5}
       />
-      <span className="font-medium">{likeCount}</span>
+      <span className={`font-medium ${isLiked ? 'text-red-500' : 'text-gray-600'}`}>
+        {likeCount}
+      </span>
     </button>
   );
 }

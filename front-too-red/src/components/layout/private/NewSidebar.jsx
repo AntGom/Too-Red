@@ -17,26 +17,26 @@ const NewSidebar = ({ onClose }) => {
   const navigate = useNavigate();
   const { auth } = useAuth();
 
-  // Redirigir al chat y cerrar el menú
+  // Redirigir al chat y cerrar menú
   const handleOpenChat = () => {
     navigate("/social/messages");
     onClose?.(); // Cerrar el menú si onClose está definido
   };
 
   return (
-    <aside className="bg-neutral-200 relative">
-      <section className="flex flex-col h-full">
+    <aside className="bg-gray-50 relative">
+      <section className="flex flex-col h-screen">
         <article className="flex flex-col gap-3 items-center">
           {/* Enlace al feed */}
           <NavLink
             to="/social/feed"
-            className="p-2"
-            onClick={onClose} // Cerrar el menú al hacer clic
+            className="py-4 px-1 w-5/6"
+            onClick={onClose}
           >
             <img
-              src="/copialogo.webp"
-              alt="Logo de la Red Social"
-              className="h-20 rounded-full object-cover border-2 border-red-600 hover:scale-110 transition-all duration-300"
+              src="/nuevoLogoLargo.webp"
+              alt="Logo de Too Red"
+              className="h-12 rounded-xl w-full object-cover border-2 border-red-600 hover:scale-110 transition-all duration-300"
             />
           </NavLink>
 
@@ -44,7 +44,7 @@ const NewSidebar = ({ onClose }) => {
           <NavLink
             to={"/social/profile/" + auth._id}
             className="rounded-lg w-4/5 hover:bg-gray-200 transition-all duration-300 hover:scale-110"
-            onClick={onClose} // Cerrar el menú al hacer clic
+            onClick={onClose} // Cerrar con clic
           >
             <div className="flex justify-start gap-2 items-center">
               {auth.image !== "default.png" ? (
@@ -71,7 +71,7 @@ const NewSidebar = ({ onClose }) => {
           <NavLink
             to="/social/people"
             className="w-4/5 p-2 flex items-center justify-start gap-2 -mb-2 hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
-            onClick={onClose} // Cerrar el menú al hacer clic
+            onClick={onClose} // Cerrar con clic
           >
             <UsersIcon className="h-6 w-6" />
             <div className="font-bold text-xl">Gente</div>
@@ -85,7 +85,7 @@ const NewSidebar = ({ onClose }) => {
               <NavLink
                 to="/social/admin/reported-publications"
                 className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
-                onClick={onClose} // Cerrar el menú al hacer clic
+                onClick={onClose} // Cerrar con clic
               >
                 <FlagIcon className="h-6 w-6 font-bold" />
                 <p className="font-bold text-xl">Publicac.</p>
@@ -93,7 +93,7 @@ const NewSidebar = ({ onClose }) => {
               <NavLink
                 to="/social/admin/reported-users"
                 className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
-                onClick={onClose} // Cerrar el menú al hacer clic
+                onClick={onClose} // Cerrar con clic
               >
                 <FlagIcon className="h-6 w-6 font-bold" />
                 <p className="font-bold text-xl">Usuarios</p>
@@ -108,7 +108,7 @@ const NewSidebar = ({ onClose }) => {
           <NavLink
             to="/social/config"
             className="h-auto w-4/5 flex items-center justify-start gap-2 hover:bg-gray-200 p-2 -mt-2 -mb-2 transition-all duration-300 hover:scale-110 rounded-xl"
-            onClick={onClose} // Cerrar el menú al hacer clic
+            onClick={onClose} // Cerrar con clic
           >
             <PencilSquareIcon className="h-6 w-6" />
             <p className="font-bold text-xl">Editar</p>
@@ -118,7 +118,7 @@ const NewSidebar = ({ onClose }) => {
           <NavLink
             to="/social/messages"
             className="h-auto w-4/5 flex items-center justify-start gap-2 hover:bg-gray-200 p-2 -mt-2 -mb-2 transition-all duration-300 hover:scale-110 rounded-xl"
-            onClick={handleOpenChat} // Cerrar el menú al hacer clic
+            onClick={handleOpenChat} // Cerrar con clic
           >
             <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />
             <p className="font-bold text-xl">Chat</p>
