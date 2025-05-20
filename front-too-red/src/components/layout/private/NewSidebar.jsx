@@ -26,7 +26,7 @@ const NewSidebar = ({ onClose }) => {
   return (
     <aside className="bg-gray-50 relative">
       <section className="flex flex-col h-screen">
-        <article className="flex flex-col gap-3 items-center">
+        <article className="flex flex-col gap-3 items-center ">
           {/* Enlace al feed */}
           <NavLink
             to="/social/feed"
@@ -36,7 +36,7 @@ const NewSidebar = ({ onClose }) => {
             <img
               src="/nuevoLogoLargo.webp"
               alt="Logo de Too Red"
-              className="h-12 py-1 rounded-xl w-full object-cover border-2 border-red-600 hover:scale-110 transition-all duration-300"
+              className="h-12 rounded-xl w-full object-contain border-2 border-red-600 hover:scale-110 transition-all duration-300"
             />
           </NavLink>
 

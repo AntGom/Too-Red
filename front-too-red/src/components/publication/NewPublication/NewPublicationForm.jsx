@@ -105,7 +105,7 @@ const NewPublicationForm = () => {
     <>
       <button
         onClick={() => setShowForm(true)}
-        className="flex items-center gap-1 px-2 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 m-3"
+        className="flex items-center gap-1 px-2 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 my-3"
       >
         <MegaphoneIcon className="w-5 h-5" />
         <span className="font-medium">Crear publicación</span>
