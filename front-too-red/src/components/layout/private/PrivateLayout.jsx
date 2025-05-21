@@ -25,7 +25,7 @@ const PrivateLayout = () => {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex-1 md:ml-[25%] lg:ml-[16.67%] px-4 md:px-8 pt-16 md:pt-8 mt-3">
+      <main className="flex-1 md:ml-[25%] lg:ml-[16.67%] px-4 md:px-8 pt-16 md:pt-8 mt-1">
         {auth._id ? <Outlet /> : <Navigate to="/login" />}
       </main>
 

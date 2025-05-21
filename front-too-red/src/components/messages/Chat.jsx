@@ -48,6 +48,17 @@ export default function Chat() {
       }));
     };
 
+    socketRef.current.on("onlineUsers", (onlineUserIds) => {
+  setOnlineUsers(() => {
+    const statusMap = {};
+    onlineUserIds.forEach(id => {
+      statusMap[id] = true;
+    });
+    return statusMap;
+  });
+});
+
+
     // Escuchar evento de mensajes leídos
     const handleMessageRead = (data) => {
       setMessages((prev) =>
@@ -214,7 +225,15 @@ export default function Chat() {
           </p>
         </div>
       )}
-
+      <ChatWindow
+        selectedUser={selectedUser}
+        messages={messages}
+        newMessage={newMessage}
+        setNewMessage={setNewMessage}
+        sendMessage={sendMessage}
+        userId={userId}
+        isOnline={selectedUser ? onlineUsers[selectedUser._id] : false}
+      />
       <button
         className="md:hidden p-2 bg-blue-500 text-white m-2 rounded"
         onClick={() => setShowContacts(true)}
@@ -253,15 +272,7 @@ export default function Chat() {
         />
       </div>
 
-      <ChatWindow
-        selectedUser={selectedUser}
-        messages={messages}
-        newMessage={newMessage}
-        setNewMessage={setNewMessage}
-        sendMessage={sendMessage}
-        userId={userId}
-        isOnline={selectedUser ? onlineUsers[selectedUser._id] : false}
-      />
+
     </div>
   );
 }

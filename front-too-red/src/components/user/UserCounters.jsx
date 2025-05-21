@@ -3,64 +3,68 @@ import { useAuth } from "../../hooks/UseAuth";
 import useCounters from "../../hooks/useCounters";
 import PropTypes from "prop-types";
 
-
 const UserCounters = ({ onClose }) => {
   const { auth } = useAuth();
   const { counters } = useCounters();
 
   return (
-    <>
-      <h1 className="text-xl font-bold -mb-3 w-full ml-16">Mi Red</h1>
-      <section className="w-4/5 max-w-4/5 flex flex-col p-2 md:p-0 lg:p-2 rounded-lg border-2 border-red-600">
+    <div className="flex flex-col justify-start gap-1 w-4/5">
+      <h1 className="text-xl font-bold mx-2 ">Mi Red</h1>
+      <section className=" flex flex-col rounded-lg border-2 border-red-600">
         {/* Contador de Siguiendo */}
-        <article>
+        <article className="mx-2">
           <NavLink
             to={"siguiendo/" + auth._id}
-            className="flex flex-row md:flex-col lg:flex-row justify-between items-center p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
-            onClick={onClose} // Cerrar el menú al hacer clic
+            className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
+            onClick={onClose}
           >
-            <div className="text-md font-medium text-gray-900">Siguiendo</div>
-            <div className="text-lg font-semibold text-red-600">
-              {counters.following}
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-red-600">
+                {counters.following}
+              </p>
+              <p className="text-md font-medium text-gray-900">Siguiendo</p>
             </div>
           </NavLink>
         </article>
 
         {/* Contador de Seguidores */}
-        <article>
+        <article className="mx-2">
           <NavLink
             to={"seguidores/" + auth._id}
-            className="flex flex-row md:flex-col lg:flex-row justify-between items-center p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
-            onClick={onClose} // Cerrar el menú al hacer clic
+            className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
+            onClick={onClose}
           >
-            <div className="text-md font-medium text-gray-900">Seguidores</div>
-            <div className="text-lg font-semibold text-red-600">
-              {counters.followers}
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-red-600">
+                {counters.followers}
+              </p>
+              <p className="text-md font-medium text-gray-900">Seguidores</p>
             </div>
           </NavLink>
         </article>
 
         {/* Contador de Publicaciones */}
-        <article>
+        <article className="mx-2">
           <NavLink
             to={"publications/" + auth._id}
-            className="flex flex-row md:flex-col lg:flex-row justify-between items-center p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
-            onClick={onClose} // Cerrar el menú al hacer clic
+            className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
+            onClick={onClose}
           >
-            <div className="text-md font-medium text-gray-900">Publicaciones</div>
-            <div className="text-lg font-semibold text-red-600">
-              {counters.publications}
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-red-600">
+                {counters.publications}
+              </p>
+              <p className="text-md font-medium text-gray-900">Publicaciones</p>
             </div>
           </NavLink>
         </article>
       </section>
-    </>
+    </div>
   );
 };
 
-// Validación de props con PropTypes (opcional)
 UserCounters.propTypes = {
-  onClose: PropTypes.func, // onClose debe ser una función
+  onClose: PropTypes.func,
 };
 
 export default UserCounters;

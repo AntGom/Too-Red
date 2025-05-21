@@ -35,7 +35,7 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Estilos de tarjeta modernos */
+/* Estilos de tarjeta */
 .card {
   @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300;
 }

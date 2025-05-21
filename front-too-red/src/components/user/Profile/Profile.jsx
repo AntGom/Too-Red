@@ -5,7 +5,6 @@ import { useAuth } from "../../../hooks/UseAuth";
 import { Global } from "../../../helpers/Global";
 import PublicationList from "../../publication/PublicationList";
 import HeaderProfile from "./HeaderProfile";
-import { getCachedData, cacheData } from "../../../helpers/Cache";
 
 const Profile = () => {
   const { auth } = useAuth();
@@ -19,16 +18,6 @@ const Profile = () => {
   const token = localStorage.getItem("token");
 
   const getCounters = async () => {
-    // Intentar cargar contadores desde caché
-    const cacheKey = `counters_${params.userId}`;
-    const cachedCounters = getCachedData(cacheKey);
-    
-    if (cachedCounters) {
-      setCounters(cachedCounters);
-      return;
-    }
-
-    // Si no hay caché, hacer petición
     const response = await fetch(
       Global.url + "user/counters/" + params.userId,
       {
@@ -37,51 +26,19 @@ const Profile = () => {
       }
     );
     const data = await response.json();
-    if (data.following) {
-      setCounters(data);
-      // Guardar en caché por 2 minutos
-      cacheData(cacheKey, data, 2);
-    }
+    if (data.following) setCounters(data);
   };
 
   const getDataUser = async () => {
-    // Intentar cargar perfil desde caché
-    const cacheKey = `profile_${params.userId}`;
-    const cachedProfile = getCachedData(cacheKey);
-    
-    if (cachedProfile) {
-      setUser(cachedProfile.user);
-      setIFollow(!!cachedProfile.following && !!cachedProfile.following._id);
-      return;
-    }
-
-    // Si no hay caché, hacer petición
     const response = await fetch(Global.url + "user/profile/" + params.userId, {
       headers: { Authorization: token },
     });
     const data = await response.json();
-    
-    // Guardar en caché por 5 minutos
-    cacheData(cacheKey, data, 5);
-    
     setUser(data.user);
     setIFollow(!!data.following && !!data.following._id);
   };
 
   const getPublications = async (actualPage = 1, newProfile = false) => {
-    // Si cargamos la primera página o es un perfil nuevo, intentar usar caché
-    if (actualPage === 1) {
-      const cacheKey = `user_publications_${params.userId}_page1`;
-      const cachedPublications = getCachedData(cacheKey);
-      
-      if (cachedPublications && newProfile) {
-        setPublications(cachedPublications.publications);
-        setMore(cachedPublications.totalPages > actualPage);
-        return;
-      }
-    }
-    
-    // Si no hay caché o es otra página, hacer petición
     const response = await fetch(
       Global.url + "publication/user/" + params.userId + "/" + actualPage,
       {
@@ -90,14 +47,10 @@ const Profile = () => {
       }
     );
     const data = await response.json();
-    
+
     if (data.status === "success") {
       if (newProfile) {
         setPublications(data.publications);
-        // Guardar primera página en caché por 2 minutos
-        if (actualPage === 1) {
-          cacheData(`user_publications_${params.userId}_page1`, data, 2);
-        }
       } else {
         setPublications((prevPublications) => [
           ...prevPublications,
@@ -119,19 +72,35 @@ const Profile = () => {
   // Escuchar el evento de nueva publicación
   useEffect(() => {
     const handleNewPublication = (event) => {
-      // Si la publicación es del usuario que estamos viendo
-      if (event.detail.userId === params.userId) {
-        // Recargar las publicaciones
+      if (event.detail.userId === params.userId && page === 1) {
         getPublications(1, true);
+        getCounters();
       }
     };
-    
-    window.addEventListener('publicationCreated', handleNewPublication);
-    
+
+    window.addEventListener("publicationCreated", handleNewPublication);
     return () => {
-      window.removeEventListener('publicationCreated', handleNewPublication);
+      window.removeEventListener("publicationCreated", handleNewPublication);
     };
-  }, [params.userId]);
+  }, [params.userId, page]);
+
+  // Escuchar evento de eliminación de publicación
+  useEffect(() => {
+    const handleDeletedPublication = (event) => {
+      if (event.detail.userId === params.userId && page === 1) {
+        getPublications(1, true);
+        getCounters();
+      }
+    };
+
+    window.addEventListener("publicationDeleted", handleDeletedPublication);
+    return () => {
+      window.removeEventListener(
+        "publicationDeleted",
+        handleDeletedPublication
+      );
+    };
+  }, [params.userId, page]);
 
   if (!user?.name) {
     return (

@@ -73,10 +73,7 @@ const Login = () => {
 
   return (
     <>
-      <header className="p-2 md:p-4 text-gray-900 text-center mt-2 w-full">
-        <h1 className="text-2xl font-bold">Identifícate</h1>
-      </header>
-      <div className="flex justify-center w-full h-2/5">
+      <div className="flex justify-center m-4 w-auto h-full">
         <LoginForm
           form={form}
           changed={changed}

@@ -73,53 +73,61 @@ app.use("/api/messages", messagesRoutes);
 io.on("connection", (socket) => {
   console.log("✅ Usuario conectado:", socket.id);
 
-  socket.on("joinRoom", (userId) => {
-    if (!userId) {
-      console.error("❌ joinRoom: userId inválido");
-      return;
+socket.on("joinRoom", (userId) => {
+  if (!userId) {
+    console.error("❌ joinRoom: userId inválido");
+    return;
+  }
+
+  try {
+    activeUsers.set(userId, socket.id);
+    socket.join(userId);
+    console.log(`✅ Usuario ${userId} se unió a la sala (socketId: ${socket.id})`);
+
+    // Notificar a todos la lista completa de usuarios online
+    io.emit("onlineUsers", Array.from(activeUsers.keys()));
+
+    // Notificar a los contactos que el usuario está ahora online
+    socket.broadcast.emit("userStatusChange", {
+      userId,
+      isOnline: true
+    });
+
+    socket.emit("joinedRoom", { userId });
+  } catch (error) {
+    console.error("❌ Error en joinRoom:", error);
+  }
+});
+
+socket.on("disconnect", () => {
+  try {
+    let userIdDisconnected = null;
+
+    for (const [userId, socketId] of activeUsers.entries()) {
+      if (socketId === socket.id) {
+        userIdDisconnected = userId;
+        activeUsers.delete(userId);
+        break;
+      }
     }
 
-    try {
-      activeUsers.set(userId, socket.id);
-      socket.join(userId);
-      console.log(`✅ Usuario ${userId} se unió a la sala (socketId: ${socket.id})`);
-      
-      // Notificar a los contactos que el usuario está ahora online
-      socket.broadcast.emit('userStatusChange', {
-        userId,
-        isOnline: true
+    if (userIdDisconnected) {
+      console.log(`🔌 Usuario desconectado: ${userIdDisconnected}`);
+
+      // Emitir lista actualizada de usuarios online
+      io.emit("onlineUsers", Array.from(activeUsers.keys()));
+
+      // Notificar a los contactos que el usuario está ahora offline
+      io.emit("userStatusChange", {
+        userId: userIdDisconnected,
+        isOnline: false
       });
-      
-      socket.emit("joinedRoom", { userId });
-    } catch (error) {
-      console.error("❌ Error en joinRoom:", error);
     }
-  });
+  } catch (error) {
+    console.error("❌ Error al manejar disconnect:", error);
+  }
+});
 
-  socket.on("disconnect", () => {
-    try {
-      let userIdDisconnected = null;
-
-      for (const [userId, socketId] of activeUsers.entries()) {
-        if (socketId === socket.id) {
-          userIdDisconnected = userId;
-          activeUsers.delete(userId);
-          break;
-        }
-      }
-
-      if (userIdDisconnected) {
-        console.log(`🔌 Usuario desconectado: ${userIdDisconnected}`);
-        // Notificar a los contactos que el usuario está ahora offline
-        io.emit('userStatusChange', {
-          userId: userIdDisconnected,
-          isOnline: false
-        });
-      }
-    } catch (error) {
-      console.error("❌ Error al manejar disconnect:", error);
-    }
-  });
 });
 
 // Ruta para ver estado del servidor

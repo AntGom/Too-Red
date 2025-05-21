@@ -17,58 +17,60 @@ const Feed = () => {
   }, [page]);
 
   const getPublications = async (actualPage = 1, showNews = false) => {
-  let shouldRefresh = false;
+    let shouldRefresh = false;
 
-  if (showNews) {
-    setPublications([]);
-    setPage(1);
-    actualPage = 1;
-    setRefreshing(true);
-    shouldRefresh = true;
-  }
-
-  try {
-    const cacheKey = `feed_publications_page_${actualPage}`;
-    const cachedFeed = getCachedData(cacheKey);
-
-    if (cachedFeed && !showNews && actualPage === 1) {
-      setPublications(cachedFeed.publications);
-      setMore(cachedFeed.hasNextPage);
-      return;
+    if (showNews) {
+      setPublications([]);
+      setPage(1);
+      actualPage = 1;
+      setRefreshing(true);
+      shouldRefresh = true;
     }
 
-    const request = await fetch(`${Global.url}publication/feed/${actualPage}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    try {
+      const cacheKey = `feed_publications_page_${actualPage}`;
+      const cachedFeed = getCachedData(cacheKey);
 
-    const data = await request.json();
-
-    if (data.status === "success") {
-      const newPublications =
-        actualPage === 1
-          ? data.publications
-          : [...publications, ...data.publications];
-
-      setPublications(newPublications);
-      setMore(data.hasNextPage);
-
-      if (actualPage === 1) {
-        cacheData(cacheKey, data, 2);
+      if (cachedFeed && !showNews && actualPage === 1) {
+        setPublications(cachedFeed.publications);
+        setMore(cachedFeed.hasNextPage);
+        return;
       }
-    } else {
-      console.error("Error en la respuesta de la API:", data);
-    }
-  } catch (error) {
-    console.error("Error al cargar publicaciones:", error);
-  } finally {
-    if (shouldRefresh) setRefreshing(false);
-  }
-};
 
+      const request = await fetch(
+        `${Global.url}publication/feed/${actualPage}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+
+      const data = await request.json();
+
+      if (data.status === "success") {
+        const newPublications =
+          actualPage === 1
+            ? data.publications
+            : [...publications, ...data.publications];
+
+        setPublications(newPublications);
+        setMore(data.hasNextPage);
+
+        if (actualPage === 1) {
+          cacheData(cacheKey, data, 2);
+        }
+      } else {
+        console.error("Error en la respuesta de la API:", data);
+      }
+    } catch (error) {
+      console.error("Error al cargar publicaciones:", error);
+    } finally {
+      if (shouldRefresh) setRefreshing(false);
+    }
+  };
 
   return (
     <div className="max-w-7xl md:px-6 lg:px-8">
@@ -79,7 +81,11 @@ const Feed = () => {
           title="Mostrar nuevas"
           disabled={refreshing}
         >
-          <ArrowPathIcon className={`h-6 w-6 text-red-600 ${refreshing ? 'animate-spin' : ''}`} />
+          <ArrowPathIcon
+            className={`h-6 w-6 text-red-600 ${
+              refreshing ? "animate-spin" : ""
+            }`}
+          />
         </button>
       </header>
 

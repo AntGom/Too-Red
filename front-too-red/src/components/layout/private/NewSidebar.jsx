@@ -71,7 +71,7 @@ const NewSidebar = ({ onClose }) => {
           <NavLink
             to="/social/people"
             className="w-4/5 p-2 flex items-center justify-start gap-2 -mb-2 hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
-            onClick={onClose} // Cerrar con clic
+            onClick={onClose} 
           >
             <UsersIcon className="h-6 w-6" />
             <div className="font-bold text-xl">Gente</div>
@@ -85,7 +85,7 @@ const NewSidebar = ({ onClose }) => {
               <NavLink
                 to="/social/admin/reported-publications"
                 className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
-                onClick={onClose} // Cerrar con clic
+                onClick={onClose} 
               >
                 <FlagIcon className="h-6 w-6 font-bold" />
                 <p className="font-bold text-xl">Publicac.</p>
@@ -93,7 +93,7 @@ const NewSidebar = ({ onClose }) => {
               <NavLink
                 to="/social/admin/reported-users"
                 className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
-                onClick={onClose} // Cerrar con clic
+                onClick={onClose} 
               >
                 <FlagIcon className="h-6 w-6 font-bold" />
                 <p className="font-bold text-xl">Usuarios</p>
@@ -108,7 +108,7 @@ const NewSidebar = ({ onClose }) => {
           <NavLink
             to="/social/config"
             className="h-auto w-4/5 flex items-center justify-start gap-2 hover:bg-gray-200 p-2 -mt-2 -mb-2 transition-all duration-300 hover:scale-110 rounded-xl"
-            onClick={onClose} // Cerrar con clic
+            onClick={onClose}
           >
             <PencilSquareIcon className="h-6 w-6" />
             <p className="font-bold text-xl">Editar</p>
@@ -118,7 +118,7 @@ const NewSidebar = ({ onClose }) => {
           <NavLink
             to="/social/messages"
             className="h-auto w-4/5 flex items-center justify-start gap-2 hover:bg-gray-200 p-2 -mt-2 -mb-2 transition-all duration-300 hover:scale-110 rounded-xl"
-            onClick={handleOpenChat} // Cerrar con clic
+            onClick={handleOpenChat}
           >
             <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />
             <p className="font-bold text-xl">Chat</p>

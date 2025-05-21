@@ -66,12 +66,12 @@ const PublicationCard = ({ publication, getPublications }) => {
           <div className="relative max-w-4xl mx-auto">
             <button
               onClick={() => setViewingImage(null)}
-              className="absolute -top-12 right-0 text-white text-4xl hover:text-red-600 transition-colors"
+              className="absolute -top-2 right-0 text-red-600 text-4xl hover:scale-125 transition-transform"
             >
               &times;
             </button>
             <img
-              src={viewingImage} // ✅ Aquí usamos la imagen clicada
+              src={viewingImage}
               alt="Imagen en tamaño original"
               className="max-w-screen max-h-screen rounded-lg shadow-lg"
             />

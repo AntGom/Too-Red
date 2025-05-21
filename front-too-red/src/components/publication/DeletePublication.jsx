@@ -8,7 +8,7 @@ import { useToast } from "../../hooks/useToast";
 const DeletePublication = ({ publicationId, onDeleteSuccess, onCancel }) => {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token")?.replace(/['"]/g, "");
-  
+
   const { updateCounters } = useContext(CountersContext);
   const { showToast } = useToast();
 
@@ -30,9 +30,14 @@ const DeletePublication = ({ publicationId, onDeleteSuccess, onCancel }) => {
       if (data.status === "success") {
         showToast({
           message: "¡Publicación eliminada con éxito!",
-          type: "success"
+          type: "success",
         });
         updateCounters("publications", -1);
+
+        const event = new CustomEvent("publicationDeleted", {
+          detail: { userId: JSON.parse(atob(token.split(".")[1])).id },
+        });
+        window.dispatchEvent(event);
 
         setTimeout(() => {
           onDeleteSuccess();
@@ -40,22 +45,20 @@ const DeletePublication = ({ publicationId, onDeleteSuccess, onCancel }) => {
       } else {
         showToast({
           message: "Error al eliminar la publicación.",
-          type: "error"
+          type: "error",
         });
         console.error("Error al eliminar la publicación:", data.message);
       }
     } catch (error) {
       showToast({
         message: "Error al eliminar la publicación.",
-        type: "error"
+        type: "error",
       });
       console.error("Error al eliminar la publicación:", error);
     } finally {
       setLoading(false);
     }
   };
-
-  console.log("Token decodificado:", JSON.parse(atob(token.split('.')[1])));
 
   return (
     <Modal isOpen={true} onClose={onCancel} title="Eliminar publicación">

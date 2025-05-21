@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Global } from "../../helpers/Global";
 import PublicationList from "../publication/PublicationList";
 import { useParams } from "react-router-dom";
+import { DocumentIcon } from "@heroicons/react/24/solid";
+
 
 const MyPublications = () => {
   const [publications, setPublications] = useState([]);
@@ -42,25 +44,34 @@ const MyPublications = () => {
         getMyPublications(1);
       }
     };
-    
-    window.addEventListener('publicationCreated', handleNewPublication);
-    
+
+    window.addEventListener("publicationCreated", handleNewPublication);
+
     return () => {
-      window.removeEventListener('publicationCreated', handleNewPublication);
+      window.removeEventListener("publicationCreated", handleNewPublication);
     };
   }, [params.userId]);
 
   return (
     <section className="max-w-7xl sm:px-2 lg:px-8">
       <h1 className="text-2xl font-bold mb-4">Mis Publicaciones</h1>
-      <PublicationList
-        publications={publications}
-        page={page}
-        setPage={setPage}
-        more={more}
-        setMore={setMore}
-        getPublications={getMyPublications}
-      />
+
+      {publications.length === 0 ? (
+        <div className="flex flex-col items-center justify-center text-center text-gray-500 mt-20">
+          <DocumentIcon className="w-16 h-16 mb-4 text-gray-400" />
+          <p className="text-lg">No hay publicaciones aún</p>
+          <span className="text-sm text-gray-400">¡Vuelve pronto!</span>
+        </div>
+      ) : (
+        <PublicationList
+          publications={publications}
+          page={page}
+          setPage={setPage}
+          more={more}
+          setMore={setMore}
+          getPublications={getMyPublications}
+        />
+      )}
     </section>
   );
 };
