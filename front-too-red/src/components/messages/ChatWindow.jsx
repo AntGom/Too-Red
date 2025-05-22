@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
-import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import { PaperAirplaneIcon, PaperClipIcon } from "@heroicons/react/24/solid";
 
 export default function ChatWindow({
   selectedUser,
@@ -41,6 +41,7 @@ export default function ChatWindow({
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
+      if (newMessage.trim() !== "")
       sendMessage();
     }
   };
@@ -86,14 +87,36 @@ export default function ChatWindow({
                             : "bg-white rounded-bl-none"
                         }`}
                       >
-                        <p
-                          className={
-                            isSentByMe ? "text-white" : "text-gray-800"
-                          }
-                        >
-                          {msg.text}
-                        </p>
+                        {/* TEXTO */}
+                        {msg.text && (
+                          <p
+                            className={
+                              isSentByMe ? "text-white" : "text-gray-800"
+                            }
+                          >
+                            {msg.text}
+                          </p>
+                        )}
 
+                        {/* ARCHIVO (imagen o vídeo) */}
+                        {msg.file && (
+                          <>
+                            {msg.file.match(/\.(jpeg|jpg|png|gif)$/) ? (
+                              <img
+                                src={msg.file}
+                                alt="imagen"
+                                className="max-w-xs mt-2 rounded"
+                              />
+                            ) : (
+                              <video controls className="max-w-xs mt-2 rounded">
+                                <source src={msg.file} type="video/mp4" />
+                                Tu navegador no soporta el vídeo.
+                              </video>
+                            )}
+                          </>
+                        )}
+
+                        {/* FECHA + TICKS */}
                         <div
                           className={`flex items-center justify-end mt-1 space-x-1 ${
                             isSentByMe
@@ -105,19 +128,11 @@ export default function ChatWindow({
                             {formatMessageTime(msg.createdAt)}
                           </span>
                           {isSentByMe && (
-                            <span className="flex items-center ml-1">
+                            <span className="flex items-center ml-1 text-xs">
                               {msg.isRead ? (
-                                <span
-                                  className={
-                                    isSentByMe
-                                      ? "text-red-300"
-                                      : "text-blue-500"
-                                  }
-                                >
-                                  ✓✓
-                                </span>
+                                <span className="text-blue-200">✓✓</span>
                               ) : (
-                                <span>✓</span>
+                                <span className="text-gray-300">✓</span>
                               )}
                             </span>
                           )}
@@ -159,23 +174,47 @@ export default function ChatWindow({
 
           {/* Área de escritura */}
           <div className="p-3 bg-white sticky bottom-0 border-t border-gray-200 rounded-b-lg">
-            <div className="flex items-center bg-gray-100 rounded-full px-4 py-1">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendMessage();
+              }}
+              className="flex items-center bg-gray-100 rounded-full px-4 py-1"
+              encType="multipart/form-data"
+            >
               <input
-                type="text"
-                className="flex-1 bg-transparent py-2 outline-none text-gray-800 placeholder-gray-500"
+                type="file"
+                accept="image/*,video/*"
+                onChange={(e) => {
+                  if (e.target.files[0]) {
+                    sendMessage(e.target.files[0]);
+                  }
+                }}
+                className="hidden"
+                id="fileInput"
+              />
+              <label
+                htmlFor="fileInput"
+                className="cursor-pointer text-blue-600"
+              >
+                <PaperClipIcon className="h-5 w-5 mr-1" />
+              </label>
+
+              <textarea
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 placeholder="Escribe un mensaje..."
+                className="flex-1 bg-transparent py-2 outline-none text-gray-800 placeholder-gray-500"
+                rows={1}
               />
               <button
-                onClick={sendMessage}
+                type="submit"
                 className="p-2 text-red-600 hover:text-red-700 transition-colors"
-                disabled={!newMessage.trim()}
               >
                 <PaperAirplaneIcon className="h-5 w-5" />
               </button>
-            </div>
+            </form>
           </div>
         </>
       ) : (

@@ -49,15 +49,14 @@ export default function Chat() {
     };
 
     socketRef.current.on("onlineUsers", (onlineUserIds) => {
-  setOnlineUsers(() => {
-    const statusMap = {};
-    onlineUserIds.forEach(id => {
-      statusMap[id] = true;
+      setOnlineUsers(() => {
+        const statusMap = {};
+        onlineUserIds.forEach((id) => {
+          statusMap[id] = true;
+        });
+        return statusMap;
+      });
     });
-    return statusMap;
-  });
-});
-
 
     // Escuchar evento de mensajes leídos
     const handleMessageRead = (data) => {
@@ -182,38 +181,38 @@ export default function Chat() {
   }, [handleNewMessage]);
 
   // Enviar mensaje
-  const sendMessage = useCallback(async () => {
-    if (newMessage.trim() === "" || !selectedUser || !userId) return;
+  const sendMessage = useCallback(
+    async (file = null) => {
+      if ((!newMessage.trim() && !file) || !selectedUser || !userId) return;
 
-    const messageData = {
-      sender: userId,
-      receiver: selectedUser._id,
-      text: newMessage,
-    };
+      const formData = new FormData();
+      formData.append("sender", userId);
+      formData.append("receiver", selectedUser._id);
+      if (newMessage.trim()) formData.append("text", newMessage);
+      if (file) formData.append("file", file);
 
-    try {
-      const response = await fetch(`${Global.url}messages/new`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify(messageData),
-      });
+      try {
+        const response = await fetch(`${Global.url}messages/new`, {
+          method: "POST",
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+          body: formData,
+        });
 
-      const data = await response.json();
-      const newMsg = data.data;
+        const data = await response.json();
+        const newMsg = data.data;
 
-      console.log("📤 Mensaje enviado:", newMsg);
+        socketRef.current.emit("newMessage", newMsg);
+        setMessages((prev) => [...prev, newMsg]);
+      } catch (err) {
+        console.error("❌ Error enviando mensaje:", err);
+      }
 
-      socketRef.current.emit("newMessage", newMsg);
-      setMessages((prev) => [...prev, newMsg]);
-    } catch (err) {
-      console.error("❌ Error enviando mensaje:", err);
-    }
-
-    setNewMessage("");
-  }, [newMessage, selectedUser, userId]);
+      setNewMessage("");
+    },
+    [newMessage, selectedUser, userId]
+  );
 
   return (
     <div className="flex h-screen gap-4 flex-col md:flex-row">
@@ -271,8 +270,6 @@ export default function Chat() {
           onlineUsers={onlineUsers}
         />
       </div>
-
-
     </div>
   );
 }
