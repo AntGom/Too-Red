@@ -17,9 +17,11 @@ export default function ChatWindow({
 
   // Auto-scroll al último mensaje
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    setTimeout(() => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
   }, [messages]);
 
   // Función para formatear la fecha
@@ -41,8 +43,7 @@ export default function ChatWindow({
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      if (newMessage.trim() !== "")
-      sendMessage();
+      if (newMessage.trim() !== "") sendMessage();
     }
   };
 
@@ -81,7 +82,7 @@ export default function ChatWindow({
                       }`}
                     >
                       <div
-                        className={`max-w-[80%] rounded-2xl px-4 py-2 shadow-sm ${
+                        className={`max-w-[70%] flex flex-col rounded-2xl px-4 py-2 shadow-sm ${
                           isSentByMe
                             ? "bg-blue-500 text-white rounded-br-none"
                             : "bg-white rounded-bl-none"
@@ -105,10 +106,13 @@ export default function ChatWindow({
                               <img
                                 src={msg.file}
                                 alt="imagen"
-                                className="max-w-xs mt-2 rounded"
+                                className="w-[85%] mt-2 rounded self-center"
                               />
                             ) : (
-                              <video controls className="max-w-xs mt-2 rounded">
+                              <video
+                                controls
+                                className="max-w-xs mt-2 rounded self-center"
+                              >
                                 <source src={msg.file} type="video/mp4" />
                                 Tu navegador no soporta el vídeo.
                               </video>
