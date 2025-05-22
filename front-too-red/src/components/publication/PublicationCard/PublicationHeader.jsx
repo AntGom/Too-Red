@@ -38,7 +38,7 @@ const PublicationHeader = ({ publication, onEdit, onDelete, onReport }) => {
             <p className="font-semibold text-gray-900">{`${publication.user?.name} ${publication.user?.surname}`}</p>
             {isUserOwnerOrAdmin && (
               <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700">
-                {auth?._id === publication.user?._id ? "Autor" : "Admin"}
+                {auth?._id === publication.user?._id ? "Yo" : "Admin"}
               </span>
             )}
           </div>
