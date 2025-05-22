@@ -51,7 +51,7 @@ export default function ChatWindow({
   };
 
   return (
-    <div className="w-full flex flex-col h-full bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+    <div className="w-full flex flex-col h-full bg-gray-50 rounded-lg border border-gray-200 shadow-sm lg:-mt-8">
       {selectedUser ? (
         <>
           <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-4 flex items-center sticky top-0 z-10 shadow-sm rounded-t-lg">
@@ -146,7 +146,8 @@ export default function ChatWindow({
                           {isSentByMe && (
                             <span className="flex items-center ml-1 text-xs">
                               {msg.isRead ? (
-                                <span className="text-blue-200">✓✓</span>
+                                <span className="text-green-400">✓✓</span>
+                                
                               ) : (
                                 <span className="text-gray-300">✓</span>
                               )}

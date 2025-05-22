@@ -217,7 +217,7 @@ export default function Chat() {
   );
 
   return (
-    <div className="flex h-screen gap-4 flex-col md:flex-row">
+    <div className="flex h-full gap-4 flex-col md:flex-row lg:mt-3">
       {!isConnected && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 w-full">
           <p>
@@ -267,7 +267,7 @@ export default function Chat() {
         </div>
       )}
 
-      <div className="hidden md:block md:w-1/4 bg-gray-200 border-red-600 border-2 rounded-lg">
+      <div className="hidden md:block md:w-1/4 ">
         <ContactList
           userId={userId}
           selectedUser={selectedUser}

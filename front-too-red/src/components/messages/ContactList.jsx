@@ -127,8 +127,8 @@ useEffect(() => {
   };
 
   return (
-    <div className="h-full w-full max-w-md flex flex-col bg-white rounded-md overflow-hidden">
-      <div className="bg-gray-300 text-gray-900 text-md font-bold py-3 text-center rounded-t-md">
+    <div className="h-full w-full max-w-md flex flex-col bg-white rounded-md overflow-hidden lg:-mt-8 border-red-600 border-2 ">
+      <div className="bg-gray-200 text-gray-900 text-md font-bold py-3 text-center rounded-t-md">
         CONTACTOS {hasUnreadMessages && "•"}
       </div>
 
