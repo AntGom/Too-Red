@@ -217,7 +217,7 @@ export default function Chat() {
   );
 
   return (
-    <div className="flex h-full gap-4 flex-col md:flex-row lg:mt-3">
+    <div className="flex h-screen gap-4 flex-col md:flex-row mb-">
       {!isConnected && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 w-full">
           <p>
@@ -239,7 +239,7 @@ export default function Chat() {
       />
 
       <button
-        className="md:hidden p-2 bg-blue-500 text-white m-2 rounded"
+        className="md:hidden p-2 bg-blue-500 text-white m-4 rounded"
         onClick={() => setShowContacts(true)}
       >
         Ver Contactos
@@ -267,7 +267,7 @@ export default function Chat() {
         </div>
       )}
 
-      <div className="hidden md:block md:w-1/4 ">
+      <div className="hidden md:block md:w-1/6">
         <ContactList
           userId={userId}
           selectedUser={selectedUser}
