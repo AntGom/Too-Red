@@ -16,31 +16,48 @@ export default function Chat() {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user.id : null;
 
+  // Función para borrar un mensaje
+  const deleteMessage = async (messageId) => {
+    if (!messageId) return;
+    try {
+      const response = await fetch(`${Global.url}messages/${messageId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      if (response.ok) {
+        setMessages((prev) => prev.filter((msg) => msg._id !== messageId));
+      } else {
+        console.error("❌ No se pudo borrar el mensaje");
+      }
+    } catch (err) {
+      console.error("❌ Error al borrar mensaje:", err);
+    }
+  };
+
   // Inicializar socket
   useEffect(() => {
     const socketUrl = Global.url.replace("/api/", "");
-    console.log("🧩 Conectando con socket en:", socketUrl);
     socketRef.current = io(socketUrl, {
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
     });
 
     socketRef.current.on("connect", () => {
-      console.log("✅ Conectado a Socket.IO");
       setIsConnected(true);
     });
 
     socketRef.current.on("connect_error", (error) => {
-      console.error("❌ Error de conexión Socket.IO:", error);
       setIsConnected(false);
+      console.error("❌ Socket error:", error);
     });
 
     if (userId) {
-      console.log("📲 Emitiendo joinRoom con userId:", userId);
       socketRef.current.emit("joinRoom", userId);
     }
 
-    // Escuchar cambios de estado de conexión de otros usuarios
     const handleStatusChange = (data) => {
       setOnlineUsers((prev) => ({
         ...prev,
@@ -48,17 +65,6 @@ export default function Chat() {
       }));
     };
 
-    socketRef.current.on("onlineUsers", (onlineUserIds) => {
-      setOnlineUsers(() => {
-        const statusMap = {};
-        onlineUserIds.forEach((id) => {
-          statusMap[id] = true;
-        });
-        return statusMap;
-      });
-    });
-
-    // Escuchar evento de mensajes leídos
     const handleMessageRead = (data) => {
       setMessages((prev) =>
         prev.map((msg) =>
@@ -71,26 +77,27 @@ export default function Chat() {
       );
     };
 
+    socketRef.current.on("onlineUsers", (onlineUserIds) => {
+      const statusMap = {};
+      onlineUserIds.forEach((id) => {
+        statusMap[id] = true;
+      });
+      setOnlineUsers(statusMap);
+    });
+
     socketRef.current.on("userStatusChange", handleStatusChange);
     socketRef.current.on("messageRead", handleMessageRead);
 
     return () => {
-      console.log("🔌 Desconectando socket");
-      socketRef.current.off("userStatusChange", handleStatusChange);
-      socketRef.current.off("messageRead", handleMessageRead);
       socketRef.current.disconnect();
     };
   }, [userId]);
 
-  // Obtener mensajes del historial
   useEffect(() => {
     const getMessages = async () => {
       if (!selectedUser || !userId) return;
 
       try {
-        console.log(
-          `📨 Cargando mensajes entre ${userId} y ${selectedUser._id}`
-        );
         const response = await fetch(
           `${Global.url}messages/${userId}/${selectedUser._id}`,
           {
@@ -111,7 +118,6 @@ export default function Chat() {
     getMessages();
   }, [selectedUser, userId]);
 
-  // Marcar mensaje como leído
   const markMessageAsRead = useCallback(
     async (senderId) => {
       if (!senderId || !userId) return;
@@ -144,11 +150,8 @@ export default function Chat() {
     [userId]
   );
 
-  // Recibir nuevos mensajes en tiempo real
   const handleNewMessage = useCallback(
     (data) => {
-      console.log("📥 Mensaje recibido en tiempo real:", data);
-
       const newMessageEvent = new CustomEvent("newMessageReceived", {
         detail: data,
       });
@@ -180,7 +183,6 @@ export default function Chat() {
     };
   }, [handleNewMessage]);
 
-  // Enviar mensaje
   const sendMessage = useCallback(
     async (file = null) => {
       if ((!newMessage.trim() && !file) || !selectedUser || !userId) return;
@@ -224,15 +226,18 @@ export default function Chat() {
           </p>
         </div>
       )}
+
       <ChatWindow
         selectedUser={selectedUser}
         messages={messages}
         newMessage={newMessage}
         setNewMessage={setNewMessage}
         sendMessage={sendMessage}
+        deleteMessage={deleteMessage}
         userId={userId}
         isOnline={selectedUser ? onlineUsers[selectedUser._id] : false}
       />
+
       <button
         className="md:hidden p-2 bg-blue-500 text-white m-2 rounded"
         onClick={() => setShowContacts(true)}

@@ -10,6 +10,7 @@ const getMessages = async (req, res) => {
         { sender: userId1, receiver: userId2 },
         { sender: userId2, receiver: userId1 },
       ],
+      isDeleted: false // Filtrar los eliminados
     })
       .sort({ createdAt: 1 }); //Ordenar por fecha ascendente
 

@@ -2,7 +2,11 @@ import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
-import { PaperAirplaneIcon, PaperClipIcon } from "@heroicons/react/24/solid";
+import {
+  PaperAirplaneIcon,
+  PaperClipIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 
 export default function ChatWindow({
   selectedUser,
@@ -10,12 +14,12 @@ export default function ChatWindow({
   newMessage,
   setNewMessage,
   sendMessage,
+  deleteMessage,
   userId,
   isOnline,
 }) {
   const messagesEndRef = useRef(null);
 
-  // Auto-scroll al último mensaje
   useEffect(() => {
     setTimeout(() => {
       if (messagesEndRef.current) {
@@ -24,7 +28,6 @@ export default function ChatWindow({
     }, 100);
   }, [messages]);
 
-  // Función para formatear la fecha
   const formatMessageTime = (timestamp) => {
     if (!timestamp) return "";
     const date = new Date(timestamp);
@@ -51,7 +54,6 @@ export default function ChatWindow({
     <div className="w-full flex flex-col h-full bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
       {selectedUser ? (
         <>
-          {/* Cabecera */}
           <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-4 flex items-center sticky top-0 z-10 shadow-sm rounded-t-lg">
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-red-600 font-bold mr-3 border-2 border-white shadow-sm">
               {selectedUser.name.charAt(0).toUpperCase()}
@@ -67,8 +69,7 @@ export default function ChatWindow({
             </p>
           </div>
 
-          {/* Área de mensajes */}
-          <div className="flex-1 overflow-y-auto p-4  bg-opacity-5">
+          <div className="flex-1 overflow-y-auto p-4 bg-opacity-5">
             {messages.length > 0 ? (
               <div className="space-y-2">
                 {messages.map((msg) => {
@@ -82,13 +83,24 @@ export default function ChatWindow({
                       }`}
                     >
                       <div
-                        className={`max-w-[70%] flex flex-col rounded-2xl px-4 py-2 shadow-sm ${
+                        className={`group relative max-w-[70%] flex flex-col rounded-2xl px-4 py-2 shadow-sm ${
                           isSentByMe
                             ? "bg-blue-500 text-white rounded-br-none"
                             : "bg-white rounded-bl-none"
                         }`}
                       >
-                        {/* TEXTO */}
+                        {/* Icono de borrar */}
+                        {isSentByMe && (
+                          <button
+                            onClick={() => deleteMessage(msg._id)}
+                            className="absolute top-1 right-1 p-1 text-white text-opacity-60 hover:text-red-700 transition-colors hidden group-hover:block"
+                            title="Borrar mensaje"
+                          >
+                            <TrashIcon className="h-4 w-4" />
+                          </button>
+                        )}
+
+                        {/* Texto */}
                         {msg.text && (
                           <p
                             className={
@@ -99,7 +111,7 @@ export default function ChatWindow({
                           </p>
                         )}
 
-                        {/* ARCHIVO (imagen o vídeo) */}
+                        {/* Archivo multimedia */}
                         {msg.file && (
                           <>
                             {msg.file.match(/\.(jpeg|jpg|png|gif)$/) ? (
@@ -120,7 +132,7 @@ export default function ChatWindow({
                           </>
                         )}
 
-                        {/* FECHA + TICKS */}
+                        {/* Fecha + ticks */}
                         <div
                           className={`flex items-center justify-end mt-1 space-x-1 ${
                             isSentByMe
@@ -266,6 +278,7 @@ ChatWindow.propTypes = {
   newMessage: PropTypes.string.isRequired,
   setNewMessage: PropTypes.func.isRequired,
   sendMessage: PropTypes.func.isRequired,
+  deleteMessage: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
   isOnline: PropTypes.bool,
 };
