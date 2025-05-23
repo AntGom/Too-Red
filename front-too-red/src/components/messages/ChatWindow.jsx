@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -7,6 +7,7 @@ import {
   PaperClipIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
+import MediaPreviewModal from "./MediaPreviewModal";
 
 export default function ChatWindow({
   selectedUser,
@@ -19,6 +20,8 @@ export default function ChatWindow({
   isOnline,
 }) {
   const messagesEndRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedMedia, setSelectedMedia] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -48,6 +51,18 @@ export default function ChatWindow({
       e.preventDefault();
       if (newMessage.trim() !== "") sendMessage();
     }
+  };
+
+  // Abrir modal
+  const openMedia = (url) => {
+    setSelectedMedia(url);
+    setModalOpen(true);
+  };
+
+  // Cerrar  modal
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedMedia(null);
   };
 
   return (
@@ -114,16 +129,18 @@ export default function ChatWindow({
                         {/* Archivo multimedia */}
                         {msg.file && (
                           <>
-                            {msg.file.match(/\.(jpeg|jpg|png|gif)$/) ? (
+                            {msg.file.match(/\.(jpeg|jpg|png|gif)$/i) ? (
                               <img
                                 src={msg.file}
                                 alt="imagen"
-                                className="w-[85%] mt-2 rounded self-center"
+                                onClick={() => openMedia(msg.file)}
+                                className="w-[85%] mt-2 rounded self-center cursor-pointer hover:brightness-90 transition"
                               />
                             ) : (
                               <video
                                 controls
-                                className="max-w-xs mt-2 rounded self-center"
+                                onClick={() => openMedia(msg.file)}
+                                className="max-w-xs mt-2 rounded self-center cursor-pointer hover:brightness-90 transition"
                               >
                                 <source src={msg.file} type="video/mp4" />
                                 Tu navegador no soporta el vídeo.
@@ -147,7 +164,6 @@ export default function ChatWindow({
                             <span className="flex items-center ml-1 text-xs">
                               {msg.isRead ? (
                                 <span className="text-green-400">✓✓</span>
-                                
                               ) : (
                                 <span className="text-gray-300">✓</span>
                               )}
@@ -265,6 +281,11 @@ export default function ChatWindow({
           </div>
         </div>
       )}
+      <MediaPreviewModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        fileUrl={selectedMedia}
+      />
     </div>
   );
 }
