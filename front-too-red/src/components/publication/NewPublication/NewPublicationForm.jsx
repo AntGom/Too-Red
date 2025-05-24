@@ -5,7 +5,11 @@ import { useAuth } from "../../../hooks/UseAuth";
 import Modal from "./ModalNewPublication";
 import FileInput from "./FileInput";
 import { CountersContext } from "../../../context/CountersContext";
-import { MegaphoneIcon, TagIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import {
+  MegaphoneIcon,
+  TagIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/react/24/solid";
 import { useToast } from "../../../hooks/useToast";
 import TagUserModal from "../TagUser/TagUserModal";
 
@@ -71,16 +75,16 @@ const NewPublicationForm = () => {
         updateCounters("publications", 1);
 
         const publicationId = data.publicationStored._id;
-        
+
         // Añadir etiquetas
-        const tagPromises = selectedTags.map(tag => 
+        const tagPromises = selectedTags.map((tag) =>
           fetch(`${Global.url}publication/${publicationId}/tag/${tag._id}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: token,
             },
-          }).then(res => res.json())
+          }).then((res) => res.json())
         );
 
         // Esperar a que se completen todas las etiquetas
@@ -107,18 +111,24 @@ const NewPublicationForm = () => {
         }
 
         // Disparar evento de nueva publicación
-        const publicationCreatedEvent = new CustomEvent('publicationCreated', {
-          detail: { userId: auth._id }
+        const publicationCreatedEvent = new CustomEvent("publicationCreated", {
+          detail: { userId: auth._id },
         });
         window.dispatchEvent(publicationCreatedEvent);
 
-        showToast({ message: "Publicación realizada con éxito", type: "success" });
+        showToast({
+          message: "Publicación realizada con éxito",
+          type: "success",
+        });
         resetForm();
         setTimeout(() => {
           setShowForm(false);
         }, 1000);
       } else {
-        showToast({ message: "Error al realizar la publicación", type: "error" });
+        showToast({
+          message: "Error al realizar la publicación",
+          type: "error",
+        });
       }
     } catch (error) {
       console.error("Error al guardar la publicación:", error);
@@ -132,10 +142,10 @@ const NewPublicationForm = () => {
     <>
       <button
         onClick={() => setShowForm(true)}
-        className="flex items-center gap-2 w-4/5 text-gray-900 font-bold text-xl rounded-lg hover:bg-gray-200 p-2 -mb-2 transition-all duration-300 hover:scale-110 text-left"
+        className="flex items-center gap-1 px-2 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg shadow-sm hover:shadow-md hover:scale-110 transition-all duration-300 my-3 self-start mx-5"
       >
-        <MegaphoneIcon className="w-6 h-6 text-gray-900" />
-        Publicar
+        <MegaphoneIcon className="w-5 h-5" />
+        <span className="text-sm"> Nueva publicación</span>
       </button>
 
       <Modal
@@ -162,9 +172,9 @@ const NewPublicationForm = () => {
           {selectedTags.length > 0 && (
             <div className="flex flex-wrap gap-1 items-center">
               <TagIcon className="h-5 w-5 text-blue-600" />
-              {selectedTags.map(user => (
-                <span 
-                  key={user._id} 
+              {selectedTags.map((user) => (
+                <span
+                  key={user._id}
                   className="bg-blue-50 text-blue-700 px-2 py-1 rounded-full text-xs font-medium"
                 >
                   @{user.nick}
@@ -176,7 +186,7 @@ const NewPublicationForm = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <FileInput onFileSelect={setSelectedFile} />
-              
+
               <button
                 type="button"
                 onClick={() => setShowTagModal(true)}
@@ -186,7 +196,7 @@ const NewPublicationForm = () => {
                 <span className="ml-1 text-gray-700 text-sm">Etiquetar</span>
               </button>
             </div>
-            
+
             <button
               type="submit"
               disabled={loading}
@@ -212,7 +222,7 @@ const NewPublicationForm = () => {
 
       {/* Modal de etiquetas */}
       {showTagModal && (
-        <TagUserModal 
+        <TagUserModal
           isOpen={showTagModal}
           onClose={() => setShowTagModal(false)}
           initialTags={selectedTags}

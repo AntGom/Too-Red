@@ -17,7 +17,7 @@ const ProfileImage = ({ user }) => {
     <>
       {/* Imagen de perfil */}
       <div className="relative">
-        <div className="w-28 h-28 rounded-full border-4 border-white shadow-md overflow-hidden bg-white">
+        <div className="w-28 h-28 rounded-full border-4 ml-1 mb-2 lg:ml-4 border-white shadow-md overflow-hidden bg-white">
           <img
             src={imageUrl}
             className="w-full h-full object-cover transition-all duration-300 hover:scale-110 cursor-pointer"

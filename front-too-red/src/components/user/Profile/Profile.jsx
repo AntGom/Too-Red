@@ -213,7 +213,7 @@ const Profile = () => {
             </div>
           ) : (
             <PublicationList
-              publications={publications}
+              publications={taggedPublications}
               page={taggedPage}
               setPage={setTaggedPage}
               more={moreTagged}

@@ -5,7 +5,6 @@ import PublicationList from "../publication/PublicationList";
 import { useParams } from "react-router-dom";
 import { DocumentIcon } from "@heroicons/react/24/solid";
 
-
 const MyPublications = () => {
   const [publications, setPublications] = useState([]);
   const [page, setPage] = useState(1);
