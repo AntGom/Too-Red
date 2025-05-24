@@ -192,7 +192,7 @@ const Profile = () => {
       
       {activeTab === "publications" && (
         <PublicationList
-          publications={taggedPublications}
+          publications={publications}
           page={page}
           setPage={setPage}
           more={more}
@@ -213,7 +213,7 @@ const Profile = () => {
             </div>
           ) : (
             <PublicationList
-              publications={taggedPublications}
+              publications={publications}
               page={taggedPage}
               setPage={setTaggedPage}
               more={moreTagged}

@@ -4,14 +4,13 @@ import CreateComment from "../Comments/CreateComment";
 
 const PublicationActions = ({ publicationId, publicationUserId, likes }) => (
   <section>
-    <article className="mx- flex items-start justify-between">
-      {/* Lista de comentarios */}
-      <CommentsList
-        publicationId={publicationId}
-        publicationUserId={publicationUserId}
-        likes={likes}
-      />
-    </article>
+    {/* Lista de comentarios */}
+    <CommentsList
+      publicationId={publicationId}
+      publicationUserId={publicationUserId}
+      likes={likes}
+    />
+    
     {/* Crear un nuevo comentario */}
     <CreateComment publicationId={publicationId} />
   </section>

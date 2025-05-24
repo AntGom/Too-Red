@@ -4,16 +4,18 @@ import { Global } from "../../helpers/Global";
 import FileInput from "./NewPublication/FileInput";
 import Modal from "./NewPublication/ModalNewPublication";
 import { useToast } from "../../hooks/useToast";
-import { TagIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { TagIcon } from "@heroicons/react/24/solid";
+import TagUserModal from "./TagUser/TagUserModal";
 
 const EditPublication = ({ publication, onSave, onCancel }) => {
   const [editText, setEditText] = useState(publication.text);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
+  const [showTagModal, setShowTagModal] = useState(false);
   const token = localStorage.getItem("token") || "";
   const { showToast } = useToast();
-  
+
   // Cargar etiquetas al montar el componente
   useEffect(() => {
     if (publication.tags) {
@@ -21,11 +23,15 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
     }
   }, [publication.tags]);
 
+  const handleTagUsers = (newTags) => {
+    setTags(newTags);
+  };
+
   const saveEdit = async () => {
     if (!editText.trim()) {
-      showToast({ 
-        message: "El texto no puede estar vacío", 
-        type: "error" 
+      showToast({
+        message: "El texto no puede estar vacío",
+        type: "error",
       });
       return;
     }
@@ -34,14 +40,17 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
 
     try {
       //Editar texto de publicación
-      const response = await fetch(`${Global.url}publication/edit/${publication._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify({ text: editText }),
-      });
+      const response = await fetch(
+        `${Global.url}publication/edit/${publication._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({ text: editText }),
+        }
+      );
 
       const data = await response.json();
 
@@ -51,76 +60,72 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
           const formData = new FormData();
           formData.append("file", selectedFile);
 
-          const uploadResponse = await fetch(`${Global.url}publication/upload/${publication._id}`, {
-            method: "POST",
-            body: formData,
-            headers: {
-              Authorization: token,
-            },
-          });
+          const uploadResponse = await fetch(
+            `${Global.url}publication/upload/${publication._id}`,
+            {
+              method: "POST",
+              body: formData,
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
 
           const uploadData = await uploadResponse.json();
 
           if (uploadData.status !== "success") {
             showToast({
               message: "Error al subir la imagen",
-              type: "error"
+              type: "error",
             });
           }
         }
 
+        // Procesar etiquetas
+        const existingTagIds = publication.tags
+          ? publication.tags.map((tag) => tag._id)
+          : [];
+
+        // Etiquetas a añadir
+        const tagsToAdd = tags.filter(
+          (tag) => !existingTagIds.includes(tag._id)
+        );
+
+        // Añadir nuevas etiquetas
+        const tagPromises = tagsToAdd.map((tag) =>
+          fetch(`${Global.url}publication/${publication._id}/tag/${tag._id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }).then((res) => res.json())
+        );
+
+        await Promise.all(tagPromises);
+
         showToast({
           message: "¡Publicación actualizada con éxito!",
-          type: "success"
+          type: "success",
         });
 
         setTimeout(() => {
-          onSave(); // Notificar que edición exitosa
+          onSave();
         }, 1500);
       } else {
         showToast({
           message: "Error al actualizar la publicación.",
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
       showToast({
         message: "Error al actualizar la publicación.",
-        type: "error"
+        type: "error",
       });
       console.error("Error en la solicitud de edición:", error);
     } finally {
       setLoading(false);
-    }
-  };
-  
-  const removeTag = async (userId) => {
-    try {
-      const response = await fetch(
-        `${Global.url}publication/${publication._id}/tag/${userId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      
-      const data = await response.json();
-      
-      if (data.status === "success") {
-        setTags(tags.filter(tag => tag._id !== userId));
-        showToast({
-          message: "Etiqueta eliminada correctamente",
-          type: "success"
-        });
-      }
-    } catch (error) {
-      console.error("Error al eliminar etiqueta:", error);
-      showToast({
-        message: "Error al eliminar la etiqueta",
-        type: "error"
-      });
     }
   };
 
@@ -131,47 +136,69 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
         onChange={(e) => setEditText(e.target.value)}
         className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none min-h-[120px]"
       />
-      
-      {/* Mostrar etiquetas actuales */}
-      {tags.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-1 items-center">
-          <TagIcon className="h-5 w-5 text-blue-600" />
-          {tags.map(tag => (
-            <div 
-              key={tag._id} 
-              className="inline-flex items-center bg-blue-50 rounded-full px-2 py-1 text-xs font-medium text-blue-700"
+
+      {/* Mostrar etiquetas actuales y botón para abrir modal */}
+      <div className="flex items-center justify-between mt-3">
+        <div className="flex flex-wrap items-center gap-2">
+          {tags.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowTagModal(true)}
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
             >
-              @{tag.nick}
-              <button
-                onClick={() => removeTag(tag._id)}
-                className="ml-1 text-blue-400 hover:text-blue-700"
+              <TagIcon className="h-5 w-5 inline mr-1" />
+              <span>Etiquetar</span>
+            </button>
+          )}
+
+          <div className="flex flex-wrap gap-1">
+            {tags.map((tag) => (
+              <span
+                key={tag._id}
+                className="inline-flex items-center bg-blue-50 rounded-full px-2.5 py-1 text-xs font-medium text-blue-700"
               >
-                <XMarkIcon className="h-3 w-3" />
-              </button>
-            </div>
-          ))}
+                @{tag.nick}
+              </span>
+            ))}
+          </div>
         </div>
-      )}
-
-      <FileInput onFileSelect={setSelectedFile} />
-
-      <div className="flex justify-end mt-4 gap-4">
-        <button
-          onClick={saveEdit}
-          disabled={loading}
-          className={`px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all ${
-            loading ? "opacity-70 cursor-not-allowed" : ""
-          }`}
-        >
-          {loading ? "Guardando..." : "Guardar"}
-        </button>
-        <button
-          onClick={onCancel}
-          className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all"
-        >
-          Cancelar
-        </button>
       </div>
+
+      <div className="flex justify-between items-center gap-2">
+
+        <div className="mt-4">
+          <FileInput onFileSelect={setSelectedFile} />
+        </div>
+
+        <div className="flex justify-end mt-6 gap-2">
+          <button
+            onClick={saveEdit}
+            disabled={loading}
+            className={`px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors ${
+              loading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
+          >
+            {loading ? "Guardando..." : "Guardar"}
+          </button>
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition-all"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+
+      {/* Modal de etiquetas */}
+      {showTagModal && (
+        <TagUserModal
+          isOpen={showTagModal}
+          onClose={() => setShowTagModal(false)}
+          initialTags={tags}
+          onTagUsers={handleTagUsers}
+          publicationId={publication._id}
+        />
+      )}
     </Modal>
   );
 };
