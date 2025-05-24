@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -5,6 +6,7 @@ import { useAuth } from "../../../hooks/UseAuth";
 import { Global } from "../../../helpers/Global";
 import PublicationList from "../../publication/PublicationList";
 import HeaderProfile from "./HeaderProfile";
+import { TagIcon } from "@heroicons/react/24/solid";
 
 const Profile = () => {
   const { auth } = useAuth();
@@ -14,6 +16,11 @@ const Profile = () => {
   const [publications, setPublications] = useState([]);
   const [page, setPage] = useState(1);
   const [more, setMore] = useState(true);
+  const [activeTab, setActiveTab] = useState("publications");
+  const [taggedPublications, setTaggedPublications] = useState([]);
+  const [taggedPage, setTaggedPage] = useState(1);
+  const [moreTagged, setMoreTagged] = useState(true);
+  const [loadingTagged, setLoadingTagged] = useState(false);
   const params = useParams();
   const token = localStorage.getItem("token");
 
@@ -61,12 +68,44 @@ const Profile = () => {
       setMore(data.totalPages > actualPage);
     }
   };
+  
+  const getTaggedPublications = async (actualPage = 1, newProfile = false) => {
+    setLoadingTagged(true);
+    try {
+      const response = await fetch(
+        `${Global.url}publication/tagged/${params.userId}/${actualPage}`,
+        {
+          method: "GET",
+          headers: { Authorization: token },
+        }
+      );
+      
+      const data = await response.json();
+      
+      if (data.status === "success") {
+        if (newProfile) {
+          setTaggedPublications(data.publications);
+        } else {
+          setTaggedPublications((prev) => [...prev, ...data.publications]);
+        }
+        
+        setMoreTagged(data.totalPages > actualPage);
+      }
+    } catch (error) {
+      console.error("Error al obtener publicaciones etiquetadas:", error);
+    } finally {
+      setLoadingTagged(false);
+    }
+  };
 
   useEffect(() => {
     setPage(1);
+    setTaggedPage(1);
+    setActiveTab("publications");
     getDataUser();
     getCounters();
     getPublications(1, true);
+    getTaggedPublications(1, true);
   }, [params.userId]);
 
   // Escuchar el evento de nueva publicación
@@ -125,14 +164,65 @@ const Profile = () => {
         setIFollow={setIFollow}
         token={token}
       />
-      <PublicationList
-        publications={publications}
-        page={page}
-        setPage={setPage}
-        more={more}
-        setMore={setMore}
-        getPublications={getPublications}
-      />
+      
+      {/* Pestañas de navegación */}
+      <div className="flex border-b border-gray-200 mb-4">
+        <button
+          className={`px-4 py-2 font-medium text-sm ${
+            activeTab === "publications"
+              ? "border-b-2 border-red-500 text-red-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+          onClick={() => setActiveTab("publications")}
+        >
+          Publicaciones
+        </button>
+        <button
+          className={`px-4 py-2 font-medium text-sm flex items-center ${
+            activeTab === "tagged"
+              ? "border-b-2 border-red-500 text-red-600"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+          onClick={() => setActiveTab("tagged")}
+        >
+          <TagIcon className="w-4 h-4 mr-1" />
+          Etiquetas
+        </button>
+      </div>
+      
+      {activeTab === "publications" && (
+        <PublicationList
+          publications={taggedPublications}
+          page={page}
+          setPage={setPage}
+          more={more}
+          setMore={setMore}
+          getPublications={getPublications}
+        />
+      )}
+      
+      {activeTab === "tagged" && (
+        <>
+          {taggedPublications.length === 0 ? (
+            <div className="text-center py-10">
+              <TagIcon className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+              <h3 className="text-lg font-medium text-gray-900">Sin etiquetas</h3>
+              <p className="mt-2 text-sm text-gray-500">
+                No hay publicaciones donde {user._id === auth._id ? "estés" : "esté"} etiquetado.
+              </p>
+            </div>
+          ) : (
+            <PublicationList
+              publications={taggedPublications}
+              page={taggedPage}
+              setPage={setTaggedPage}
+              more={moreTagged}
+              setMore={setMoreTagged}
+              getPublications={getTaggedPublications}
+            />
+          )}
+        </>
+      )}
     </section>
   );
 };

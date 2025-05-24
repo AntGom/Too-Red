@@ -21,6 +21,7 @@ import ReportedPublications from "../components/publication/ReportedPublications
 import ReportedUsers from "../components/user/ReportedUsers.jsx";
 import Chat from "../components/messages/Chat";
 import { CountersProvider } from "../context/CountersContext.jsx";
+import TaggedPublications from "../components/user/TaggedPublications.jsx";
 
 const Routing = () => {
   return (
@@ -49,6 +50,7 @@ const Routing = () => {
               <Route path="seguidores/:userId" element={<Followers />} />
               <Route path="profile/:userId" element={<Profile />} />
               <Route path="publications/:userId" element={<MyPublications />} />
+              <Route path="tagged/:userId" element={<TaggedPublications />} />
               <Route path="admin/reported-publications" element={<ReportedPublications />}/>
               <Route path="admin/reported-users" element={<ReportedUsers />}/>
               <Route path="messages" element={<Chat />} />

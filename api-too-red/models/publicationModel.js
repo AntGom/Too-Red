@@ -18,6 +18,7 @@ const PublicationSchema = new Schema({
   user: { type: Schema.ObjectId, ref: "User", required: true },
   text: { type: String, required: true, trim: true, minlength: 1, maxlength: 1000 },
   file: String,
+  tags: [{ type: Schema.ObjectId, ref: "User" }], // Usuarios etiquetados en la publicación
   likes: [{ type: Schema.ObjectId, ref: "User", unique: true }],
   likesCount: { type: Number, default: 0 },
   comments: [CommentSchema],

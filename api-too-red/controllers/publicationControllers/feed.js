@@ -20,6 +20,7 @@ const feed = async (req, res) => {
           { path: "user", select: "_id name surname nick image" },
           { path: "comments.user", select: "_id name nick image" },
           { path: "likes.user", select: "_id name nick" },
+          { path: "tags", select: "_id name surname nick image" },
         ],
         sort: { createdAt: -1 },
       });
@@ -86,6 +87,7 @@ const feed = async (req, res) => {
         { path: "user", select: "_id name surname nick image" },
         { path: "comments.user", select: "_id name nick image" },
         { path: "likes.user", select: "_id name nick" },
+        { path: "tags", select: "_id name surname nick image" },
       ],
       sort: { createdAt: -1 },
     });

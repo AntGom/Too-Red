@@ -4,7 +4,6 @@ import {followControllers} from "../controllers/followControllers/followControll
 
 const router = Router();
 
-//Definir las rutas
 router.post("/save", auth, followControllers.save);
 router.delete("/unfollow/:id", auth, followControllers.unfollow);
 router.get("/following/:id", auth, followControllers.followingList);

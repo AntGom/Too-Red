@@ -12,6 +12,10 @@ import reportPublication from "../reports/reportPublication.js";
 import getReportedPublications from "../reports/reportedPublications.js";
 import revertReport from "../reports/revertReport.js";
 import getUsersWithReports from "../reports/getUsersWithReports.js";
+import addTag from "./tags/addTags.js";
+import removeTag from "./tags/removeTags.js";
+import taggedPublications from "./tags/taggedPublications.js";
+import searchUsers from "./tags/searchUsers.js";
 
 export const publicationController = {
   save,
@@ -28,4 +32,8 @@ export const publicationController = {
   getReportedPublications,
   revertReport,
   getUsersWithReports,
+  addTag,
+  removeTag,
+  taggedPublications,
+  searchUsers
 };

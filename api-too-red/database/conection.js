@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";  // Asegúrate de importar dotenv
+import dotenv from "dotenv";
 
-dotenv.config();  // Cargar las variables de entorno
+dotenv.config();
 
 const conection = async () => {
     try {
-        // Usamos la URI de MongoDB Atlas desde las variables de entorno
         await mongoose.connect(process.env.MONGO_URI, {
             
         });
