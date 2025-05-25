@@ -3,7 +3,7 @@ import {
   ArrowLeftStartOnRectangleIcon,
   FlagIcon,
   PencilSquareIcon,
-  UsersIcon,
+  UserGroupIcon,
   ChatBubbleLeftEllipsisIcon,
 } from "@heroicons/react/24/outline";
 import avatar from "../../../assets/img/user.png";
@@ -106,7 +106,7 @@ const NewSidebar = ({ onClose }) => {
           className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={onClose}
         >
-          <UsersIcon className="h-6 w-6" />
+          <UserGroupIcon className="h-6 w-6" />
           <div className="font-bold text-xl ml-2">Gente</div>
         </NavLink>
 

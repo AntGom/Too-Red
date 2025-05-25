@@ -6,6 +6,7 @@ import {
   PaperAirplaneIcon,
   PaperClipIcon,
   TrashIcon,
+  ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
 import MediaPreviewModal from "./MediaPreviewModal";
 
@@ -18,6 +19,7 @@ export default function ChatWindow({
   deleteMessage,
   userId,
   isOnline,
+  setShowContacts,
 }) {
   const messagesEndRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,38 +55,44 @@ export default function ChatWindow({
     }
   };
 
-  // Abrir modal
   const openMedia = (url) => {
     setSelectedMedia(url);
     setModalOpen(true);
   };
 
-  // Cerrar  modal
   const closeModal = () => {
     setModalOpen(false);
     setSelectedMedia(null);
   };
 
   return (
-    <div className="w-full flex flex-col h-full bg-gray-50 rounded-lg border border-gray-200 shadow-sm lg:-mt-8">
+    <div className="w-full h-full flex flex-col bg-gray-50 rounded-lg border border-gray-200 shadow-sm overflow-hidden">
       {selectedUser ? (
         <>
-          <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-4 flex items-center sticky top-0 z-10 shadow-sm rounded-t-lg">
+          {/* Header del chat */}
+          <div className="bg-gradient-to-r from-red-500 to-red-600 text-white z-10 p-2 flex items-center rounded-t-lg shadow-sm w-[91%] md:w-full  fixed top-16 md:sticky md:top-0">
+            <button
+              onClick={() => setShowContacts(true)}
+              className="md:hidden text-white mr-2"
+            >
+              <ArrowLeftIcon className="h-5 w-5" />
+            </button>
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-red-600 font-bold mr-3 border-2 border-white shadow-sm">
               {selectedUser.name.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1">
-              <h2 className="text-lg font-semibold">{selectedUser.name}</h2>
+              <h2 className="text-md font-semibold">{selectedUser.name}</h2>
               <p className="text-xs text-white text-opacity-90">
                 @{selectedUser.nick}
               </p>
             </div>
-            <p className="text-sm">
+            <p className="text-xs">
               {isOnline ? "🟢 En línea" : "⚫️ Desconectado"}
             </p>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 bg-opacity-5">
+          {/* Mensajes */}
+          <div className="flex-1 overflow-y-auto p-2 bg-opacity-5 mt-14 md:mt-0">
             {messages.length > 0 ? (
               <div className="space-y-2">
                 {messages.map((msg) => {
@@ -104,7 +112,6 @@ export default function ChatWindow({
                             : "bg-white rounded-bl-none"
                         }`}
                       >
-                        {/* Icono de borrar */}
                         {isSentByMe && (
                           <button
                             onClick={() => deleteMessage(msg._id)}
@@ -115,7 +122,6 @@ export default function ChatWindow({
                           </button>
                         )}
 
-                        {/* Texto */}
                         {msg.text && (
                           <p
                             className={
@@ -126,7 +132,6 @@ export default function ChatWindow({
                           </p>
                         )}
 
-                        {/* Archivo multimedia */}
                         {msg.file && (
                           <>
                             {msg.file.match(/\.(jpeg|jpg|png|gif)$/i) ? (
@@ -149,7 +154,6 @@ export default function ChatWindow({
                           </>
                         )}
 
-                        {/* Fecha + ticks */}
                         <div
                           className={`flex items-center justify-end mt-1 space-x-1 ${
                             isSentByMe
@@ -249,6 +253,11 @@ export default function ChatWindow({
               </button>
             </form>
           </div>
+
+          {/* Modal para previsualizar imágenes/videos */}
+          {modalOpen && selectedMedia && (
+            <MediaPreviewModal mediaUrl={selectedMedia} onClose={closeModal} />
+          )}
         </>
       ) : (
         <div className="h-full flex items-center justify-center bg-gray-50 p-8">
@@ -264,43 +273,38 @@ export default function ChatWindow({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Tus conversaciones
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Selecciona un contacto para comenzar a chatear o continuar una
-              conversación
+
+            <p className="text-gray-700 font-medium text-lg">
+              Selecciona un contacto
             </p>
-            <p className="text-sm text-gray-500">
-              Puedes enviar mensajes a cualquier usuario que estés siguiendo
+            <p className="text-gray-500 mt-1 text-sm">
+              Elige a alguien con quien chatear.
             </p>
+            <button
+              className="md:hidden p-2 bg-blue-500 text-white m-4 rounded"
+              onClick={() => setShowContacts(true)}
+            >
+              Ver Contactos
+            </button>
           </div>
         </div>
       )}
-      <MediaPreviewModal
-        isOpen={modalOpen}
-        onClose={closeModal}
-        fileUrl={selectedMedia}
-      />
     </div>
   );
 }
 
 ChatWindow.propTypes = {
-  selectedUser: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    nick: PropTypes.string,
-  }),
+  selectedUser: PropTypes.object,
   messages: PropTypes.array.isRequired,
   newMessage: PropTypes.string.isRequired,
   setNewMessage: PropTypes.func.isRequired,
   sendMessage: PropTypes.func.isRequired,
   deleteMessage: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
-  isOnline: PropTypes.bool,
+  isOnline: PropTypes.bool.isRequired,
+  setShowContacts: PropTypes.func.isRequired,
 };

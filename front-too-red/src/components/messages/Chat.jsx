@@ -236,18 +236,12 @@ export default function Chat() {
         deleteMessage={deleteMessage}
         userId={userId}
         isOnline={selectedUser ? onlineUsers[selectedUser._id] : false}
+        setShowContacts={setShowContacts}
       />
-
-      <button
-        className="md:hidden p-2 bg-blue-500 text-white m-4 rounded"
-        onClick={() => setShowContacts(true)}
-      >
-        Ver Contactos
-      </button>
 
       {showContacts && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center md:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center md:hidden z-20"
           onClick={() => setShowContacts(false)}
         >
           <div
