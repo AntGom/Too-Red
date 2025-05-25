@@ -45,7 +45,7 @@ const NewSidebar = ({ onClose }) => {
           className="rounded-lg w-full hover:bg-gray-200 transition-all duration-300 hover:scale-110"
           onClick={onClose}
         >
-          <div className="flex justify-center gap-1 items-center">
+          <div className="flex justify-start ml-4 gap-1 items-center">
             {auth.image !== "default.png" ? (
               <img
                 src={auth.image}
