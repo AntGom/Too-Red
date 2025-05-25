@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/UseAuth";
 import useCounters from "../../hooks/useCounters";
 import PropTypes from "prop-types";
+import { GlobeAltIcon } from "@heroicons/react/24/outline";
 
 const UserCounters = ({ onClose }) => {
   const { auth } = useAuth();
@@ -9,8 +10,12 @@ const UserCounters = ({ onClose }) => {
 
   return (
     <div className="flex flex-col justify-start gap-1 w-4/5">
-      <h1 className="text-xl font-bold mx-2 ">Mi Red</h1>
-      <section className=" flex flex-col rounded-lg border-2 border-red-600">
+      <div className="flex items-center">
+        <GlobeAltIcon className="h-6 w-6" />
+        <p className="text-xl font-bold ml-2 ">Mi Red</p>
+      </div>
+
+      <section className=" flex flex-col">
         {/* Contador de Siguiendo */}
         <article className="mx-2">
           <NavLink
@@ -18,7 +23,7 @@ const UserCounters = ({ onClose }) => {
             className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
             onClick={onClose}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border-y border-gray-500 w-full">
               <p className="text-lg font-semibold text-red-600">
                 {counters.following}
               </p>
@@ -34,7 +39,7 @@ const UserCounters = ({ onClose }) => {
             className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
             onClick={onClose}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2  border-b border-gray-500 w-full">
               <p className="text-lg font-semibold text-red-600">
                 {counters.followers}
               </p>
@@ -50,7 +55,7 @@ const UserCounters = ({ onClose }) => {
             className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
             onClick={onClose}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border-b border-gray-500 w-full">
               <p className="text-lg font-semibold text-red-600">
                 {counters.publications}
               </p>

@@ -142,10 +142,10 @@ const NewPublicationForm = () => {
     <>
       <button
         onClick={() => setShowForm(true)}
-        className="flex items-center gap-1 px-2 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg shadow-sm hover:shadow-md hover:scale-110 transition-all duration-300 my-3 self-start mx-5"
+        className=" flex items-center justify-center w-full gap-1 px-2 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
       >
-        <MegaphoneIcon className="w-5 h-5" />
-        <span className="text-sm"> Nueva publicación</span>
+        <MegaphoneIcon className="w-5 h-5"/>
+        <span className="text-md"> Nueva publicación</span>
       </button>
 
       <Modal
