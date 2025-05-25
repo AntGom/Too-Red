@@ -70,7 +70,7 @@ export default function ChatWindow({
       {selectedUser ? (
         <>
           {/* Header del chat */}
-          <div className="bg-gradient-to-r from-red-500 to-red-600 text-white z-10 p-2 flex items-center rounded-t-lg shadow-sm w-[91%] md:w-full  fixed top-16 md:sticky md:top-0">
+          <div className="bg-gradient-to-r from-red-500 to-red-600 text-white z-10 p-2 flex items-center rounded-t-lg shadow-sm w-[91%] md:w-full fixed top-16 md:sticky md:top-0">
             <button
               onClick={() => setShowContacts(true)}
               className="md:hidden text-white mr-2"
@@ -298,13 +298,13 @@ export default function ChatWindow({
 }
 
 ChatWindow.propTypes = {
-  selectedUser: PropTypes.object,
+selectedUser: PropTypes.object,
   messages: PropTypes.array.isRequired,
   newMessage: PropTypes.string.isRequired,
   setNewMessage: PropTypes.func.isRequired,
   sendMessage: PropTypes.func.isRequired,
   deleteMessage: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
-  isOnline: PropTypes.bool.isRequired,
+  isOnline: PropTypes.bool,
   setShowContacts: PropTypes.func.isRequired,
 };
