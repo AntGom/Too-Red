@@ -24,7 +24,7 @@ const NewSidebar = ({ onClose }) => {
   };
 
   return (
-    <aside className="bg-gray-50 relative p-2 h-full overflow-y-auto">
+    <aside className="bg-gray-50 relative p-2 h-full max-h-screen overflow-y-auto">
       <section className="flex flex-col gap-5 md:gap-3 items-center ">
         {/* Enlace al feed */}
         <NavLink
