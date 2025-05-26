@@ -256,7 +256,7 @@ export default function ChatWindow({
 
           {/* Modal para previsualizar imágenes/videos */}
           {modalOpen && selectedMedia && (
-            <MediaPreviewModal mediaUrl={selectedMedia} onClose={closeModal} />
+            <MediaPreviewModal fileUrl={selectedMedia} isOpen={modalOpen} onClose={closeModal} />
           )}
         </>
       ) : (
