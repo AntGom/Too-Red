@@ -21,12 +21,15 @@ const unbanUser = async (req, res) => {
     await user.save();
 
     //Enviar correo al usuario
-    const subject = "Notificación de cuenta desbaneada - Too-Red";
+    const subject = "Notificación de reactivación de cuenta - Too-Red";
     const html = `
-      <h1>Tu cuenta ha sido desbaneada</h1>
+      <div style="font-family: Arial, sans-serif; color: #333;">
+      <h2>Tu cuenta ha sido reactivada</h2>
       <p>Hola ${user.name},</p>
-      <p>Tu cuenta en Too-Red ha sido restaurada. Ahora puedes volver a disfrutar de nuestros servicios.</p>
-      <p>Gracias por tu paciencia.</p>
+      <p>Te informamos que tu cuenta en <strong>Too-Red</strong> ha sido reactivada. Ya puedes volver a iniciar sesión y disfrutar de nuestros servicios con normalidad.</p>
+      <p>Gracias por tu paciencia y comprensión.</p>
+      <p style="margin-top: 30px;"><strong>El equipo de Too-Red</strong><p/>
+    </div>
     `;
     await sendEmail(user.email, subject, html);
 

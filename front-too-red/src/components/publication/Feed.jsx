@@ -51,12 +51,18 @@ const Feed = () => {
       const data = await request.json();
 
       if (data.status === "success") {
-        const newPublications =
+        const allPublications =
           actualPage === 1
             ? data.publications
             : [...publications, ...data.publications];
 
-        setPublications(newPublications);
+        // Filtra publicaciones duplicadas por _id
+        const uniquePublications = allPublications.filter(
+          (pub, index, self) =>
+            index === self.findIndex((p) => p._id === pub._id)
+        );
+
+        setPublications(uniquePublications);
         setMore(data.hasNextPage);
 
         if (actualPage === 1) {

@@ -39,12 +39,29 @@ const register = async (req, res) => {
     //Correo de confirmación
     const confirmationUrl = `${process.env.CLIENT_URL}/confirm/${token}`;
     const htmlContent = `
-      <h1>¡Bienvenido, ${name}!</h1>
-      <p>Por favor, confirma tu registro haciendo clic en el siguiente enlace:</p>
-      <a href="${confirmationUrl}">Confirmar Registro</a>
-      <p>Este enlace es válido por 1 hora.</p>
-    `;
+      <div style="font-family: Arial, sans-serif; color: #333;">
+      <h2>¡Bienvenido a Too-Red!</h2>
+      <p>Hola ${name},</p>
+      <p>Gracias por registrarte. Para completar el proceso y activar tu cuenta, haz clic en el siguiente botón:</p>
+      <a href="${confirmationUrl}" style="
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 10px;
+      ">
+        Confirmar registro
+      </a>
+      <p style="margin-top: 20px;"><strong>Nota:</strong> este enlace es válido por 1 hora.</p>
+      <p>Si tú no realizaste el registro, puedes ignorar este mensaje.</p>
+      <p style="margin-top: 30px;">¡Nos alegra tenerte con nosotros!</p>
+      <p><strong>El equipo de Too-Red</strong></p>
+    </div>
 
+    `;
     await sendEmail(email, "Confirma tu registro en Too-Red", htmlContent);
 
     return res.status(200).json({

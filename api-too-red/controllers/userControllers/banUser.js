@@ -23,10 +23,27 @@ const banUser = async (req, res) => {
     //Enviar correo al usuario
     const subject = "Notificación de cuenta baneada - Too-Red";
     const html = `
-      <h1>Tu cuenta ha sido baneada</h1>
+      <div style="font-family: Arial, sans-serif; color: #333;">
+      <h2>Tu cuenta ha sido suspendida</h2>
       <p>Hola ${user.name},</p>
-      <p>Tu cuenta en Too-Red ha sido baneada por un administrador debido a un incumplimiento de nuestras políticas.</p>
-      <p>Si crees que esto es un error, por favor contacta con soporte.</p>
+      <p>Te informamos que tu cuenta en <strong>Too-Red</strong> ha sido suspendida temporalmente por un administrador debido a una posible infracción de nuestras políticas de uso.</p>
+      <p>Si consideras que se trata de un error o deseas apelar esta decisión, por favor contacta con nuestro equipo de soporte:</p>
+      <a href="mailto:soporte@too-red.com" style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin: 10px 0;
+      ">
+        Contactar con soporte
+      </a>
+      <p style="margin-top: 20px;">Gracias por tu comprensión.</p>
+      <p><strong>El equipo de Too-Red</strong></p>
+    </div>
+
     `;
     await sendEmail(user.email, subject, html);
 
