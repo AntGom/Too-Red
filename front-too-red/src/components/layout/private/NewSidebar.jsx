@@ -124,7 +124,7 @@ const NewSidebar = ({ onClose }) => {
         </NavLink>
       </section>
       {/* Botón de logout */}
-      <div className="w-full mt-16 md:mt-0 flex justify-center md:absolute md:bottom-4 md:right-2">
+      <div className="w-full mt-6 flex justify-center">
         <NavLink
           to="/social/logout"
           className="font-bold border-2 border-red-600 rounded-lg p-1 w-fit flex items-center transition-all duration-300 hover:scale-125"
