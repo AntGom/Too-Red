@@ -25,6 +25,7 @@ const uploadAvatarController = async (req, res) => {
     }
 
     return res.status(200).send({
+      status: "success",
       message: "Imagen de avatar subida correctamente",
       user,
       imageUrl,

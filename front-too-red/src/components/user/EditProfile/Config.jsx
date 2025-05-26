@@ -29,7 +29,7 @@ const Config = () => {
       });
 
       const data = await request.json();
-      
+
       if (data.status === "success") {
         delete data.user.password;
         setAuth(data.user);
@@ -39,21 +39,21 @@ const Config = () => {
         if (fileInput.files[0]) {
           await uploadImage(fileInput.files[0], token);
         } else {
-          showToast({ 
-            message: "¡¡Usuario actualizado correctamente!!", 
-            type: "success" 
+          showToast({
+            message: "¡¡Usuario actualizado correctamente!!",
+            type: "success",
           });
         }
       } else {
-        showToast({ 
-          message: "Error al actualizar los datos de usuario", 
-          type: "error" 
+        showToast({
+          message: "Error al actualizar los datos de usuario",
+          type: "error",
         });
       }
     } catch (error) {
-      showToast({ 
-        message: "Error al actualizar los datos de usuario", 
-        type: "error" 
+      showToast({
+        message: "Error al actualizar los datos de usuario",
+        type: "error",
       });
       console.error(error);
     } finally {
@@ -75,24 +75,24 @@ const Config = () => {
       });
 
       const uploadData = await uploadRequest.json();
-      
+
       if (uploadData.status === "success") {
         delete uploadData.user.password;
         setAuth(uploadData.user);
-        showToast({ 
-          message: "¡¡Usuario actualizado correctamente!!", 
-          type: "success" 
+        showToast({
+          message: "¡¡Usuario actualizado correctamente!!",
+          type: "success",
         });
       } else {
-        showToast({ 
-          message: "Error al subir la imagen", 
-          type: "error" 
+        showToast({
+          message: "Error al subir la imagen",
+          type: "error",
         });
       }
     } catch (error) {
-      showToast({ 
-        message: "Error al subir la imagen", 
-        type: "error" 
+      showToast({
+        message: "Error al subir la imagen",
+        type: "error",
       });
       console.error("Error al subir la imagen:", error);
     }
@@ -108,8 +108,8 @@ const Config = () => {
         setAuth={setAuth}
         showPassword={showPassword}
         setShowPassword={setShowPassword}
-        onChange={updateUser} 
-        onFileChange={() => {}} 
+        onChange={updateUser}
+        onFileChange={() => {}}
         loading={loading}
       />
     </>

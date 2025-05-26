@@ -75,7 +75,7 @@ ProfileActions.propTypes = {
   }).isRequired,
   auth: PropTypes.shape({
     _id: PropTypes.string.isRequired,
-    role: PropTypes.string.isRequired,
+    role: PropTypes.string,
   }).isRequired,
   iFollow: PropTypes.bool,
   setIFollow: PropTypes.func.isRequired,
