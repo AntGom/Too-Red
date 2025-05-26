@@ -25,7 +25,7 @@ const ReportedPublicationCard = ({
       <article className="p-2 -mt-3">
         <h2 className="font-semibold">Archivo adjunto:</h2>
         <img
-          src={publication.file}  // Aquí usamos directamente la URL de la imagen
+          src={publication.file}
           alt="Archivo adjunto"
           className="h-32 object-cover mt-1 rounded-lg"
         />

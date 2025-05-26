@@ -16,7 +16,7 @@ const addTag = async (req, res) => {
       });
     }
 
-    // Verificar si el usuario actual es el creador de la publicación
+    // Verificar si usuario es owner de publicación
     if (publication.user.toString() !== currentUserId) {
       return res.status(403).json({
         status: "error",
@@ -24,7 +24,7 @@ const addTag = async (req, res) => {
       });
     }
 
-    // Verificar si el usuario a etiquetar existe
+    // Verificar si usuario a etiquetar existe
     const userToTag = await User.findById(taggedUserId);
     if (!userToTag) {
       return res.status(404).json({
@@ -33,7 +33,7 @@ const addTag = async (req, res) => {
       });
     }
 
-    // Verificar si el usuario ya está etiquetado
+    // Verificar si usuario ya etiquetado
     if (publication.tags.includes(taggedUserId)) {
       return res.status(400).json({
         status: "error",
@@ -41,7 +41,7 @@ const addTag = async (req, res) => {
       });
     }
 
-    // Verificar si el usuario es el propio autor (siempre se puede etiquetar a sí mismo)
+    // Verificar si el usuario es el propio autor
     if (taggedUserId !== currentUserId) {
       // Si no es el propio autor, verificar si sigue al usuario
       const followExists = await Follow.findOne({

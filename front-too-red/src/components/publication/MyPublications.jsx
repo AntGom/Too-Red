@@ -34,7 +34,6 @@ const MyPublications = () => {
     getMyPublications(1);
   }, [params.userId]);
 
-  // Escuchar el evento de nueva publicación
   useEffect(() => {
     const handleNewPublication = (event) => {
       // Si la publicación es del usuario que estamos viendo

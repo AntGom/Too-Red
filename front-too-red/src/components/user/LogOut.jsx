@@ -7,7 +7,6 @@ const LogOut = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //Vaciar LocalStorage
     localStorage.clear();
 
     //Setear estados globales a vacío

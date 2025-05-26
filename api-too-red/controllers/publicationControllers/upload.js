@@ -6,10 +6,10 @@ const upload = async (req, res) => {
         const publicationId = req.params.id;
         const file = req.files?.file;
 
-        // Subir imagen usando el servicio
+        // Subir imagen
         const imageUrl = await uploadPublicationImage(file);
 
-        // Guardar la URL en la base de datos
+        // Guardar URL en bbdd
         const publication = await Publication.findOneAndUpdate(
             { user: req.user.id, _id: publicationId },
             { file: imageUrl },

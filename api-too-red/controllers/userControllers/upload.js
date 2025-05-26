@@ -1,11 +1,12 @@
-import { savePhotoService } from '../../services/avatarService.js';
-import User from '../../models/userModel.js';
+import { savePhotoService } from "../../services/avatarService.js";
+import User from "../../models/userModel.js";
 
 const uploadAvatarController = async (req, res) => {
   try {
-
     if (!req.files || !req.files.avatar) {
-      return res.status(400).send({ message: "No se ha enviado una imagen de avatar" });
+      return res
+        .status(400)
+        .send({ message: "No se ha enviado una imagen de avatar" });
     }
 
     const avatarFile = req.files.avatar;
@@ -14,7 +15,7 @@ const uploadAvatarController = async (req, res) => {
 
     //Guarda URL en BBDD
     const user = await User.findByIdAndUpdate(
-      req.user.id, 
+      req.user.id,
       { image: imageUrl },
       { new: true }
     );

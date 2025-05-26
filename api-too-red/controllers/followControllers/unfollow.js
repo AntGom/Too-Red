@@ -3,10 +3,10 @@ import Follow from "../../models/followModel.js";
 const unfollow = async (req, res) => {
 
     try {
-        let followedId = req.params.id;//ID del usuario a dejar de seguir desde los params
+        let followedId = req.params.id;//ID del usuario a dejar de seguir
         let identity = req.user; //Usuario autenticado
 
-        if (!followedId) { // Verificar si se proporcionó un ID válido
+        if (!followedId) { // Verificar si ID válido
             return res.status(400).send({
                 status: "error",
                 message: "El ID del usuario a dejar de seguir es requerido.",
@@ -18,7 +18,7 @@ const unfollow = async (req, res) => {
             followed: followedId,
         });
 
-        if (!followExists) { // Si no existe la relación, devolver un error
+        if (!followExists) { // Si no existe relación, error
             return res.status(404).send({
                 status: "error",
                 message: "No se encontró el follow para eliminar.",
@@ -29,7 +29,7 @@ const unfollow = async (req, res) => {
             _id: followExists._id
         });
 
-        if (result.deletedCount === 0) { // Verificar si se eliminó correctamente
+        if (result.deletedCount === 0) { // Verificar si se eliminó
             return res.status(500).send({
                 status: "error",
                 message: "Error al eliminar el follow.",

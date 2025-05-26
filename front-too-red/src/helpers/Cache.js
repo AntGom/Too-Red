@@ -12,11 +12,7 @@ export const cacheData = (key, data, expirationMinutes = 15) => {
   }
 };
 
-/**
- * Obtiene datos de la caché, verificando si han expirado
- * @param {string} key - Clave única para identificar los datos
- * @returns {any|null} - Datos almacenados o null si no existen o han expirado
- */
+//Obtiene datos de caché y verifica si han expirado
 export const getCachedData = (key) => {
   try {
     const cachedItem = localStorage.getItem(`cache_${key}`);
@@ -35,17 +31,12 @@ export const getCachedData = (key) => {
   }
 };
 
-/**
- * Elimina un elemento específico de la caché
- * @param {string} key - Clave del elemento a eliminar
- */
+//Elimina elemento específico de la caché
 export const removeCachedItem = (key) => {
   localStorage.removeItem(`cache_${key}`);
 };
 
-/**
- * Limpia toda la caché de la aplicación
- */
+//Limpia toda la caché
 export const clearCache = () => {
   const cacheKeys = [];
   for (let i = 0; i < localStorage.length; i++) {
@@ -58,12 +49,7 @@ export const clearCache = () => {
   cacheKeys.forEach(key => localStorage.removeItem(key));
 };
 
-/**
- * Actualiza un elemento en la caché con nuevos datos manteniendo 
- * su tiempo de expiración original
- * @param {string} key - Clave del elemento a actualizar
- * @param {any} newData - Nuevos datos para actualizar
- */
+//Actualiza elemento manteniendo su expiración original
 export const updateCachedItem = (key, newData) => {
   try {
     const cachedItem = localStorage.getItem(`cache_${key}`);

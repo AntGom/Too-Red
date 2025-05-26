@@ -17,10 +17,10 @@ const searchUsers = async (req, res) => {
     const follows = await Follow.find({ user: currentUserId });
     const followedIds = follows.map(follow => follow.followed.toString());
 
-    // Añadir el propio ID del usuario
+    // Añadir ID del usuario
     followedIds.push(currentUserId);
 
-    // Buscar usuarios que coincidan con la consulta y que el usuario siga (o sea él mismo)
+    // Buscar usuarios que coincidan con la consulta y que el usuario siga
     const users = await User.find({
       $and: [
         { _id: { $in: followedIds } },

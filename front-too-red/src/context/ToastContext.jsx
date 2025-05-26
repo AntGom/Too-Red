@@ -9,11 +9,11 @@ export const ToastProvider = ({ children }) => {
   const [toast, setToast] = useState({
     show: false,
     message: '',
-    type: '', // success, error, warning, info
+    type: '',
     duration: 3000,
   });
 
-  // Función para mostrar la notificación
+  // Mostrar la notificación
   const showToast = useCallback(({ message, type = 'info', duration = 3000 }) => {
     setToast({
       show: true,
@@ -22,7 +22,6 @@ export const ToastProvider = ({ children }) => {
       duration,
     });
 
-    // Ocultar automáticamente después de la duración especificada
     if (duration > 0) {
       setTimeout(() => {
         hideToast();
@@ -30,7 +29,7 @@ export const ToastProvider = ({ children }) => {
     }
   }, []);
 
-  // Función para ocultar la notificación
+  // Ocultar la notificación
   const hideToast = useCallback(() => {
     setToast((prev) => ({ ...prev, show: false }));
   }, []);

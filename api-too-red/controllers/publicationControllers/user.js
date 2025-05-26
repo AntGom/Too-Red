@@ -18,7 +18,7 @@ const user = async (req, res) => {
       ],
     };
 
-    // Filtrar las publicaciones por el ID del usuario proporcionado con paginación
+    // Filtrar las publicaciones por el ID del usuario
     const publications = await Publication.paginate({ user: userId }, options);
 
     // Verificar si hay publicaciones

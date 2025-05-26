@@ -5,7 +5,6 @@ import auth from "../middlewares/auth.js";
 
 const router = Router();
 
-// Definir las rutas
 router.post("/register", userController.register);
 router.get("/confirm/:token", userController.confirmRegistration);
 router.post("/login", userController.login);

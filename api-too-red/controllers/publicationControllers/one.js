@@ -3,8 +3,6 @@ import Publication from "../../models/publicationModel.js";
 const detail = async (req, res) => {
   
   try {
-
-    // Id de la publicación
     const publication = await Publication.findById(req.params.id).populate('user', 'image');
 
     if (!publication) {

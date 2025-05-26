@@ -8,7 +8,12 @@ const register = async (req, res) => {
     const { name, surname, nick, email, password, interests } = req.body;
 
     if (!name || !surname || !nick || !email || !password) {
-      return res.status(400).json({ status: "error", message: "Todos los campos son obligatorios" });
+      return res
+        .status(400)
+        .json({
+          status: "error",
+          message: "Todos los campos son obligatorios",
+        });
     }
 
     const existingUser = await User.findOne({
@@ -16,7 +21,12 @@ const register = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({ status: "error", message: "Ya existe un usuario con ese correo o alias" });
+      return res
+        .status(400)
+        .json({
+          status: "error",
+          message: "Ya existe un usuario con ese correo o alias",
+        });
     }
 
     //Crear usuario+cifrar contraseña
@@ -29,12 +39,14 @@ const register = async (req, res) => {
       email,
       password: hashedPassword,
       interests: interests || [],
-    });    
+    });
 
     const savedUser = await newUser.save();
 
     //Token de confirmación
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     //Correo de confirmación
     const confirmationUrl = `${process.env.CLIENT_URL}/confirm/${token}`;
@@ -66,11 +78,14 @@ const register = async (req, res) => {
 
     return res.status(200).json({
       status: "success",
-      message: "Usuario registrado correctamente. Revisa tu correo y confirma tu registro en Too-Red.",
+      message:
+        "Usuario registrado correctamente. Revisa tu correo y confirma tu registro en Too-Red.",
     });
   } catch (error) {
     console.error("Error en el registro:", error);
-    return res.status(500).json({ status: "error", message: "Error en el registro de usuario" });
+    return res
+      .status(500)
+      .json({ status: "error", message: "Error en el registro de usuario" });
   }
 };
 

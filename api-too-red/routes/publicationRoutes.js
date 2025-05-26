@@ -13,18 +13,38 @@ router.post("/upload/:id", auth, publicationController.upload);
 router.get("/feed/:page?", auth, publicationController.feed);
 router.put("/edit/:id", auth, publicationController.editPublication);
 router.post("/comment/:publication_id", auth, publicationController.addComment);
-router.get("/comments/:publication_id", auth, publicationController.getComments);
-router.delete("/:publication_id/comments/:comment_id", auth, publicationController.deleteComment);
+router.get(
+  "/comments/:publication_id",
+  auth,
+  publicationController.getComments
+);
+router.delete(
+  "/:publication_id/comments/:comment_id",
+  auth,
+  publicationController.deleteComment
+);
 
 // Rutas para etiquetas
 router.post("/:id/tag/:userId", auth, publicationController.addTag);
 router.delete("/:id/tag/:userId", auth, publicationController.removeTag);
-router.get("/tagged/:userId/:page?", auth, publicationController.taggedPublications);
+router.get(
+  "/tagged/:userId/:page?",
+  auth,
+  publicationController.taggedPublications
+);
 router.get("/search-users", auth, publicationController.searchUsers);
 
 router.post("/report/:id", auth, publicationController.reportPublication);
-router.delete("/revert-report/:publicationId/:reportId", auth, publicationController.revertReport);
-router.get("/reported-publications", auth, publicationController.getReportedPublications);
+router.delete(
+  "/revert-report/:publicationId/:reportId",
+  auth,
+  publicationController.revertReport
+);
+router.get(
+  "/reported-publications",
+  auth,
+  publicationController.getReportedPublications
+);
 router.get("/reported-users", auth, publicationController.getUsersWithReports);
 
 router.post("/like/:publication_id", auth, likesController.newLike);

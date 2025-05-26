@@ -65,14 +65,14 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
       } else {
         setSearchResults([]);
       }
-    }, 300); // debounce de 300ms
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [search]);
 
   const handleUserSelect = (user) => {
     setSelectedUsers((prev) => {
-      // Verificar si ya existe el usuario
+      // Verificar si existe usuario
       if (prev.some(u => u._id === user._id)) {
         return prev;
       }
@@ -95,7 +95,7 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
     try {
       setLoading(true);
       
-      // Si tenemos un ID de publicación, estamos en modo edición
+      // Si hay ID de publicación-> modo edición
       if (publicationId) {
         // Primero, obtenemos etiquetas actuales para saber cuáles añadir/quitar
         const tagsToAdd = selectedUsers.filter(

@@ -12,9 +12,9 @@ const FileInput = ({ onFileSelect }) => {
     if (file) {
       setSelectedFileName(file.name);
       onFileSelect(file);
-      
+
       // Si es una imagen, mostrar vista previa
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.onload = (e) => {
           setFilePreview(e.target.result);
@@ -32,7 +32,7 @@ const FileInput = ({ onFileSelect }) => {
 
   const clearFile = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
     setSelectedFileName("");
     setFilePreview(null);
@@ -58,7 +58,7 @@ const FileInput = ({ onFileSelect }) => {
           accept="image/*"
         />
       </div>
-      
+
       {selectedFileName && (
         <div className="mt-2 bg-gray-50 p-2 rounded-md relative">
           <div className="flex items-center justify-between">
@@ -73,13 +73,13 @@ const FileInput = ({ onFileSelect }) => {
               ×
             </button>
           </div>
-          
+
           {filePreview && (
             <div className="mt-2">
-              <img 
-                src={filePreview} 
-                alt="Vista previa" 
-                className="max-h-24 rounded border border-gray-300" 
+              <img
+                src={filePreview}
+                alt="Vista previa"
+                className="max-h-24 rounded border border-gray-300"
               />
             </div>
           )}

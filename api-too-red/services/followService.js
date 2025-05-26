@@ -3,12 +3,12 @@ import Follow from "../models/followModel.js";
 export const followUserIds = async (identityUserId) => {
   try {
     //Sacar Información de seguimiento
-    let following = await Follow.find({ "user": identityUserId })
-      .select({ "followed": 1, "_id":0 })
+    let following = await Follow.find({ user: identityUserId })
+      .select({ followed: 1, _id: 0 })
       .exec();
 
     let followers = await Follow.find({ followed: identityUserId })
-      .select({ "user": 1, "_id": 0 })
+      .select({ user: 1, _id: 0 })
       .exec();
 
     //Procesar array de identificadores
@@ -26,7 +26,6 @@ export const followUserIds = async (identityUserId) => {
       following: following_clean,
       followers: followers_clean,
     };
-    
   } catch (error) {
     return {
       status: "error",
@@ -45,18 +44,15 @@ export const followThisUser = async (identityUserId, profileUserId) => {
   let following = await Follow.findOne({
     user: identityUserId,
     followed: profileUserId,
-  })
-
+  });
 
   let follower = await Follow.findOne({
     user: profileUserId,
     followed: identityUserId,
-  })
-
+  });
 
   return {
     following,
-    follower
+    follower,
   };
 };
-
