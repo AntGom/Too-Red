@@ -69,7 +69,7 @@ const NewSidebar = ({ onClose }) => {
         {/* Editar perfil */}
         <NavLink
           to="/social/config"
-          className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
+          className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={onClose}
         >
           <PencilSquareIcon className="h-6 w-6" />
