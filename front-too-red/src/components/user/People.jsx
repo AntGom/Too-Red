@@ -20,7 +20,7 @@ const People = () => {
   const getUsers = async (nextPage = 1) => {
     setLoading(true);
 
-    // Intentar leer de caché si es la primera página
+    // Leer de caché si es 1ª pág
     if (nextPage === 1) {
       const cacheKey = "people_list_page1";
       const cachedUsers = getCachedData(cacheKey);
@@ -46,7 +46,7 @@ const People = () => {
       const data = await request.json();
 
       if (data.users && data.status === "success") {
-        // Guardar primera página en caché por 5 minutos
+        // Primera página en caché, 5 minutos
         if (nextPage === 1) {
           cacheData("people_list_page1", data, 5);
         }
@@ -67,7 +67,7 @@ const People = () => {
     }
   };
 
-  // Implementar debounce para la búsqueda
+  // Debounce para la búsqueda
   const debouncedSearch = useMemo(
     () => debounce((term) => {
       console.log("Filtrando usuarios por:", term);
@@ -81,7 +81,7 @@ const People = () => {
     return () => debouncedSearch.cancel();
   }, [searchTerm, debouncedSearch]);
 
-  // Filtrar usuarios en el cliente, evitando recálculos innecesarios con useMemo
+  // Filtrar usuarios
   const filteredUsers = useMemo(() => {
     return users.filter(
       (user) =>
