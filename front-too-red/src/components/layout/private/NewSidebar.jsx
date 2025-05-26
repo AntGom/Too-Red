@@ -83,7 +83,7 @@ const NewSidebar = ({ onClose }) => {
           <>
             <NavLink
               to="/social/admin/reported-publications"
-              className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
+              className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
               <FlagIcon className="h-6 w-6 font-bold" />
@@ -91,7 +91,7 @@ const NewSidebar = ({ onClose }) => {
             </NavLink>
             <NavLink
               to="/social/admin/reported-users"
-              className="w-4/5 p-2 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl gap-2"
+              className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
               <FlagIcon className="h-6 w-6 font-bold" />
