@@ -1,4 +1,4 @@
-k# Too-Red - Red social fullstack con mensajería en tiempo real y moderación
+# Too-Red - Red social fullstack con mensajería en tiempo real y moderación
 
 ![Logo Too-Red](./front-too-red/public/nuevoLogoLargo.webp)
 
