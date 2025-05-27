@@ -1,10 +1,26 @@
-# Too-Red - Red Social
+# Too-Red - Red social fullstack con mensajería en tiempo real y moderación
 
 ![Logo Too-Red](./front-too-red/public/nuevoLogoLargo.webp)
 
-## Descripción del Proyecto
+## 📚 Índice
 
-Too-Red es una red social completa desarrollada como proyecto final de curso. La plataforma permite a los usuarios conectar con amigos, compartir publicaciones, interactuar a través de comentarios y likes, chatear en tiempo real y mucho más. La aplicación cuenta con un frontend en React y un backend en Node.js/Express con MongoDB.
+- [Descripción del Proyecto](#descripción-del-proyecto)
+- [Características Principales](#características-principales)
+- [Decisiones Técnicas](#🛠️-decisiones-técnicas)
+- [Funcionalidades Destacadas](#🚀-funcionalidades-destacadas)
+- [Despliegue](#🌐-despliegue)
+- [Estructura del proyecto](#🏗️-estructura-del-proyecto)
+- [Optimizaciones de rendimiento](#⚙️-optimizaciones-de-rendimiento)
+- [Consideraciones de Seguridad](#🔐-consideraciones-de-seguridad)
+- [Mejoras futuras](#🧱-mejoras-futuras)
+- [Instalación y ejecución](#🔧-instalación-y-ejecución)
+- [Variables de entorno](#📋-variables-de-entorno-requeridas)
+- [Enlaces útiles](#🔗-enlaces-útiles)
+
+
+## 📝 Descripción del Proyecto
+
+Too-Red es una red social completa desarrollada como proyecto final de curso. La plataforma permite a los usuarios conectar con amigos, compartir publicaciones, interactuar a través de comentarios, likes y etiquetas, chatear en tiempo real y mucho más. La aplicación cuenta con un frontend en React y un backend en Node.js/Express con MongoDB.
 
 ## Características Principales
 
@@ -39,13 +55,13 @@ Too-Red es una red social completa desarrollada como proyecto final de curso. La
 - **Seguridad**: Protección contra inyecciones y autenticación robusta
 - **Optimización de rendimiento**: Técnicas para mejorar la velocidad de carga
 
-## Decisiones Técnicas
+## 🛠️ Decisiones Técnicas
 
-### Frontend
+### 🎨 Frontend
 
 #### Interfaz de Usuario
 - **React**: Biblioteca principal para la construcción de la interfaz
-- **TailwindCSS**: Framework de CSS utilizado para el diseño responsive
+- **TailwindCSS**: Framework de CSS utilizado para estilos y responsive
 - **HeroIcons**: Biblioteca de iconos SVG para elementos visuales
 - **React Router**: Gestión de rutas en la aplicación SPA
 - **react-time-ago**: Para mostrar fechas relativas (ej. "hace 5 minutos")
@@ -149,7 +165,7 @@ export const ToastProvider = ({ children }) => {
 };
 ```
 
-### Backend
+### 🧠 Backend
 
 #### Arquitectura
 - **Node.js/Express**: Plataforma y framework para el backend
@@ -173,7 +189,7 @@ export const ToastProvider = ({ children }) => {
 - **Filtrado de elementos eliminados**: Middleware personalizado para filtrar entidades borradas lógicamente
 ```javascript
 const filterDeleted = (req, res, next) => {
-  // Guardar referencias a las funciones originales
+  
   const originalFind = mongoose.Model.find;
   const originalFindOne = mongoose.Model.findOne;
   
@@ -186,15 +202,23 @@ const filterDeleted = (req, res, next) => {
     return originalFind.apply(this, [query, ...args.slice(1)]);
   };
   
-  //... más sobrescrituras
+  //... resto del script
   
   next();
 };
 ```
+## 🌐 Despliegue
 
-## Funcionalidades Destacadas
+El proyecto está desplegado en:
 
-### Sistema de etiquetado de usuarios
+- **Frontend**: [Vercel](https://vercel.com/)
+- **Backend**: [Render](https://render.com/)
+- **Base de datos**: [MongoDB Atlas](https://www.mongodb.com/es/atlas)
+
+
+## 🚀 Funcionalidades Destacadas
+
+### 🏷️ Sistema de etiquetado de usuarios
 Implementación mejorada que permite etiquetar a usuarios en publicaciones mediante un modal dedicado:
 
 ```javascript
@@ -204,7 +228,7 @@ const TagUserModal = ({ isOpen, onClose, onTagUsers, initialTags = [] }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   // ...
 
-  // Búsqueda de usuarios con debounce
+  // Búsqueda de usuarios
   useEffect(() => {
     const timer = setTimeout(() => {
       if (search.length >= 2) {
@@ -227,8 +251,8 @@ const TagUserModal = ({ isOpen, onClose, onTagUsers, initialTags = [] }) => {
 };
 ```
 
-### Denuncias y moderación
-Los usuarios pueden denunciar contenido inapropiado, que será revisado por administradores:
+### 🚩 Denuncias y moderación
+Los usuarios pueden denunciar contenido inapropiado, que será revisado por los administradores:
 
 ```javascript
 const reportPublication = async (req, res) => {
@@ -258,14 +282,13 @@ const reportPublication = async (req, res) => {
     }
 
     // Añadir denuncia y enviar email al admin
-    // ...
   } catch (error) {
     // Manejo de errores
   }
 };
 ```
 
-### Eliminación lógica y recuperación de cuentas
+### 🔐♻️ Eliminación lógica y recuperación de cuentas
 Las cuentas se marcan como eliminadas pero se mantienen 30 días antes de su eliminación física:
 
 ```javascript
@@ -305,7 +328,7 @@ const deleteUser = async (req, res) => {
 };
 ```
 
-### Borrado físico programado
+### 🧨🗓️ Borrado físico programado
 Utilizando cron jobs para eliminar definitivamente las cuentas marcadas como borradas:
 
 ```javascript
@@ -320,7 +343,7 @@ const deletePhysicallyAfter30Days = async () => {
   const thirtyDaysAgo = currentDate.subtract(30, "days").toDate();
 
   try {
-    // Eliminar usuarios, publicaciones y follows que pasaron 30 días
+    // Eliminar usuarios, publicaciones y follows tras 30 días
     // desde su eliminación lógica
   } catch (error) {
     console.error("Error en el borrado físico:", error);
@@ -328,7 +351,7 @@ const deletePhysicallyAfter30Days = async () => {
 };
 ```
 
-### Gestión de usuarios
+### 👥 Gestión de usuarios
 Los administradores pueden banear usuarios que infringen las normas:
 
 ```javascript
@@ -356,7 +379,7 @@ const banUser = async (req, res) => {
 };
 ```
 
-### Mensajería en tiempo real
+### 📩 Mensajería en tiempo real
 Implementación de chat con indicadores de lectura y estado en línea:
 
 ```javascript
@@ -385,10 +408,10 @@ io.on("connection", (socket) => {
 });
 ```
 
-## Estructura del Proyecto
+## 🏗️ Estructura del Proyecto
 
 ```
-project/
+TOO-RED/
 ├── api-too-red/            # Backend (Node.js/Express)
 │   ├── controllers/        # Lógica de negocio
 │   ├── database/           # Conexión a BBDD
@@ -413,7 +436,7 @@ project/
         └── index.html
 ```
 
-## Optimizaciones de Rendimiento
+## ⚙️ Optimizaciones de Rendimiento
 
 - **Carga diferida de imágenes**: Componente LazyImage con IntersectionObserver
 - **Caché de datos**: Sistema para almacenar respuestas API y reducir peticiones
@@ -422,49 +445,55 @@ project/
 - **Eliminación lógica**: Uso de flags en lugar de eliminar registros físicamente
 - **WebSockets eficientes**: Conexiones optimizadas para mensajería en tiempo real
 
-## Consideraciones de Seguridad
+## 🔐 Consideraciones de Seguridad
 
 - **Cifrado de contraseñas**: Uso de bcrypt para almacenamiento seguro
 - **JWT con expiración**: Tokens de acceso con tiempo limitado
 - **Validación de datos**: Verificación de entradas del usuario
 - **Protección CORS**: Configuración adecuada de Cross-Origin Resource Sharing
-- **Permisos granulares**: Verificación de propiedad antes de permitir acciones
+- **Permisos granulares**: Verificación de propiedad/rol antes de permitir acciones
 - **Protección contra XSS**: Sanitización de datos ingresados por usuarios
 
-## Mejoras Futuras
+## 🧱 Mejoras Futuras
 
 - Implementación de PWA para experiencia móvil mejorada
 - Notificaciones push para mayor engagement
 - Sistema de grupos o comunidades
-- Análisis de sentimiento en comentarios
 
-## Instalación y Ejecución
+## 🔧 Instalación y Ejecución
 
 ### Requisitos previos
 - Node.js >= 14.x
 - MongoDB
 - Cuenta en Cloudinary (para almacenamiento de imágenes)
 - Servicio SMTP para envío de correos
+- MongoDB Atlas o una instancia local de MongoDB
 
-### Backend
-
+### 1. Clona el repositorio
+```bash
+git clone https://github.com/AntGom/Too-Red
+cd too-red
+```
+### 2. Instalación del Backend
 ```bash
 cd api-too-red
 npm install
-# Configurar variables de entorno en .env
 npm run dev
 ```
+> El backend estará disponible en `http://localhost:3900`
+---
 
-### Frontend
-
+### 3. Instalación del Frontend
+En otra terminal:
 ```bash
-cd front-too-red
+cd ../front-too-red
 npm install
-# Configurar variables de entorno en .env
 npm run dev
 ```
+> El frontend estará disponible en `http://localhost:3000`
+---
 
-## Variables de Entorno Requeridas
+## 📋 Variables de Entorno Requeridas
 
 ### Backend (.env)
 ```
@@ -482,11 +511,15 @@ CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
 ```
-
 ### Frontend (.env)
 ```
 VITE_API_URL=http://localhost:3900/api/
 ```
+## 🔗 Enlaces útiles
+
+- [Too-Red](https://too-red.vercel.app//)
+- [Heroicons](https://heroicons.com/)
+- [Cloudinary](https://cloudinary.com/)
 
 ## 👤 Autor
 
