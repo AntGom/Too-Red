@@ -127,11 +127,11 @@ const NewSidebar = ({ onClose }) => {
       <div className="w-full mt-10 md:mt-6 flex justify-center border-t border-gray-500">
         <NavLink
           to="/social/logout"
-          className="font-bold border-2 mt-8 md:mt-4 border-red-600 rounded-lg p-1 w-fit flex items-center transition-all duration-300 hover:scale-125"
+          className="font-bold border-2 mt-10 md:mt-4 border-red-600 rounded-lg p-1 w-fit flex items-center transition-all duration-300 hover:scale-125"
           onClick={onClose}
         >
           <ArrowLeftStartOnRectangleIcon className="h-6 w-6" />
-          <p className="font-bold text-xl ml-1">Salir</p>
+          <p className="font-bold text-xl">Salir</p>
         </NavLink>
       </div>
     </aside>

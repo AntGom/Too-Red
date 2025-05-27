@@ -6,7 +6,7 @@ import { useAuth } from "../../../hooks/UseAuth";
 import { Global } from "../../../helpers/Global";
 import PublicationList from "../../publication/PublicationList";
 import HeaderProfile from "./HeaderProfile";
-import { TagIcon } from "@heroicons/react/24/solid";
+import { TagIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
 
 const Profile = () => {
   const { auth } = useAuth();
@@ -68,7 +68,7 @@ const Profile = () => {
       setMore(data.totalPages > actualPage);
     }
   };
-  
+
   const getTaggedPublications = async (actualPage = 1, newProfile = false) => {
     setLoadingTagged(true);
     try {
@@ -79,16 +79,16 @@ const Profile = () => {
           headers: { Authorization: token },
         }
       );
-      
+
       const data = await response.json();
-      
+
       if (data.status === "success") {
         if (newProfile) {
           setTaggedPublications(data.publications);
         } else {
           setTaggedPublications((prev) => [...prev, ...data.publications]);
         }
-        
+
         setMoreTagged(data.totalPages > actualPage);
       }
     } catch (error) {
@@ -108,7 +108,7 @@ const Profile = () => {
     getTaggedPublications(1, true);
   }, [params.userId]);
 
-  // Escuchar el evento de nueva publicación
+  // Evento de nueva publicación
   useEffect(() => {
     const handleNewPublication = (event) => {
       if (event.detail.userId === params.userId && page === 1) {
@@ -123,7 +123,7 @@ const Profile = () => {
     };
   }, [params.userId, page]);
 
-  // Escuchar evento de eliminación de publicación
+  // Evento de eliminación de publicación
   useEffect(() => {
     const handleDeletedPublication = (event) => {
       if (event.detail.userId === params.userId && page === 1) {
@@ -155,7 +155,7 @@ const Profile = () => {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="max-w-7xl mx-auto md:px-8">
       <HeaderProfile
         user={user}
         auth={auth}
@@ -164,7 +164,7 @@ const Profile = () => {
         setIFollow={setIFollow}
         token={token}
       />
-      
+
       {/* Pestañas de navegación */}
       <div className="flex border-b border-gray-200 mb-4">
         <button
@@ -189,26 +189,45 @@ const Profile = () => {
           Etiquetas
         </button>
       </div>
-      
+
       {activeTab === "publications" && (
-        <PublicationList
-          publications={publications}
-          page={page}
-          setPage={setPage}
-          more={more}
-          setMore={setMore}
-          getPublications={getPublications}
-        />
+        <>
+          {publications.length === 0 ? (
+            <div className="text-center py-10">
+              <DocumentTextIcon className="h-10 w-10 text-gray-400 mx-auto mb-3" />
+              <h3 className="text-lg font-medium text-gray-900">
+                Sin publicaciones
+              </h3>
+              <p className="mt-2 text-sm text-gray-500">
+                {user._id === auth._id
+                  ? "Todavía no has publicado nada."
+                  : "Este usuario aún no ha publicado nada."}
+              </p>
+            </div>
+          ) : (
+            <PublicationList
+              publications={publications}
+              page={page}
+              setPage={setPage}
+              more={more}
+              setMore={setMore}
+              getPublications={getPublications}
+            />
+          )}
+        </>
       )}
-      
+
       {activeTab === "tagged" && (
         <>
           {taggedPublications.length === 0 ? (
             <div className="text-center py-10">
-              <TagIcon className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-              <h3 className="text-lg font-medium text-gray-900">Sin etiquetas</h3>
+              <TagIcon className="h-10 w-10 text-gray-400 mx-auto mb-3" />
+              <h3 className="text-lg font-medium text-gray-900">
+                Sin etiquetas
+              </h3>
               <p className="mt-2 text-sm text-gray-500">
-                No hay publicaciones donde {user._id === auth._id ? "estés" : "esté"} etiquetado.
+                No hay publicaciones donde{" "}
+                {user._id === auth._id ? "estés" : "esté"} etiquetado.
               </p>
             </div>
           ) : (

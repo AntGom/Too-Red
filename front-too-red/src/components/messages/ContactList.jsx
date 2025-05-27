@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Global } from "../../helpers/Global";
 
-export default function ContactList({ userId, selectedUser, setSelectedUser, onlineUsers }) {
+export default function ContactList({
+  userId,
+  selectedUser,
+  setSelectedUser,
+  onlineUsers,
+}) {
   const [contacts, setContacts] = useState([]);
   const [unreadSenders, setUnreadSenders] = useState([]);
   const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
@@ -11,28 +16,34 @@ export default function ContactList({ userId, selectedUser, setSelectedUser, onl
   // Obtener contactos
   useEffect(() => {
     if (!userId || contacts.length > 0) return;
-  
+
     const getContacts = async () => {
       try {
-        const response = await fetch(`${Global.url}follow/following/${userId}/`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        });
-  
+        const response = await fetch(
+          `${Global.url}follow/following/${userId}/`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+          }
+        );
+
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
-  
+
         const data = await response.json();
-  
+
         if (data.status === "success" && Array.isArray(data.follows)) {
           const sortedContacts = data.follows
             .map((follow) => follow.followed)
-            .sort((a, b) => a.name.localeCompare(b.name, "es", { sensitivity: "base" }));
-  
+            .filter((user) => user._id !== userId)
+            .sort((a, b) =>
+              a.name.localeCompare(b.name, "es", { sensitivity: "base" })
+            );
+
           setContacts(sortedContacts);
         } else {
           setContacts([]);
@@ -41,43 +52,42 @@ export default function ContactList({ userId, selectedUser, setSelectedUser, onl
         console.error("Error obteniendo contactos:", err);
       }
     };
-  
+
     getContacts();
   }, [userId, contacts.length, token]);
 
   // Obtener mensajes no leídos
-useEffect(() => {
-  if (!userId || !token) return;
+  useEffect(() => {
+    if (!userId || !token) return;
 
-  const fetchUnreadMessages = async () => {
-    try {
-      const response = await fetch(`${Global.url}messages/unread`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token
+    const fetchUnreadMessages = async () => {
+      try {
+        const response = await fetch(`${Global.url}messages/unread`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        });
+
+        const contentType = response.headers.get("content-type");
+
+        if (contentType && contentType.includes("application/json")) {
+          const data = await response.json();
+          if (data.status === "success") {
+            setHasUnreadMessages(data.hasUnread);
+            setUnreadSenders(data.sendersWithUnread || []);
+          }
+        } else {
+          const text = await response.text();
+          console.error("Respuesta no JSON recibida:", text);
         }
-      });
-
-      const contentType = response.headers.get("content-type");
-
-      if (contentType && contentType.includes("application/json")) {
-        const data = await response.json();
-        if (data.status === "success") {
-          setHasUnreadMessages(data.hasUnread);
-          setUnreadSenders(data.sendersWithUnread || []);
-        }
-      } else {
-        const text = await response.text();
-        console.error("Respuesta no JSON recibida:", text);
+      } catch (error) {
+        console.error("Error al obtener mensajes no leídos:", error);
       }
-    } catch (error) {
-      console.error("Error al obtener mensajes no leídos:", error);
-    }
-  };
+    };
 
-  fetchUnreadMessages();
-}, [userId, token]);
-
+    fetchUnreadMessages();
+  }, [userId, token]);
 
   // Escuchar eventos de socket para actualizar mensajes NO leídos
   useEffect(() => {
@@ -85,25 +95,28 @@ useEffect(() => {
 
     const handleNewMessage = (event) => {
       const data = event.detail;
-      if (data.receiver === userId && (!selectedUser || data.sender !== selectedUser._id)) {
-        setUnreadSenders(prev => [...new Set([...prev, data.sender])]);
+      if (
+        data.receiver === userId &&
+        (!selectedUser || data.sender !== selectedUser._id)
+      ) {
+        setUnreadSenders((prev) => [...new Set([...prev, data.sender])]);
         setHasUnreadMessages(true);
       }
     };
 
-    window.addEventListener('newMessageReceived', handleNewMessage);
-    
+    window.addEventListener("newMessageReceived", handleNewMessage);
+
     return () => {
-      window.removeEventListener('newMessageReceived', handleNewMessage);
+      window.removeEventListener("newMessageReceived", handleNewMessage);
     };
   }, [userId, selectedUser]);
 
   // Marcar mensajes como leídos al seleccionar un contacto
   const handleSelectUser = async (user) => {
     if (user._id === selectedUser?._id) return;
-    
+
     setSelectedUser(user);
-    
+
     // Marcar mensajes como leídos si hay NO leídos de este usuario
     if (unreadSenders.includes(user._id)) {
       try {
@@ -111,12 +124,12 @@ useEffect(() => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: token
-          }
+            Authorization: token,
+          },
         });
-        
+
         // Actualizar estado local
-        setUnreadSenders(prev => prev.filter(id => id !== user._id));
+        setUnreadSenders((prev) => prev.filter((id) => id !== user._id));
         if (unreadSenders.length === 1) {
           setHasUnreadMessages(false);
         }
@@ -151,12 +164,14 @@ useEffect(() => {
                   <span className="ml-2 w-2 h-2 bg-green-500 rounded-full"></span>
                 )}
               </div>
-              
+
               {/* Indicador de mensajes no leídos (punto rojo) */}
               {unreadSenders.includes(user._id) && (
-                <span className={`${
-                  selectedUser?._id === user._id ? 'bg-white' : 'bg-red-500'
-                } w-2 h-2 rounded-full`}></span>
+                <span
+                  className={`${
+                    selectedUser?._id === user._id ? "bg-white" : "bg-red-500"
+                  } w-2 h-2 rounded-full`}
+                ></span>
               )}
             </div>
           ))

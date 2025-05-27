@@ -3,10 +3,9 @@ import { followUserIds } from "../../services/followService.js";
 
 const following = async (req, res) => {
   try {
-    // Sacar id del usuario logueado
     let userId = req.user.id;
 
-    // Comprobar si me llega el id por params en la url
+    // Comprobar si me llega el id por params
     if (req.params.id) userId = req.params.id;
 
     // Opciones de consulta
@@ -19,7 +18,7 @@ const following = async (req, res) => {
     };
 
     // Find a follow, popular datos de user y no usar paginación
-    const result = await Follow.find({ user: userId }, null, options);
+const result = await Follow.find({ user: userId, isDeleted: false }, null, options);
 
     // Sacar array de ids que me siguen y los que sigo yo
     let followUserIdsResult = await followUserIds(req.user.id);
