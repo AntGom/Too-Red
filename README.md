@@ -4,18 +4,18 @@
 
 ## 📚 Índice
 
-- [Descripción del Proyecto](#descripción-del-proyecto)
-- [Características Principales](#características-principales)
-- [Decisiones Técnicas](#🛠️-decisiones-técnicas)
-- [Funcionalidades Destacadas](#🚀-funcionalidades-destacadas)
-- [Despliegue](#🌐-despliegue)
-- [Estructura del proyecto](#🏗️-estructura-del-proyecto)
-- [Optimizaciones de rendimiento](#⚙️-optimizaciones-de-rendimiento)
-- [Consideraciones de Seguridad](#🔐-consideraciones-de-seguridad)
-- [Mejoras futuras](#🧱-mejoras-futuras)
-- [Instalación y ejecución](#🔧-instalación-y-ejecución)
-- [Variables de entorno](#📋-variables-de-entorno-requeridas)
-- [Enlaces útiles](#🔗-enlaces-útiles)
+- [descripción del proyecto](#descripción-del-proyecto)
+- [características principales](#características-principales)
+- [decisiones técnicas](#decisiones-técnicas)
+- [funcionalidades destacadas](#funcionalidades-destacadas)
+- [despliegue](#despliegue)
+- [estructura del proyecto](#estructura-del-proyecto)
+- [optimizaciones de rendimiento](#optimizaciones-de-rendimiento)
+- [consideraciones de seguridad](#consideraciones-de-seguridad)
+- [mejoras futuras](#mejoras-futuras)
+- [instalación y ejecución](#instalación-y-ejecución)
+- [variables de entorno requeridas](#variables-de-entorno-requeridas)
+- [enlaces útiles](#enlaces-útiles)
 
 
 ## 📝 Descripción del Proyecto
