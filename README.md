@@ -1,26 +1,26 @@
-# Too-Red - Red social fullstack con mensajería en tiempo real y moderación
+k# Too-Red - Red social fullstack con mensajería en tiempo real y moderación
 
 ![Logo Too-Red](./front-too-red/public/nuevoLogoLargo.webp)
 
 ## 📚 Índice
 
-- [descripción del proyecto](#descripción-del-proyecto)
-- [características principales](#características-principales)
-- [decisiones técnicas](#decisiones-técnicas)
-- [funcionalidades destacadas](#funcionalidades-destacadas)
-- [despliegue](#despliegue)
-- [estructura del proyecto](#estructura-del-proyecto)
-- [optimizaciones de rendimiento](#optimizaciones-de-rendimiento)
-- [consideraciones de seguridad](#consideraciones-de-seguridad)
-- [mejoras futuras](#mejoras-futuras)
-- [instalación y ejecución](#instalación-y-ejecución)
-- [variables de entorno requeridas](#variables-de-entorno-requeridas)
-- [enlaces útiles](#enlaces-útiles)
+- Descripción del Proyecto
+- Características Principales
+- Decisiones Técnicas
+- Funcionalidades Destacadas
+- Despliegue
+- Estructura del proyecto
+- Optimizaciones de rendimiento
+- Consideraciones de Seguridad
+- Mejoras futuras
+- Instalación y ejecución
+- Variables de entorno
+- Enlaces útiles
 
 
 ## 📝 Descripción del Proyecto
 
-Too-Red es una red social completa desarrollada como proyecto final de curso. La plataforma permite a los usuarios conectar con amigos, compartir publicaciones, interactuar a través de comentarios, likes y etiquetas, chatear en tiempo real y mucho más. La aplicación cuenta con un frontend en React y un backend en Node.js/Express con MongoDB.
+Too-Red es una red social completa desarrollada como proyecto final de curso. La plataforma permite a los usuarios conectar con amigos, compartir publicaciones, interactuar a través de comentarios, likes y etiquetas, además de chatear en tiempo real. La aplicación cuenta con un frontend en React y un backend en Node.js/Express con MongoDB.
 
 ## Características Principales
 
@@ -34,7 +34,7 @@ Too-Red es una red social completa desarrollada como proyecto final de curso. La
 ### Publicaciones
 - **Creación de publicaciones**: Con texto e imágenes
 - **Sistema de etiquetado**: Posibilidad de etiquetar a usuarios seguidos
-- **Comentarios**: Añadir, ver y eliminar comentarios en publicaciones
+- **Comentarios**: Añadir, ver, editar y eliminar comentarios en publicaciones
 - **Likes**: Sistema de "me gusta" en publicaciones
 - **Feed personalizado**: Contenido filtrado según seguidos e intereses similares
 
@@ -214,6 +214,7 @@ El proyecto está desplegado en:
 - **Frontend**: [Vercel](https://vercel.com/)
 - **Backend**: [Render](https://render.com/)
 - **Base de datos**: [MongoDB Atlas](https://www.mongodb.com/es/atlas)
+- **App web**: [Too-Red](https://too-red.vercel.app//)
 
 
 ## 🚀 Funcionalidades Destacadas
@@ -457,8 +458,8 @@ TOO-RED/
 ## 🧱 Mejoras Futuras
 
 - Implementación de PWA para experiencia móvil mejorada
-- Notificaciones push para mayor engagement
-- Sistema de grupos o comunidades
+- Notificaciones push que fomenten la interacción
+- Sistema de grupos/comunidades
 
 ## 🔧 Instalación y Ejecución
 
