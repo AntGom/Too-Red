@@ -42,7 +42,7 @@ const NewSidebar = ({ onClose }) => {
         {/* Enlace al perfil */}
         <NavLink
           to={"/social/profile/" + auth._id}
-          className="rounded-lg w-full hover:bg-gray-200 transition-all duration-300 hover:scale-110"
+          className="rounded-xl w-full hover:bg-gray-200 transition-all duration-300 hover:scale-105"
           onClick={onClose}
         >
           <div className="flex justify-start ml-4 gap-1 items-center">
@@ -56,7 +56,7 @@ const NewSidebar = ({ onClose }) => {
               <img
                 src={avatar}
                 alt="Foto de Perfil"
-                className="rounded-lg w-10 h-10 border-2 border-gray-500"
+                className="rounded-lg w-12 h-12 border-2 border-gray-500"
               />
             )}
             <div className="flex flex-col items-start">

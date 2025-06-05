@@ -20,7 +20,7 @@ const UserCounters = ({ onClose }) => {
         <article className="mx-2">
           <NavLink
             to={"siguiendo/" + auth._id}
-            className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-lg"
+            className="flex flex-row p-0.5 hover:bg-gray-200 transition-all duration-300 hover:scale-105 rounded-xl"
             onClick={onClose}
           >
             <div className="flex items-center gap-2 border-y border-gray-500 w-full">
