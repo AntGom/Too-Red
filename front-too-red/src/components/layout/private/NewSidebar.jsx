@@ -25,7 +25,8 @@ const NewSidebar = ({ onClose }) => {
   };
 
   return (
-    <aside className="bg-gray-50 relative p-2 h-full max-h-screen overflow-y-auto">
+    <aside className="flex flex-col items-center justify-between bg-gray-50 relative p-2 max-h-screen h-full overflow-y-auto">
+
       <section className="flex flex-col gap-5 md:gap-3 items-center ">
         {/* Enlace al feed */}
         <NavLink
@@ -136,6 +137,7 @@ const NewSidebar = ({ onClose }) => {
         </NavLink>
         <PrivateFooter />
       </div>
+
     </aside>
   );
 };
