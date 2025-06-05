@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const FormInput = ({ label, name, type = "text", value, onChange, error }) => {
   return (
     <div className="mb-2">
-      <label htmlFor={name} className="block text-gray-900 font-semibold">
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
         {label}
       </label>
       <input
@@ -11,7 +11,7 @@ const FormInput = ({ label, name, type = "text", value, onChange, error }) => {
         name={name}
         onChange={onChange}
         value={value}
-        className="border-2 border-red-600 rounded w-full py-2 px-3"
+        className="input"
       />
       {error && <p className="text-red-500">{error}</p>}
     </div>

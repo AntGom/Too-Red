@@ -9,7 +9,7 @@ const PasswordInput = ({ value, onChange, error }) => {
     <div className="mb-4">
       <label
         htmlFor="password"
-        className="block text-sm font-medium text-gray-900"
+        className="block text-sm font-medium text-gray-700 mb-1"
       >
         Contraseña
       </label>
@@ -19,17 +19,18 @@ const PasswordInput = ({ value, onChange, error }) => {
           name="password"
           onChange={onChange}
           value={value}
-          className="border-2 border-red-600 rounded w-full py-2 px-3"
+          placeholder="••••••••"
+          className="input"
         />
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute inset-y-0 right-0 flex items-center pr-3"
+          className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
         >
           {showPassword ? (
-            <EyeSlashIcon className="w-6 h-6 text-gray-700" />
-          ) : (
-            <EyeIcon className="w-6 h-6 text-gray-700" />
+            <EyeSlashIcon className="w-5 h-5" />
+            ) : (
+              <EyeIcon className="w-5 h-5" />
           )}
         </button>
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Global } from "../../../helpers/Global";
 import UseForm from "../../../hooks/UseForm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import FormInput from "./FormInput";
 import PasswordInput from "./PasswordInput";
 import validateForm from "../../../helpers/validateForm.js";
@@ -82,65 +82,77 @@ const Register = () => {
   };
 
   return (
-    <div className="mb-8">
-      <header className="p-4 text-gray-900 text-center mt-2 w-full">
-        <h1 className="text-2xl font-bold">Forma parte de Too-Red</h1>
-      </header>
+    <div className="flex justify-center items-center min-h-screen md:mt-4 bg-gray-50 px-4">
+      <form
+        onSubmit={saveUser}
+        className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm max-w-md w-full"
+      >
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          Únete a Too-Red
+        </h2>
 
-      <div className="flex flex-col gap-2 justify-center items-center h-2/5">
-        <form
-          className="bg-white border-2 border-gray-900 p-6 rounded-xl shadow-lg shadow-gray-600 lg:w-2/5 sm:w-4/5"
-          onSubmit={saveUser}
-        >
-          <FormInput
-            label="Nombre"
-            name="name"
-            value={form.name || ""}
-            onChange={changed}
-            error={errors.name}
-          />
-          <FormInput
-            label="Apellidos"
-            name="surname"
-            value={form.surname || ""}
-            onChange={changed}
-            error={errors.surname}
-          />
-          <FormInput
-            label="Alias"
-            name="nick"
-            value={form.nick || ""}
-            onChange={changed}
-            error={errors.nick}
-          />
-          <FormInput
-            label="Email"
-            name="email"
-            type="email"
-            value={form.email || ""}
-            onChange={changed}
-            error={errors.email}
-          />
-          <PasswordInput
-            value={form.password || ""}
-            onChange={changed}
-            error={errors.password}
-          />
+        <FormInput
+          label="Nombre"
+          name="name"
+          value={form.name}
+          onChange={changed}
+          error={errors.name}
+        />
+        <FormInput
+          label="Apellidos"
+          name="surname"
+          value={form.surname}
+          onChange={changed}
+          error={errors.surname}
+        />
+        <FormInput
+          label="Alias"
+          name="nick"
+          value={form.nick}
+          onChange={changed}
+          error={errors.nick}
+        />
+        <FormInput
+          label="Email"
+          name="email"
+          type="email"
+          value={form.email}
+          onChange={changed}
+          error={errors.email}
+        />
+        <PasswordInput
+          value={form.password}
+          onChange={changed}
+          error={errors.password}
+        />
+
+        <div className="mb-4">
           <InterestsSelect
             selectedInterests={form.interests}
             onChange={(values) => setForm({ ...form, interests: values })}
           />
+        </div>
 
-          <input
-            type="submit"
-            value={loading ? "Registrando..." : "Regístrate"}
-            disabled={loading}
-            className={`text-gray-900 border-2 font-bold border-red-600 rounded py-2 px-4 hover:scale-110 transition-all duration-300 cursor-pointer mt-4 ${
-              loading ? "opacity-70 cursor-not-allowed" : ""
-            }`}
-          />
-        </form>
-      </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-medium py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {loading ? "Registrando..." : "Regístrate"}
+        </button>
+
+        <div className="mt-4 text-center">
+          <p className="text-sm text-gray-600">
+            ¿Ya tienes una cuenta?{" "}
+            <Link
+              to="/login"
+              className="text-red-600 hover:text-red-700 font-medium"
+            >
+              Inicia sesión
+            </Link>
+          </p>
+        </div>
+      </form>
     </div>
   );
 };
