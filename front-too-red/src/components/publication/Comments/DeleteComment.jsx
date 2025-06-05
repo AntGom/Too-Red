@@ -26,8 +26,8 @@ const DeleteComment = ({
         // Verificar si el usuario es el propietario/autor/admin
         setCanDelete(
           user.id === commentUserId || // Autor
-          user.id === publicationUserId || // Propietario
-          user.role === "admin" // Admin
+            user.id === publicationUserId || // Propietario
+            user.role === "admin" // Admin
         );
       } catch (error) {
         console.error("Error al decodificar el token:", error);
@@ -42,7 +42,7 @@ const DeleteComment = ({
       if (!token) {
         showToast({
           message: "No estás autenticado. Por favor, inicia sesión.",
-          type: "error"
+          type: "error",
         });
         return;
       }
@@ -61,26 +61,26 @@ const DeleteComment = ({
       if (response.ok && data.status === "success") {
         showToast({
           message: "Comentario eliminado correctamente.",
-          type: "success"
+          type: "success",
         });
         onDelete(commentId);
         setShowModal(false);
       } else if (response.status === 403) {
         showToast({
           message: "No tienes permiso para eliminar este comentario.",
-          type: "error"
+          type: "error",
         });
       } else {
         showToast({
           message: data.message || "Error al eliminar el comentario.",
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
       console.error("Error al eliminar comentario:", error.message);
       showToast({
         message: "Hubo un error. Por favor, inténtalo más tarde.",
-        type: "error"
+        type: "error",
       });
     } finally {
       setLoading(false);

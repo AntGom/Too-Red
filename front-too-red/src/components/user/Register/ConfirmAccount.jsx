@@ -24,23 +24,24 @@ const ConfirmAccount = () => {
         if (data.status === "success") {
           setStatus("success");
           showToast({
-            message: "Cuenta confirmada correctamente. Ahora puedes iniciar sesión.",
-            type: "success"
+            message:
+              "Cuenta confirmada correctamente. Ahora puedes iniciar sesión.",
+            type: "success",
           });
-          setTimeout(() => navigate("/login"), 2000); 
+          setTimeout(() => navigate("/login"), 2000);
         } else {
           setStatus("error");
           showToast({
             message: "El enlace de confirmación no es válido o ha expirado.",
-            type: "error"
+            type: "error",
           });
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
         setStatus("error");
         showToast({
           message: "Error al confirmar la cuenta.",
-          type: "error"
+          type: "error",
         });
       }
     };
@@ -50,7 +51,9 @@ const ConfirmAccount = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      {status === "loading" && <p className="text-lg">Validando tu cuenta...</p>}
+      {status === "loading" && (
+        <p className="text-lg">Validando tu cuenta...</p>
+      )}
       {status === "success" && (
         <div className="text-center">
           <h1 className="text-2xl font-bold text-green-500">

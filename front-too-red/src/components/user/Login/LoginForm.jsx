@@ -7,10 +7,15 @@ const LoginForm = ({ changed, loginUser, showPassword, setShowPassword }) => {
       className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm max-w-md w-full"
       onSubmit={loginUser}
     >
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Iniciar sesión</h2>
-      
+      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+        Iniciar sesión
+      </h2>
+
       <div className="mb-4">
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Email
         </label>
         <input
@@ -59,10 +64,16 @@ const LoginForm = ({ changed, loginUser, showPassword, setShowPassword }) => {
       >
         Entrar
       </button>
-      
+
       <div className="mt-4 text-center">
         <p className="text-sm text-gray-600">
-          ¿No tienes una cuenta? <a href="/register" className="text-red-600 hover:text-red-700 font-medium">Regístrate</a>
+          ¿No tienes una cuenta?{" "}
+          <a
+            href="/register"
+            className="text-red-600 hover:text-red-700 font-medium"
+          >
+            Regístrate
+          </a>
         </p>
       </div>
     </form>

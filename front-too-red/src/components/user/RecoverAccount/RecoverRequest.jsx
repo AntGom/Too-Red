@@ -19,22 +19,22 @@ const RecoverRequest = () => {
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
         showToast({
           message: data.message,
-          type: "success"
+          type: "success",
         });
       } else {
         showToast({
           message: data.message,
-          type: "error"
+          type: "error",
         });
       }
     } catch (err) {
       showToast({
         message: `Error: ${err.message || "No se pudo conectar al servidor."}`,
-        type: "error"
+        type: "error",
       });
     } finally {
       setLoading(false);

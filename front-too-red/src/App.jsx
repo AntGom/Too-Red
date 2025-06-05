@@ -1,6 +1,6 @@
 import Routing from "./router/Routing";
-import { ToastProvider } from './context/ToastContext';
-import ToastContainer from './components/ui/ToastContainer';
+import { ToastProvider } from "./context/ToastContext";
+import ToastContainer from "./components/ui/ToastContainer";
 
 function App() {
   return (

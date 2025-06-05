@@ -17,7 +17,7 @@ const NewSidebar = ({ onClose }) => {
   const navigate = useNavigate();
   const { auth } = useAuth();
 
-  // Redirigir al chat y cerrar menú
+  // Redirigir al chat+cerrar menú
   const handleOpenChat = () => {
     navigate("/social/messages");
     onClose?.();

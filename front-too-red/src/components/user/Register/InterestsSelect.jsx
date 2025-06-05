@@ -21,7 +21,7 @@ const customStyles = {
     ...base,
     backgroundColor: "#f9fafb",
     border: state.isFocused ? "1px solid #ef4444" : "1px solid #d1d5db",
-    boxShadow: state.isFocused ? "0 0 0 1px #ef4444" : null, 
+    boxShadow: state.isFocused ? "0 0 0 1px #ef4444" : null,
     borderRadius: "0.5rem",
     "&:hover": {
       borderColor: "#ef4444",
@@ -60,28 +60,36 @@ const InterestsSelect = ({ selectedInterests = [], onChange }) => {
   const [selectedInterestsState, setSelectedInterests] = useState([]);
 
   useEffect(() => {
-    if (JSON.stringify(selectedInterests) !== JSON.stringify(selectedInterestsState)) {
+    if (
+      JSON.stringify(selectedInterests) !==
+      JSON.stringify(selectedInterestsState)
+    ) {
       setSelectedInterests(selectedInterests);
     }
   }, [selectedInterests, selectedInterestsState]);
 
   const handleInterestsChange = (selectedOptions) => {
-    const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
+    const selectedValues = selectedOptions
+      ? selectedOptions.map((option) => option.value)
+      : [];
     setSelectedInterests(selectedValues);
     onChange(selectedValues);
   };
 
   return (
     <div>
-      <label htmlFor="interests" className="block rounded-lg text-sm font-medium text-gray-900">
+      <label
+        htmlFor="interests"
+        className="block rounded-lg text-sm font-medium text-gray-900"
+      >
         Intereses
       </label>
       <Select
         id="interests"
         isMulti
         options={interestOptions}
-        styles={customStyles} 
-        value={interestOptions.filter(option => 
+        styles={customStyles}
+        value={interestOptions.filter((option) =>
           selectedInterestsState.includes(option.value)
         )}
         onChange={handleInterestsChange}

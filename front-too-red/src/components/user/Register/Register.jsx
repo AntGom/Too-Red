@@ -48,10 +48,11 @@ const Register = () => {
 
       if (data.status === "success") {
         showToast({
-          message: "¡Usuario registrado correctamente! Confirma tu cuenta desde el correo que has recibido.",
-          type: "success"
+          message:
+            "¡Usuario registrado correctamente! Confirma tu cuenta desde el correo que has recibido.",
+          type: "success",
         });
-        
+
         setForm({
           name: "",
           surname: "",
@@ -60,20 +61,20 @@ const Register = () => {
           password: "",
           interests: [],
         });
-        
+
         setTimeout(() => navigate("/login"), 2000);
       } else {
         showToast({
           message: data.message || "Error al registrar el usuario",
-          type: "error"
+          type: "error",
         });
         setErrors({ general: data.message });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       showToast({
         message: "Error al conectar con el servidor",
-        type: "error"
+        type: "error",
       });
     } finally {
       setLoading(false);

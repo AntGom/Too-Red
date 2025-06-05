@@ -35,9 +35,9 @@ const Login = () => {
       setAuth(data.user);
 
       // Mostrar Toast de éxito
-      showToast({ 
-        message: "¡¡Usuario identificado correctamente!!", 
-        type: "success" 
+      showToast({
+        message: "¡¡Usuario identificado correctamente!!",
+        type: "success",
       });
 
       setTimeout(() => {
@@ -47,15 +47,15 @@ const Login = () => {
       setShowBanModal(true);
 
       // Mostrar Toast de advertencia
-      showToast({ 
-        message: "Tu cuenta está suspendida. Contacta al soporte.", 
-        type: "error" 
+      showToast({
+        message: "Tu cuenta está suspendida. Contacta al soporte.",
+        type: "error",
       });
     } else {
       // Mostrar Toast de error
-      showToast({ 
-        message: "Email o contraseña incorrectos.", 
-        type: "error" 
+      showToast({
+        message: "Email o contraseña incorrectos.",
+        type: "error",
       });
     }
   };

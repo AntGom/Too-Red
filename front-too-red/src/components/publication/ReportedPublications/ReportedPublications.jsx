@@ -19,9 +19,12 @@ const ReportedPublications = () => {
     const fetchReportedPublications = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`${Global.url}publication/reported-publications`, {
-          headers: { Authorization: token },
-        });
+        const response = await fetch(
+          `${Global.url}publication/reported-publications`,
+          {
+            headers: { Authorization: token },
+          }
+        );
         if (!response.ok) throw new Error("Error al obtener las publicaciones");
         const { data } = await response.json();
         setReportedPublications(data);
@@ -51,17 +54,26 @@ const ReportedPublications = () => {
   }, [filterStatus, reportedPublications]);
 
   const handleDeleteSuccess = () => {
-    setReportedPublications((prev) => prev.filter((pub) => pub._id !== selectedPublicationId));
+    setReportedPublications((prev) =>
+      prev.filter((pub) => pub._id !== selectedPublicationId)
+    );
     setShowDeleteModal(false);
   };
 
   const handleRevertSuccess = () => {
     setReportedPublications((prev) =>
-      prev.map((pub) =>
-        pub._id === selectedPublicationId
-          ? { ...pub, reports: pub.reports.filter((rep) => rep._id !== selectedReportId) }
-          : pub
-      ).filter((pub) => pub.reports.length > 0)
+      prev
+        .map((pub) =>
+          pub._id === selectedPublicationId
+            ? {
+                ...pub,
+                reports: pub.reports.filter(
+                  (rep) => rep._id !== selectedReportId
+                ),
+              }
+            : pub
+        )
+        .filter((pub) => pub.reports.length > 0)
     );
     setShowRevertModal(false);
   };
@@ -71,20 +83,30 @@ const ReportedPublications = () => {
 
   return (
     <section className="mb-4">
-      <h1 className="text-3xl font-bold text-start mb-4">Publicaciones Reportadas</h1>
+      <h1 className="text-3xl font-bold text-start mb-4">
+        Publicaciones Reportadas
+      </h1>
 
       {/* Filtro */}
       <article className="mb-4">
-        <label htmlFor="filter" className="mr-2 font-semibold">Filtrar por estado:</label>
+        <label htmlFor="filter" className="mr-2 font-semibold">
+          Filtrar por estado:
+        </label>
         <select
           id="filter"
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
           className="border-gray-300 rounded p-2"
         >
-          <option value="all" className="text-xs md:text-md">Todas</option>
-          <option value="active" className="text-xs md:text-md">Activas</option>
-          <option value="reverted" className="text-xs md:text-md">Revisadas</option>
+          <option value="all" className="text-xs md:text-md">
+            Todas
+          </option>
+          <option value="active" className="text-xs md:text-md">
+            Activas
+          </option>
+          <option value="reverted" className="text-xs md:text-md">
+            Revisadas
+          </option>
         </select>
       </article>
 

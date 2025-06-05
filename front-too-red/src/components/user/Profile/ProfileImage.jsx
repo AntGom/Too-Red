@@ -9,9 +9,7 @@ const ProfileImage = ({ user }) => {
   const closeModal = () => setIsModalOpen(false);
 
   const imageUrl =
-    user.image && user.image !== "default.png"
-      ? `${user.image}`
-      : avatar;
+    user.image && user.image !== "default.png" ? `${user.image}` : avatar;
 
   return (
     <>

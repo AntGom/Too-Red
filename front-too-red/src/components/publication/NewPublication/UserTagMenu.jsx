@@ -2,16 +2,14 @@ import PropTypes from "prop-types";
 
 const UserTagMenu = ({ users, onSelectUser, onClose }) => {
   return (
-    <div 
-      className="absolute z-10 mt-1 bg-white rounded-md shadow-lg max-h-60 w-full overflow-auto border border-gray-300"
-    >
+    <div className="absolute z-10 mt-1 bg-white rounded-md shadow-lg max-h-60 w-full overflow-auto border border-gray-300">
       {users.length === 0 ? (
         <div className="py-2 px-3 text-sm text-gray-500">
           No se encontraron usuarios
         </div>
       ) : (
         <ul className="py-1">
-          {users.map(user => (
+          {users.map((user) => (
             <li key={user._id}>
               <button
                 type="button"
@@ -22,9 +20,9 @@ const UserTagMenu = ({ users, onSelectUser, onClose }) => {
                 }}
               >
                 <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
-                  <img 
-                    src={user.image} 
-                    alt={user.name} 
+                  <img
+                    src={user.image}
+                    alt={user.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.onerror = null;
@@ -48,7 +46,7 @@ const UserTagMenu = ({ users, onSelectUser, onClose }) => {
 UserTagMenu.propTypes = {
   users: PropTypes.array.isRequired,
   onSelectUser: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };
 
 export default UserTagMenu;

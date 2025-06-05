@@ -37,7 +37,7 @@ const PrivateLayout = () => {
           className="h-12 rounded-xl border-2 border-red-600 cursor-pointer"
           onClick={() => navigate("/social/feed")}
         />
-        
+
         <button
           className="text-red-600 text-2xl"
           onClick={() => setIsMenuOpen(!isMenuOpen)}

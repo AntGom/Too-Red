@@ -27,7 +27,7 @@ const NavbarPublic = () => {
           >
             Entrar
           </NavLink>
-          
+
           <NavLink
             to="/register"
             className={({ isActive }) =>

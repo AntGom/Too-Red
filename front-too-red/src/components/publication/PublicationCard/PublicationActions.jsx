@@ -10,7 +10,7 @@ const PublicationActions = ({ publicationId, publicationUserId, likes }) => (
       publicationUserId={publicationUserId}
       likes={likes}
     />
-    
+
     {/* Crear un nuevo comentario */}
     <CreateComment publicationId={publicationId} />
   </section>

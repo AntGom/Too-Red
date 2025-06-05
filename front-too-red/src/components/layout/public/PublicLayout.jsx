@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import {useAuth} from "../../../hooks/UseAuth";
+import { useAuth } from "../../../hooks/UseAuth";
 import NavbarPublic from "./NavbarPublic";
 
 const PublicLayout = () => {
@@ -9,9 +9,7 @@ const PublicLayout = () => {
     <>
       <NavbarPublic />
 
-      <section>
-        {!auth._id ? <Outlet /> : <Navigate to="/social" />}
-      </section>
+      <section>{!auth._id ? <Outlet /> : <Navigate to="/social" />}</section>
     </>
   );
 };

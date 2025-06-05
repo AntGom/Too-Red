@@ -5,7 +5,7 @@ import { useToast } from "../../../../hooks/useToast";
 
 const FollowButton = ({ userId, iFollow, setIFollow, token }) => {
   const { showToast } = useToast();
-  
+
   const follow = async () => {
     try {
       const response = await fetch(`${Global.url}follow/save`, {
@@ -21,18 +21,18 @@ const FollowButton = ({ userId, iFollow, setIFollow, token }) => {
         setIFollow(true);
         showToast({
           message: "¡Ahora sigues a este usuario!",
-          type: "success"
+          type: "success",
         });
       } else {
         showToast({
           message: data.message || "Error al seguir al usuario",
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
       showToast({
         message: error.message || "Error de conexión. Inténtalo más tarde.",
-        type: "error"
+        type: "error",
       });
     }
   };
@@ -51,18 +51,18 @@ const FollowButton = ({ userId, iFollow, setIFollow, token }) => {
         setIFollow(false);
         showToast({
           message: "Has dejado de seguir a este usuario.",
-          type: "success"
+          type: "success",
         });
       } else {
         showToast({
           message: data.message || "Error al dejar de seguir al usuario",
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
       showToast({
         message: error.message || "Error de conexión. Inténtalo más tarde.",
-        type: "error"
+        type: "error",
       });
     }
   };
@@ -71,8 +71,9 @@ const FollowButton = ({ userId, iFollow, setIFollow, token }) => {
     <button
       onClick={iFollow ? unFollow : follow}
       className={`flex items-center border-2 ${
-        iFollow ? "bg-red-600 text-white hover:bg-red-700"
-                        : "bg-gray-300 text-gray-900 hover:bg-gray-400"
+        iFollow
+          ? "bg-red-600 text-white hover:bg-red-700"
+          : "bg-gray-300 text-gray-900 hover:bg-gray-400"
       } font-semibold px-2 py-2 rounded-full shadow-md hover:scale-110 duration-300 transition-all w-auto h-10`}
     >
       {iFollow ? (

@@ -1,13 +1,18 @@
-import { ShieldExclamationIcon, ShieldCheckIcon } from "@heroicons/react/24/solid";
+import {
+  ShieldExclamationIcon,
+  ShieldCheckIcon,
+} from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
 import { Global } from "../../../../helpers/Global";
 import { useToast } from "../../../../hooks/useToast";
 
 const BanButton = ({ user, token }) => {
   const { showToast } = useToast();
-  
+
   const toggleBanStatus = async () => {
-    const url = `${Global.url}user/${user.isBanned ? "unban" : "ban"}/${user._id}`;
+    const url = `${Global.url}user/${user.isBanned ? "unban" : "ban"}/${
+      user._id
+    }`;
     try {
       const response = await fetch(url, {
         method: "PUT",
@@ -20,19 +25,21 @@ const BanButton = ({ user, token }) => {
       if (data.status === "success") {
         user.isBanned = !user.isBanned;
         showToast({
-          message: user.isBanned ? "Usuario baneado con éxito." : "Usuario desbaneado con éxito.",
-          type: "success"
+          message: user.isBanned
+            ? "Usuario baneado con éxito."
+            : "Usuario desbaneado con éxito.",
+          type: "success",
         });
       } else {
         showToast({
           message: data.message || "Error al cambiar el estado del usuario",
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
       showToast({
         message: error.message || "Error de conexión. Inténtalo más tarde.",
-        type: "error"
+        type: "error",
       });
     }
   };

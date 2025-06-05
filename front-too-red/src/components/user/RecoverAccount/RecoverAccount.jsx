@@ -12,17 +12,16 @@ const RecoverAccount = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const token = queryParams.get("token");
-  
+
     if (token) {
       recoverAccount(token);
     } else {
       showToast({
         message: "Token inválido o no encontrado en la URL.",
-        type: "error"
+        type: "error",
       });
     }
   }, [location]);
-  
 
   const recoverAccount = async (token) => {
     try {
@@ -37,19 +36,19 @@ const RecoverAccount = () => {
       if (response.ok) {
         showToast({
           message: data.message,
-          type: "success"
+          type: "success",
         });
         setTimeout(() => navigate("/login"), 3000);
       } else {
         showToast({
           message: data.message,
-          type: "error"
+          type: "error",
         });
       }
     } catch (err) {
       showToast({
         message: `Error: ${err.message || "No se pudo conectar al servidor."}`,
-        type: "error"
+        type: "error",
       });
     }
   };
@@ -58,7 +57,7 @@ const RecoverAccount = () => {
     <div className="flex flex-col justify-center items-center">
       <header className="p-4 w-3/5 border-2 border-red-600 rounded-lg text-gray-900 text-center mt-14">
         <h1 className="text-2xl font-bold text-gray-900 text-center">
-          ¡¡Se ha recuperado la Cuenta!! 
+          ¡¡Se ha recuperado la Cuenta!!
         </h1>
       </header>
     </div>

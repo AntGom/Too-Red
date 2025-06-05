@@ -20,13 +20,10 @@ const HeaderProfile = ({
         <h2 className="text-2xl font-bold text-gray-900">
           {user.name} {user.surname}
         </h2>
-        <NavLink
-          to={`/social/publications/${user._id}`}
-        >
+        <NavLink to={`/social/publications/${user._id}`}>
           <p className="text-sm font-semibold text-red-600 hover:scale-110 origin-left transition-all mt-2">
-  Publicaciones: {counters.publications || 0}
-</p>
-
+            Publicaciones: {counters.publications || 0}
+          </p>
         </NavLink>
       </div>
 

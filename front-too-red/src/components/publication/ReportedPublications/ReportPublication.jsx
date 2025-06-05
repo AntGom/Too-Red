@@ -14,14 +14,14 @@ const ReportPublication = ({ publicationId, onClose }) => {
     "Spam",
     "Acoso o discurso de odio",
     "Falsedad o engaño",
-    "Otro"
+    "Otro",
   ];
 
   const onReport = async () => {
     if (!selectedReason) {
       showToast({
         message: "Por favor, selecciona una razón para reportar.",
-        type: "warning"
+        type: "warning",
       });
       return;
     }
@@ -30,34 +30,37 @@ const ReportPublication = ({ publicationId, onClose }) => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`${Global.url}publication/report/${publicationId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify({ reason: selectedReason }),
-      });
+      const response = await fetch(
+        `${Global.url}publication/report/${publicationId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({ reason: selectedReason }),
+        }
+      );
 
       const data = await response.json();
 
       if (data.status === "success") {
         showToast({
           message: "Reporte enviado con éxito",
-          type: "success"
+          type: "success",
         });
         onClose();
       } else {
         showToast({
           message: `Error al reportar la publicación: ${data.message}`,
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
       console.error("Error al reportar la publicación:", error);
       showToast({
         message: "Error al intentar reportar la publicación.",
-        type: "error"
+        type: "error",
       });
     } finally {
       setLoading(false);

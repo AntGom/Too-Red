@@ -15,7 +15,7 @@ const ResetPassword = () => {
   const handleReset = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const request = await fetch(Global.url + "user/reset-password", {
         method: "POST",
@@ -24,29 +24,29 @@ const ResetPassword = () => {
           "Content-Type": "application/json",
         },
       });
-      
+
       const data = await request.json();
 
       if (data.status === "success") {
         showToast({
           message: data.message,
-          type: "success"
+          type: "success",
         });
-        
+
         setTimeout(() => {
           navigate("/login");
         }, 1500);
       } else {
         showToast({
           message: data.message,
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       showToast({
         message: "Error al conectar con el servidor",
-        type: "error"
+        type: "error",
       });
     } finally {
       setLoading(false);

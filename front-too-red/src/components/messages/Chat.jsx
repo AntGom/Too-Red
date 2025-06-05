@@ -16,7 +16,7 @@ export default function Chat() {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user.id : null;
 
-  // Función para borrar un mensaje
+  // Borrar un mensaje
   const deleteMessage = async (messageId) => {
     if (!messageId) return;
     try {

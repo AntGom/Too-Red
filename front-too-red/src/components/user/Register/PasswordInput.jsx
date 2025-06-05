@@ -7,7 +7,10 @@ const PasswordInput = ({ value, onChange, error }) => {
 
   return (
     <div className="mb-4">
-      <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+      <label
+        htmlFor="password"
+        className="block text-sm font-medium text-gray-900"
+      >
         Contraseña
       </label>
       <div className="relative">

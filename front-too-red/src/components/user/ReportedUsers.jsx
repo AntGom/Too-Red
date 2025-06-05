@@ -70,21 +70,31 @@ const ReportedUsers = () => {
 
       {/* Filtro */}
       <article className="mb-4">
-        <label htmlFor="filter" className="mr-2 font-semibold">Filtrar por estado:</label>
+        <label htmlFor="filter" className="mr-2 font-semibold">
+          Filtrar por estado:
+        </label>
         <select
           id="filter"
           value={reportStatus}
           onChange={(e) => setReportStatus(e.target.value)}
           className="border-gray-300 rounded p-2 w-full md:w-auto"
         >
-          <option value="" className="text-xs md:text-md">Estado de los Reportes</option>
-          <option value="active" className="text-xs md:text-md">Activo</option>
-          <option value="reverted" className="text-xs md:text-md">Revisado</option>
+          <option value="" className="text-xs md:text-md">
+            Estado de los Reportes
+          </option>
+          <option value="active" className="text-xs md:text-md">
+            Activo
+          </option>
+          <option value="reverted" className="text-xs md:text-md">
+            Revisado
+          </option>
         </select>
       </article>
 
       {users.length === 0 ? (
-        <p className="text-center text-xl">No hay usuarios con publicaciones reportadas</p>
+        <p className="text-center text-xl">
+          No hay usuarios con publicaciones reportadas
+        </p>
       ) : (
         <article className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {users.map((user) => (
@@ -104,13 +114,17 @@ const ReportedUsers = () => {
                 <p className="text-sm text-gray-600">{user.email}</p>
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-gray-700">Publicaciones Reportadas:</h3>
+                <h3 className="text-sm font-semibold text-gray-700">
+                  Publicaciones Reportadas:
+                </h3>
                 <ul className="list-disc pl-5 text-sm space-y-1">
                   {user.reportedPublications.map((pub, index) => (
                     <li key={index}>
                       <strong>{pub.title}</strong>
                       <div className="text-xs text-gray-500">
-                        <p>Fecha: {new Date(pub.createdAt).toLocaleDateString()}</p>
+                        <p>
+                          Fecha: {new Date(pub.createdAt).toLocaleDateString()}
+                        </p>
                       </div>
                     </li>
                   ))}

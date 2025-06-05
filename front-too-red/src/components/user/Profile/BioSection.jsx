@@ -9,13 +9,13 @@ const BioSection = ({ user }) => (
     ) : (
       <p className="text-gray-500 italic">Este usuario no tiene biografía.</p>
     )}
-    
+
     {user.interests && user.interests.length > 0 && (
       <div className="mt-3">
         <p className="text-sm font-medium text-gray-700 mb-2">Intereses:</p>
         <div className="flex flex-wrap gap-2">
           {user.interests.map((interest, index) => (
-            <span 
+            <span
               key={index}
               className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"
             >

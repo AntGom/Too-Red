@@ -15,7 +15,7 @@ const ProfileForm = ({
   setShowPassword,
   onChange,
   onFileChange,
-  loading
+  loading,
 }) => {
   const [selectedFileName, setSelectedFileName] = useState("");
 
@@ -164,7 +164,9 @@ const ProfileForm = ({
                 onChange={handleFileChange}
               />
               {selectedFileName && (
-                <span className="text-sm text-gray-700">{selectedFileName}</span>
+                <span className="text-sm text-gray-700">
+                  {selectedFileName}
+                </span>
               )}
             </div>
           </div>
@@ -201,7 +203,7 @@ ProfileForm.propTypes = {
   setShowPassword: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onFileChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
 };
 
 export default ProfileForm;

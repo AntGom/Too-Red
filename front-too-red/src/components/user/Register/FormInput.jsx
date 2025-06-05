@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const FormInput = ({ label, name, type = "text", value, onChange, error }) => {
   return (

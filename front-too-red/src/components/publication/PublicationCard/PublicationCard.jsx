@@ -27,15 +27,15 @@ const PublicationCard = ({ publication, getPublications }) => {
         file={publication.file}
         onViewImage={setViewingImage}
       />
-      
+
       {/* Mostrar etiquetas si existen */}
       {publication.tags && publication.tags.length > 0 && (
-        <PublicationTags 
-          publication={publication} 
-          onRefresh={() => getPublications(1, true)} 
+        <PublicationTags
+          publication={publication}
+          onRefresh={() => getPublications(1, true)}
         />
       )}
-      
+
       <PublicationActions
         publicationId={publication._id}
         likes={publication.likes}

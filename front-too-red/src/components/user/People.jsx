@@ -2,7 +2,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Global } from "../../helpers/Global";
 import UserList from "./UserList";
-import debounce from 'lodash.debounce';
+import debounce from "lodash.debounce";
 import { getCachedData, cacheData } from "../../helpers/Cache";
 
 const People = () => {
@@ -24,7 +24,7 @@ const People = () => {
     if (nextPage === 1) {
       const cacheKey = "people_list_page1";
       const cachedUsers = getCachedData(cacheKey);
-      
+
       if (cachedUsers) {
         setUsers(cachedUsers.users);
         setFollowing(cachedUsers.following);
@@ -50,10 +50,12 @@ const People = () => {
         if (nextPage === 1) {
           cacheData("people_list_page1", data, 5);
         }
-        
+
         setUsers((prevUsers) => [...prevUsers, ...data.users]);
-        setFollowing(Array.isArray(data.user_following) ? data.user_following : []);
-        
+        setFollowing(
+          Array.isArray(data.user_following) ? data.user_following : []
+        );
+
         if (users.length >= data.total - data.users.length) {
           setMore(false);
         } else {
@@ -69,15 +71,16 @@ const People = () => {
 
   // Debounce para la búsqueda
   const debouncedSearch = useMemo(
-    () => debounce((term) => {
-      console.log("Filtrando usuarios por:", term);
-    }, 300),
+    () =>
+      debounce((term) => {
+        console.log("Filtrando usuarios por:", term);
+      }, 300),
     []
   );
 
   useEffect(() => {
     debouncedSearch(searchTerm);
-    
+
     return () => debouncedSearch.cancel();
   }, [searchTerm, debouncedSearch]);
 
@@ -94,7 +97,7 @@ const People = () => {
   return (
     <div className="flex-1 flex-col">
       <h1 className="flex text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-      Comunidad Too-Red
+        Comunidad Too-Red
       </h1>
 
       {/* Buscador */}

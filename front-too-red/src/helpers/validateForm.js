@@ -1,10 +1,10 @@
 import validator from "validator";
 
-// Validación en el frontend
+// Validación en el front
 const validateForm = (params) => {
   const errors = {};
 
-  // Validación de nombre
+  // Validación nombre
   if (
     !params.name ||
     validator.isEmpty(params.name) ||
@@ -15,7 +15,7 @@ const validateForm = (params) => {
     errors.name = "El nombre solo puede contener letras.";
   }
 
-  // Validación de apellidos
+  // Validación apellidos
   if (
     !params.surname ||
     validator.isEmpty(params.surname) ||
@@ -26,7 +26,7 @@ const validateForm = (params) => {
     errors.surname = "El apellido solo puede contener letras.";
   }
 
-  // Validación de alias
+  // Validación alias
   if (
     !params.nick ||
     validator.isEmpty(params.nick) ||
@@ -35,7 +35,7 @@ const validateForm = (params) => {
     errors.nick = "El alias debe tener al menos 3 caracteres.";
   }
 
-  // Validación de email
+  // Validación email
   if (
     !params.email ||
     validator.isEmpty(params.email) ||
@@ -44,7 +44,7 @@ const validateForm = (params) => {
     errors.email = "El email no es válido.";
   }
 
-  // Validación de contraseña
+  // Validación contraseña
   if (
     !params.password ||
     validator.isEmpty(params.password) ||

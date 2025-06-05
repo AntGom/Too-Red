@@ -25,7 +25,7 @@ const DeleteProfileModal = ({ authId, token, onDeleteSuccess, onCancel }) => {
       if (data.message === "Usuario eliminado correctamente (soft delete)") {
         showToast({
           message: "¡Perfil eliminado con éxito!",
-          type: "success"
+          type: "success",
         });
 
         setTimeout(() => {
@@ -34,14 +34,14 @@ const DeleteProfileModal = ({ authId, token, onDeleteSuccess, onCancel }) => {
       } else {
         showToast({
           message: "Error al eliminar el perfil.",
-          type: "error"
+          type: "error",
         });
         console.error("Error al eliminar el perfil:", data.message);
       }
     } catch (error) {
       showToast({
         message: "Error al eliminar el perfil.",
-        type: "error"
+        type: "error",
       });
       console.error("Error al eliminar el perfil:", error);
     } finally {

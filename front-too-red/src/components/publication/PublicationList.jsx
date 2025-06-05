@@ -2,7 +2,13 @@ import { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import PublicationCard from "./PublicationCard/PublicationCard";
 
-const PublicationList = ({ publications, getPublications, page, setPage, more }) => {
+const PublicationList = ({
+  publications,
+  getPublications,
+  page,
+  setPage,
+  more,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const loadMore = useCallback(() => {

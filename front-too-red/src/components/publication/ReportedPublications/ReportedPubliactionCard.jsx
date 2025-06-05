@@ -14,7 +14,8 @@ const ReportedPublicationCard = ({
         <strong>Nick:</strong> @{publication.user.nick}
       </p>
       <p className="text-sm text-gray-900">
-        <strong>Fecha:</strong> {new Date(publication.createdAt).toLocaleString()}
+        <strong>Fecha:</strong>{" "}
+        {new Date(publication.createdAt).toLocaleString()}
       </p>
       <p className="text-sm text-gray-900">
         <strong>Texto:</strong> {publication.text || "Sin texto"}
@@ -38,21 +39,25 @@ const ReportedPublicationCard = ({
         <div
           key={report._id}
           className={`mb-2 p-3 rounded-lg ${
-            report.status === "reverted" ? "bg-gray-200 text-gray-600" : "bg-orange-300"
+            report.status === "reverted"
+              ? "bg-gray-200 text-gray-600"
+              : "bg-orange-300"
           }`}
         >
           <p className="text-sm">
-            <strong>Reportado por:</strong> {report.user.nick} ({report.user.email})
+            <strong>Reportado por:</strong> {report.user.nick} (
+            {report.user.email})
           </p>
           <p className="text-sm">
             <strong>Motivo:</strong> {report.reason}
           </p>
           <p className="text-sm">
-            <strong>Fecha:</strong> {new Date(report.createdAt).toLocaleString()}
+            <strong>Fecha:</strong>{" "}
+            {new Date(report.createdAt).toLocaleString()}
           </p>
           {report.status === "reverted" && (
             <p className="text-sm text-yellow-600 font-semibold">
-              ✅ Publicación Revisada 
+              ✅ Publicación Revisada
             </p>
           )}
           <div className="flex justify-around mt-2">

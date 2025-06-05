@@ -7,7 +7,13 @@ import { useToast } from "../../../hooks/useToast";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import avatar from "../../../assets/img/user.png";
 
-const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicationId }) => {
+const TagUserModal = ({
+  isOpen,
+  onClose,
+  initialTags = [],
+  onTagUsers,
+  publicationId,
+}) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -27,7 +33,7 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
       setSearchResults([]);
       return;
     }
-    
+
     setLoading(true);
     try {
       const response = await fetch(
@@ -73,7 +79,7 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
   const handleUserSelect = (user) => {
     setSelectedUsers((prev) => {
       // Verificar si existe usuario
-      if (prev.some(u => u._id === user._id)) {
+      if (prev.some((u) => u._id === user._id)) {
         return prev;
       }
       return [...prev, user];
@@ -94,38 +100,38 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
 
     try {
       setLoading(true);
-      
+
       // Si hay ID de publicación-> modo edición
       if (publicationId) {
         // Primero, obtenemos etiquetas actuales para saber cuáles añadir/quitar
         const tagsToAdd = selectedUsers.filter(
-          user => !initialTags.some(tag => tag._id === user._id)
+          (user) => !initialTags.some((tag) => tag._id === user._id)
         );
-        
-        // Crear promesas para añadir etiquetas nuevas
-        const tagPromises = tagsToAdd.map(user => 
+
+        // Promesas para añadir etiquetas nuevas
+        const tagPromises = tagsToAdd.map((user) =>
           fetch(`${Global.url}publication/${publicationId}/tag/${user._id}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: token,
             },
-          }).then(res => res.json())
+          }).then((res) => res.json())
         );
-        
+
         await Promise.all(tagPromises);
       }
-      
+
       onTagUsers(selectedUsers);
-      showToast({ 
-        message: "Usuarios etiquetados correctamente", 
-        type: "success" 
+      showToast({
+        message: "Usuarios etiquetados correctamente",
+        type: "success",
       });
     } catch (error) {
       console.error("Error al guardar etiquetas:", error);
-      showToast({ 
-        message: "Error al guardar etiquetas", 
-        type: "error" 
+      showToast({
+        message: "Error al guardar etiquetas",
+        type: "error",
       });
     } finally {
       setLoading(false);
@@ -134,11 +140,7 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Etiquetar usuarios"
-    >
+    <Modal isOpen={isOpen} onClose={onClose} title="Etiquetar usuarios">
       <div className="space-y-4">
         <div className="relative">
           <input
@@ -165,12 +167,18 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
                 className="p-2 hover:bg-gray-100 cursor-pointer flex items-center border-b last:border-b-0"
               >
                 <img
-                  src={user.image && user.image !== "default.png" ? user.image : avatar}
+                  src={
+                    user.image && user.image !== "default.png"
+                      ? user.image
+                      : avatar
+                  }
                   alt={user.name}
                   className="w-8 h-8 rounded-full mr-2 object-cover"
                 />
                 <div>
-                  <div className="font-medium text-sm">{user.name} {user.surname}</div>
+                  <div className="font-medium text-sm">
+                    {user.name} {user.surname}
+                  </div>
                   <div className="text-xs text-gray-500">@{user.nick}</div>
                 </div>
               </div>
@@ -191,7 +199,11 @@ const TagUserModal = ({ isOpen, onClose, initialTags = [], onTagUsers, publicati
                   className="inline-flex items-center bg-blue-50 rounded-full px-2.5 py-1.5 text-xs font-medium text-blue-700"
                 >
                   <img
-                    src={user.image && user.image !== "default.png" ? user.image : avatar}
+                    src={
+                      user.image && user.image !== "default.png"
+                        ? user.image
+                        : avatar
+                    }
                     alt={user.name}
                     className="w-4 h-4 rounded-full mr-1.5 object-cover"
                   />
@@ -236,7 +248,7 @@ TagUserModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   initialTags: PropTypes.array,
   onTagUsers: PropTypes.func.isRequired,
-  publicationId: PropTypes.string
+  publicationId: PropTypes.string,
 };
 
 export default TagUserModal;

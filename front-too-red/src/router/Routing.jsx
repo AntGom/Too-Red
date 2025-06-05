@@ -51,8 +51,11 @@ const Routing = () => {
               <Route path="profile/:userId" element={<Profile />} />
               <Route path="publications/:userId" element={<MyPublications />} />
               <Route path="tagged/:userId" element={<TaggedPublications />} />
-              <Route path="admin/reported-publications" element={<ReportedPublications />}/>
-              <Route path="admin/reported-users" element={<ReportedUsers />}/>
+              <Route
+                path="admin/reported-publications"
+                element={<ReportedPublications />}
+              />
+              <Route path="admin/reported-users" element={<ReportedUsers />} />
               <Route path="messages" element={<Chat />} />
             </Route>
 

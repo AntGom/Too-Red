@@ -57,7 +57,7 @@ const CommentsList = ({ publicationId, likes, publicationUserId }) => {
         <div className="spinner"></div>
       </div>
     );
-    
+
   return (
     <section className="mt-3 w-full border-t pt-3">
       <article className="flex justify-between items-center">
@@ -80,7 +80,9 @@ const CommentsList = ({ publicationId, likes, publicationUserId }) => {
       {showComments && (
         <div className="mt-3 space-y-3">
           {comments.length === 0 ? (
-            <p className="text-gray-500 italic text-center py-2">No hay comentarios aún.</p>
+            <p className="text-gray-500 italic text-center py-2">
+              No hay comentarios aún.
+            </p>
           ) : (
             comments.map((comment) => (
               <article

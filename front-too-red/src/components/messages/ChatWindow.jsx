@@ -256,7 +256,11 @@ export default function ChatWindow({
 
           {/* Modal para previsualizar imágenes/videos */}
           {modalOpen && selectedMedia && (
-            <MediaPreviewModal fileUrl={selectedMedia} isOpen={modalOpen} onClose={closeModal} />
+            <MediaPreviewModal
+              fileUrl={selectedMedia}
+              isOpen={modalOpen}
+              onClose={closeModal}
+            />
           )}
         </>
       ) : (
@@ -298,7 +302,7 @@ export default function ChatWindow({
 }
 
 ChatWindow.propTypes = {
-selectedUser: PropTypes.object,
+  selectedUser: PropTypes.object,
   messages: PropTypes.array.isRequired,
   newMessage: PropTypes.string.isRequired,
   setNewMessage: PropTypes.func.isRequired,

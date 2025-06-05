@@ -39,7 +39,7 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
     setLoading(true);
 
     try {
-      //Editar texto de publicación
+      //Editar texto
       const response = await fetch(
         `${Global.url}publication/edit/${publication._id}`,
         {
@@ -56,7 +56,7 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
 
       if (data.status === "success") {
         if (selectedFile) {
-          // Si hay archivo seleccionado, subimos a Cloudinary
+          // Si hay archivo seleccionado-> a Cloudinary
           const formData = new FormData();
           formData.append("file", selectedFile);
 
@@ -165,7 +165,6 @@ const EditPublication = ({ publication, onSave, onCancel }) => {
       </div>
 
       <div className="flex justify-between items-center gap-2">
-
         <div className="mt-4">
           <FileInput onFileSelect={setSelectedFile} />
         </div>

@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { GetProfile } from "../../helpers/GetProfile";
 
 const Followers = () => {
-  // Estados
   const [users, setUsers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -18,25 +18,25 @@ const RecoverPassword = () => {
           "Content-Type": "application/json",
         },
       });
-      
+
       const data = await request.json();
-      
+
       if (data.status === "success") {
         showToast({
           message: data.message,
-          type: "success"
+          type: "success",
         });
       } else {
         showToast({
           message: data.message,
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       showToast({
         message: "Error al conectar con el servidor",
-        type: "error"
+        type: "error",
       });
     } finally {
       setLoading(false);

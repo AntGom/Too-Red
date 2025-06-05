@@ -21,7 +21,7 @@ const PublicationHeader = ({ publication, onEdit, onDelete, onReport }) => {
   return (
     <section className="flex items-center justify-between mb-4">
       <article className="flex items-center text-sm text-gray-800">
-        <NavLink 
+        <NavLink
           to={`/social/profile/${publication.user?._id}`}
           className="relative group"
         >

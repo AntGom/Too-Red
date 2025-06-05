@@ -19,7 +19,7 @@ const CreateComment = ({ publicationId }) => {
     if (!commentText.trim()) {
       showToast({
         message: "El comentario no puede estar vacío.",
-        type: "error"
+        type: "error",
       });
       return;
     }
@@ -44,21 +44,21 @@ const CreateComment = ({ publicationId }) => {
         setCommentText("");
         showToast({
           message: "Comentario añadido correctamente.",
-          type: "success"
+          type: "success",
         });
-        // Recargar los comentarios desde el padre
+        // Recargar los comentarios desde su padre
         window.location.reload();
       } else {
         showToast({
           message: data.message || "Hubo un error al agregar el comentario.",
-          type: "error"
+          type: "error",
         });
       }
     } catch (error) {
       console.error("Error al crear comentario:", error);
       showToast({
         message: "Error al crear el comentario.",
-        type: "error"
+        type: "error",
       });
     } finally {
       setLoading(false);

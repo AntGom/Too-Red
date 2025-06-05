@@ -37,9 +37,9 @@ const RevertReport = ({
       if (data.status === "success") {
         showToast({
           message: "Reporte revertido con éxito.",
-          type: "success"
+          type: "success",
         });
-        
+
         setTimeout(() => {
           onRevertSuccess();
         }, 1500);
@@ -49,7 +49,7 @@ const RevertReport = ({
     } catch (error) {
       showToast({
         message: error.message || "Error al intentar revertir el reporte.",
-        type: "error"
+        type: "error",
       });
       onCancel();
     } finally {

@@ -12,10 +12,10 @@ const PublicationTags = ({ publication, onRefresh }) => {
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
 
-  // Solo el creador de la publicación o un usuario etiquetado puede quitar la etiqueta
+  // Solo owner o usuario etiquetado puede quitar la etiqueta
   const canRemoveTag = (tagUserId) => {
     return (
-      auth._id === publication.user._id || // Es el creador de la publicación
+      auth._id === publication.user._id || // Es owner de publicación
       auth._id === tagUserId // Es el usuario etiquetado
     );
   };

@@ -1,20 +1,25 @@
-import { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { XCircleIcon, CheckCircleIcon, ExclamationTriangleIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
-import { createPortal } from 'react-dom';
-import clsx from 'clsx';
+import { useEffect } from "react";
+import PropTypes from "prop-types";
+import {
+  XCircleIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/24/outline";
+import { createPortal } from "react-dom";
+import clsx from "clsx";
 
 const Toast = ({ message, type, show, onClose }) => {
   // Bloquear scroll cuando salta
   useEffect(() => {
     if (show) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [show]);
 
@@ -30,23 +35,23 @@ const Toast = ({ message, type, show, onClose }) => {
 
   // Estilos según tipo de notificación
   const typeStyles = {
-    success: 'bg-gradient-to-r from-green-500 to-green-600 text-white',
-    error: 'bg-gradient-to-r from-red-500 to-red-600 text-white',
-    warning: 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-white',
-    info: 'bg-gradient-to-r from-blue-400 to-blue-500 text-white',
+    success: "bg-gradient-to-r from-green-500 to-green-600 text-white",
+    error: "bg-gradient-to-r from-red-500 to-red-600 text-white",
+    warning: "bg-gradient-to-r from-yellow-400 to-yellow-500 text-white",
+    info: "bg-gradient-to-r from-blue-400 to-blue-500 text-white",
   };
 
   // Contenido
   const toastContent = (
     <div className="fixed top-4 right-4 z-[9999] animate-fade-in">
-      <div className={clsx(
-        'p-4 rounded-lg shadow-lg max-w-md w-auto mx-4 border border-white border-opacity-20',
-        typeStyles[type] || typeStyles.info
-      )}>
+      <div
+        className={clsx(
+          "p-4 rounded-lg shadow-lg max-w-md w-auto mx-4 border border-white border-opacity-20",
+          typeStyles[type] || typeStyles.info
+        )}
+      >
         <div className="flex items-center">
-          <div className="flex-shrink-0">
-            {icons[type] || icons.info}
-          </div>
+          <div className="flex-shrink-0">{icons[type] || icons.info}</div>
           <div className="ml-3 flex-1">
             <p className="font-medium">{message}</p>
           </div>
@@ -70,7 +75,7 @@ const Toast = ({ message, type, show, onClose }) => {
 
 Toast.propTypes = {
   message: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['success', 'error', 'warning', 'info']),
+  type: PropTypes.oneOf(["success", "error", "warning", "info"]),
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };

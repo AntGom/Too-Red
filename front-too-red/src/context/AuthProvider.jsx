@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       const data = await request.json();
 
       if (data.user.isBanned) {
-        setShowBanModal(true); // Mostrar el modal si el usuario está baneado
+        setShowBanModal(true); // Mostrar modal si usuario baneado
       }
 
       const countersRequest = await fetch(

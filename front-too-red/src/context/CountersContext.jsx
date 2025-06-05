@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Global } from '../helpers/Global';
+import { createContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Global } from "../helpers/Global";
 
 export const CountersContext = createContext();
 
@@ -11,40 +11,42 @@ export const CountersProvider = ({ children }) => {
     publications: 0,
   });
 
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user.id : null;
 
   useEffect(() => {
-
     const fetchCountersFromDatabase = async () => {
-        const token = localStorage.getItem('token');
-      
-        if (!userId || !token) {
-          console.error('User ID or Token is missing.');
-          return;
+      const token = localStorage.getItem("token");
+
+      if (!userId || !token) {
+        console.error("User ID or Token is missing.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${Global.url}user/counters/${userId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        });
+        const data = await response.json();
+
+        if (data.userId === userId) {
+          const { following, followers, publications } = data;
+          setCounters({ following, followers, publications });
+        } else {
+          console.error(
+            "No se pudieron cargar los contadores desde la base de datos. Respuesta: ",
+            data
+          );
         }
-      
-        try {
-          const response = await fetch(`${Global.url}user/counters/${userId}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token,
-            },
-          });
-          const data = await response.json();
-      
-          if (data.userId === userId) {
-            const { following, followers, publications } = data;
-            setCounters({ following, followers, publications });
-          } else {
-            console.error('No se pudieron cargar los contadores desde la base de datos. Respuesta: ', data);
-          }
-        } catch (error) {
-          console.error('Error al obtener los contadores:', error);
-        }
-      };
-      
+      } catch (error) {
+        console.error("Error al obtener los contadores:", error);
+      }
+    };
+
     fetchCountersFromDatabase();
   }, [userId]);
 
