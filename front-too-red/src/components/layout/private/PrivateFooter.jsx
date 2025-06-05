@@ -2,9 +2,9 @@ const PrivateFooter = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-4 mb-2 text-center text-gray-600">
+    <footer className="mt-4 mb-2 text-gray-600">
       <div className="flex flex-col justify-center items-center">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center">
           <img
             src="/nuevoLogoLargo.webp"
             alt="Logo de Too-Red"

@@ -27,7 +27,7 @@ const NewSidebar = ({ onClose }) => {
   return (
     <aside className="flex flex-col items-center justify-between bg-gray-50 relative p-2 max-h-screen h-full overflow-y-auto">
 
-      <section className="flex flex-col gap-5 md:gap-3 items-center ">
+      <section className="flex flex-col gap-4 md:gap-3 items-center ">
         {/* Enlace al feed */}
         <NavLink
           to="/social/feed"
@@ -44,10 +44,10 @@ const NewSidebar = ({ onClose }) => {
         {/* Enlace al perfil */}
         <NavLink
           to={"/social/profile/" + auth._id}
-          className="rounded-xl w-full hover:bg-gray-200 transition-all duration-300 hover:scale-105"
+          className="rounded-xl m-1 w-full hover:bg-gray-200 transition-all duration-300 hover:scale-105"
           onClick={onClose}
         >
-          <div className="flex justify-start ml-4 gap-1 items-center">
+          <div className="flex gap-1 items-center">
             {auth.image !== "default.png" ? (
               <img
                 src={auth.image}

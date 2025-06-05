@@ -46,7 +46,7 @@ const PrivateLayout = () => {
         </button>
       </div>
 
-      {/* Fondo oscuro menú móvil */}
+      {/* Fondo oscuro al abrirlo en menú móvil */}
       {isMenuOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out z-10"
@@ -56,7 +56,7 @@ const PrivateLayout = () => {
 
       {/* Menú deslizante pantallas pequeñas */}
       <div
-        className={`fixed top-0 right-0 z-30 bg-gary-50 h-full w-2/3 shadow-lg border-l-2 border-red-600 md:hidden
+        className={`fixed top-0 right-0 z-30 bg-gray-50 h-full w-2/3 shadow-lg border-l-2 border-red-600 md:hidden
           transform transition-transform duration-300 ease-in-out
           ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
