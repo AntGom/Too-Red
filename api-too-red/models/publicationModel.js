@@ -10,13 +10,25 @@ const ReportSchema = new Schema({
 
 const CommentSchema = new Schema({
   user: { type: Schema.ObjectId, ref: "User", required: true },
-  text: { type: String, required: true, trim: true, minlength: 1, maxlength: 1000 },
+  text: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1,
+    maxlength: 1000,
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
 const PublicationSchema = new Schema({
   user: { type: Schema.ObjectId, ref: "User", required: true },
-  text: { type: String, required: true, trim: true, minlength: 1, maxlength: 1000 },
+  text: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1,
+    maxlength: 1000,
+  },
   file: String,
   tags: [{ type: Schema.ObjectId, ref: "User" }], // Usuarios etiquetados en la publicación
   likes: [{ type: Schema.ObjectId, ref: "User", unique: true }],
@@ -29,7 +41,7 @@ const PublicationSchema = new Schema({
   deletedAt: { type: Date, default: null },
 });
 
-//Middleware actualizar contador de likes
+//Actualizar contador de likes
 PublicationSchema.pre("save", function (next) {
   this.likesCount = this.likes.length;
   this.reportCount = this.reports.length;

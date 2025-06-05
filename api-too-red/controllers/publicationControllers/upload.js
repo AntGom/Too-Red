@@ -2,41 +2,40 @@ import Publication from "../../models/publicationModel.js";
 import { uploadPublicationImage } from "../../services/imgPublicationService.js";
 
 const upload = async (req, res) => {
-    try {
-        const publicationId = req.params.id;
-        const file = req.files?.file;
+  try {
+    const publicationId = req.params.id;
+    const file = req.files?.file;
 
-        // Subir imagen
-        const imageUrl = await uploadPublicationImage(file);
+    // Subir imagen
+    const imageUrl = await uploadPublicationImage(file);
 
-        // Guardar URL en bbdd
-        const publication = await Publication.findOneAndUpdate(
-            { user: req.user.id, _id: publicationId },
-            { file: imageUrl },
-            { new: true }
-        )
-        .populate("user", "name")
-        .select("createdAt user file");
+    // Guardar URL en bbdd
+    const publication = await Publication.findOneAndUpdate(
+      { user: req.user.id, _id: publicationId },
+      { file: imageUrl },
+      { new: true }
+    )
+      .populate("user", "name")
+      .select("createdAt user file");
 
-        if (!publication) {
-            return res.status(404).json({
-                status: "error",
-                message: "Publicación no encontrada",
-            });
-        }
-
-        return res.status(200).json({
-            status: "success",
-            message: "Imagen subida correctamente",
-            publication,
-        });
-
-    } catch (error) {
-        return res.status(500).json({
-            status: "error",
-            message: error.message,
-        });
+    if (!publication) {
+      return res.status(404).json({
+        status: "error",
+        message: "Publicación no encontrada",
+      });
     }
+
+    return res.status(200).json({
+      status: "success",
+      message: "Imagen subida correctamente",
+      publication,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
 };
 
-export default upload ;
+export default upload;

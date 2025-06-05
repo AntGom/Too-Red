@@ -31,7 +31,9 @@ const reportPublication = async (req, res) => {
 
     //Nickname denunciante
     const reportUser = await User.findById(userId);
-    const reportUserNickname = reportUser ? reportUser.nick : "Usuario desconocido";
+    const reportUserNickname = reportUser
+      ? reportUser.nick
+      : "Usuario desconocido";
 
     //Nickname denunciado
     const postUser = await User.findById(publication.user);

@@ -15,7 +15,7 @@ const deleteComment = async (req, res) => {
       });
     }
 
-    // Validar los IDs recibidos
+    // Validar IDs recibidos
     if (!publication_id || !comment_id) {
       console.error("Error: IDs de publicación o comentario no proporcionados");
       return res.status(400).json({
@@ -64,7 +64,7 @@ const deleteComment = async (req, res) => {
       });
     }
 
-    // Eliminar el comentario usando el método pull de MongoDB
+    // Eliminar el comentario
     publication.comments.pull(comment_id);
     await publication.save();
 

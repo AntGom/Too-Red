@@ -16,7 +16,6 @@ const MessageSchema = new Schema(
   { versionKey: false }
 );
 
-//Índices para optimizar búsquedas
 MessageSchema.index({ sender: 1, receiver: 1, createdAt: 1 }); //Optimizar búsqueda entre usuarios
 MessageSchema.index({ createdAt: 1 }); //Optimizar búsqueda por fecha
 

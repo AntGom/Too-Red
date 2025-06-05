@@ -3,10 +3,10 @@ import Follow from "../../models/followModel.js";
 const unfollow = async (req, res) => {
 
     try {
-        let followedId = req.params.id;//ID del usuario a dejar de seguir
+        let followedId = req.params.id;//ID de usuario a dejar de seguir
         let identity = req.user; //Usuario autenticado
 
-        if (!followedId) { // Verificar si ID válido
+        if (!followedId) {
             return res.status(400).send({
                 status: "error",
                 message: "El ID del usuario a dejar de seguir es requerido.",

@@ -16,7 +16,7 @@ const editPublication = async (req, res) => {
     // Buscar la por ID
     const publication = await Publication.findById(publicationId);
 
-    // Si no se encuentra, enviar error
+    // Si no se encuentra, error
     if (!publication) {
       return res.status(404).send({
         status: "error",
@@ -24,7 +24,7 @@ const editPublication = async (req, res) => {
       });
     }
 
-    // Verificar si usuario que realiza solicitud es el mismo que creó la publicación
+    // Verificar si usuario que realiza solicitud es el mismo que la creó
     if (publication.user.toString() !== req.user.id) {
       return res.status(403).send({
         status: "error",
@@ -32,7 +32,7 @@ const editPublication = async (req, res) => {
       });
     }
 
-    // Actualizar publicación
+    // Actualizar
     const publicationUpdated = await Publication.findByIdAndUpdate(
       publicationId,
       params,

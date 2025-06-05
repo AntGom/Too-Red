@@ -6,14 +6,13 @@ const getComments = async (req, res) => {
 
     // Buscar la publicación
     const publication = await Publication.findById(publication_id)
-      .populate("comments.user", "name nick image") // Popular los usuarios de los comentarios
+      .populate("comments.user", "name nick image")
       .exec();
 
     if (!publication) {
       return res.status(404).json({ status: "error", message: "Publicación no encontrada." });
     }
 
-    // Enviar los comentarios
     return res.status(200).json({
       status: "success",
       comments: publication.comments,

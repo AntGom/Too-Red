@@ -1,5 +1,5 @@
 import Publication from "../../models/publicationModel.js";
-import { sendEmail } from "../../services/emailService.js"; // Asegúrate de importar tu servicio de correo.
+import { sendEmail } from "../../services/emailService.js";
 
 const remove = async (req, res) => {
   try {

@@ -5,10 +5,8 @@ const following = async (req, res) => {
   try {
     let userId = req.user.id;
 
-    // Comprobar si me llega el id por params
     if (req.params.id) userId = req.params.id;
 
-    // Opciones de consulta
     const options = {
       populate: [
         { path: "user", select: "-password -role -__v" },
@@ -18,7 +16,11 @@ const following = async (req, res) => {
     };
 
     // Find a follow, popular datos de user y no usar paginación
-const result = await Follow.find({ user: userId, isDeleted: false }, null, options);
+    const result = await Follow.find(
+      { user: userId, isDeleted: false },
+      null,
+      options
+    );
 
     // Sacar array de ids que me siguen y los que sigo yo
     let followUserIdsResult = await followUserIds(req.user.id);

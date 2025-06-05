@@ -47,12 +47,11 @@ const addComment = async (req, res) => {
     return res.status(200).json({
       status: "success",
       message: "Comentario añadido correctamente.",
-      comment: newComment, // Devolver comentario recién añadido
+      comment: newComment,
     });
   } catch (error) {
     console.error("Error al añadir comentario:", error);
 
-    // Responder con el mensaje de error
     return res.status(500).json({ 
       status: "error", 
       message: "Error al añadir el comentario.",

@@ -6,7 +6,7 @@ const counter = async (req, res) => {
   if (req.params.id) userId = req.params.id;
 
   try {
-    // Seguidores válidos (usuarios que siguen al userId)
+    // Seguidores (usuarios que siguen al userId)
     const rawFollowers = await Follow.find({ followed: userId }).populate("user", "isDeleted deletedAt");
     const followers = rawFollowers.filter(f => f.user && !f.user.isDeleted && !f.user.deletedAt).length;
 
@@ -14,7 +14,7 @@ const counter = async (req, res) => {
     const rawFollowing = await Follow.find({ user: userId }).populate("followed", "isDeleted deletedAt");
     const following = rawFollowing.filter(f => f.followed && !f.followed.isDeleted && !f.followed.deletedAt).length;
 
-    // Publicaciones activas (si usas isDeleted o deletedAt)
+    // Publicaciones activas
     const publications = await Publication.countDocuments({
       user: userId,
       $or: [

@@ -1,7 +1,6 @@
 import Publication from "../../models/publicationModel.js";
 
 const save = async (req, res) => {
-  // Recoger datos del body
   const params = req.body;
 
   // Si no llegan dar respuesta negativa
@@ -13,11 +12,11 @@ const save = async (req, res) => {
   }
 
   try {
-    // Crear objeto de la clase Publication
+    // Crear objeto Publication
     let newPublication = new Publication(params);
     newPublication.user = req.user.id;
 
-    // Guardar modelo en BBDD
+    // Guardar
     const publicationStored = await newPublication.save();
 
     return res.status(200).send({

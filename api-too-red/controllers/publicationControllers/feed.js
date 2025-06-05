@@ -9,7 +9,7 @@ const feed = async (req, res) => {
     let itemsPerPage = 5;
 
     // Usuario = admin?
-    const isAdmin = identity.role === 'admin';
+    const isAdmin = identity.role === "admin";
 
     // Usuario = admin => mostrar todas publicaciones
     if (isAdmin) {
@@ -37,7 +37,7 @@ const feed = async (req, res) => {
       });
     }
 
-    // Si != admin, ver seguidos, intereses comunes y uno mismo
+    // Si != admin, ver seguidos, intereses comunes y mi mismo
     const user = await User.findById(identity.id).select("interests");
     if (!user) {
       return res.status(404).json({
@@ -49,19 +49,24 @@ const feed = async (req, res) => {
     // Usuarios seguidos
     let followUserId = await followUserIds(identity.id);
 
-    // Usuarios con intereses comunes (excluyéndose a sí mismo)
+    // Usuarios con intereses comunes (excluyéndome mí)
     const usersWithCommonInterests = await User.find({
       interests: { $in: user.interests },
       _id: { $ne: identity.id },
     }).select("_id");
 
-    const commonInterestUserIds = usersWithCommonInterests.map((u) => u._id);
+    const commonInterestUserIds = usersWithCommonInterests.map(u => u._id);
 
-    // Combinar IDs y añadir el propio usuario
+    // IDs de administradores
+    const adminUsers = await User.find({ role: "admin" }).select("_id");
+    const adminIds = adminUsers.map(admin => admin._id);
+
+    // Combinar IDs: seguidos, intereses comunes, yo mismo y admins
     const userIds = [...new Set([
       ...followUserId.following,
       ...commonInterestUserIds,
-      identity.id, // ✅ Incluir publicaciones propias
+      ...adminIds,
+      identity.id,
     ])];
 
     if (userIds.length === 0) {
@@ -77,7 +82,6 @@ const feed = async (req, res) => {
       });
     }
 
-    // Publicaciones de usuarios seguidos, con intereses comunes y uno mismo
     const query = { user: { $in: userIds } };
 
     const publications = await Publication.paginate(query, {

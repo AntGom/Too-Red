@@ -28,7 +28,6 @@ const profile = async (req, res) => {
     const followInfo = await followThisUser(req.user.id, req.params.id);
     console.log(followInfo);
 
-    // Devolver el resultado
     return res.status(200).send({
       status: "success",
       message: "Usuario identificado correctamente",

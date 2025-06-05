@@ -16,7 +16,7 @@ const addTag = async (req, res) => {
       });
     }
 
-    // Verificar si usuario es owner de publicación
+    // Verificar si usuario es owner
     if (publication.user.toString() !== currentUserId) {
       return res.status(403).json({
         status: "error",
@@ -57,7 +57,7 @@ const addTag = async (req, res) => {
       }
     }
 
-    // Añadir la etiqueta
+    // Añadir etiqueta
     publication.tags.push(taggedUserId);
     await publication.save();
 

@@ -18,7 +18,7 @@ const resetPassword = async (req, res) => {
       });
     }
 
-    // Actualizar la contraseña
+    // Actualizar contraseña
     user.password = await bcrypt.hash(newPassword, 10);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;

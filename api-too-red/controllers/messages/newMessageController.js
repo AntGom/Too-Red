@@ -9,7 +9,7 @@ const newMessage = async (req, res) => {
   let fileUrl = null;
 
   try {
-    // 1. Si hay archivo, subir a Cloudinary
+    // Si hay archivo, subir a Cloudinary
     if (req.files?.file) {
       const file = req.files.file;
       const uploadResult = await cloudinary.v2.uploader.upload(
@@ -23,7 +23,7 @@ const newMessage = async (req, res) => {
       fileUrl = uploadResult.secure_url;
     }
 
-    // 2. Crear mensaje con/sin archivo
+    // Crear mensaje con/sin archivo
     const newMessage = new Message({
       sender,
       receiver,
@@ -35,7 +35,7 @@ const newMessage = async (req, res) => {
 
     await newMessage.save();
 
-    // 3. Emitir por socket si receptor online
+    // Emitir por socket si receptor online
     const receiverSockets = await io.in(receiver).fetchSockets();
 
     if (receiverSockets.length > 0) {
@@ -53,7 +53,7 @@ const newMessage = async (req, res) => {
       await newMessage.save();
     }
 
-    // 4. Responder al cliente
+    // Responder al cliente
     return res.status(201).json({
       message: "Mensaje enviado correctamente",
       data: {

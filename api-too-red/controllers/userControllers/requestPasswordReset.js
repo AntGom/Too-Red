@@ -13,7 +13,7 @@ const requestPasswordReset = async (req, res) => {
   }
 
   try {
-    // Buscar el usuario por su email
+    // Buscar usuario por su email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).send({
@@ -32,29 +32,28 @@ const requestPasswordReset = async (req, res) => {
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
     const emailHtml = `
         <div style="font-family: Arial, sans-serif; color: #333;">
-  <h2>Restablecimiento de contraseña</h2>
-  <p>Hola ${user.name},</p>
+      <h2>Restablecimiento de contraseña</h2>
+      <p>Hola ${user.name},</p>
 
-  <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Too-Red.</p>
-  <p>Para continuar con el proceso, haz clic en el siguiente botón:</p>
-  <a href="${resetLink}" style="
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: 10px;
-  ">
-    Restablecer contraseña
-  </a>
-  <p style="margin-top: 20px;"><strong>Importante:</strong> este enlace estará activo solo durante 1 hora.</p>
-  <p>Si tú no solicitaste el cambio, puedes ignorar este mensaje con tranquilidad.</p>
-  <p style="margin-top: 30px;">Gracias por confiar en nosotros,</p>
-  <p><strong>El equipo de Too-Red</strong></p>
-</div>
-
+      <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Too-Red.</p>
+      <p>Para continuar con el proceso, haz clic en el siguiente botón:</p>
+      <a href="${resetLink}" style="
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 10px;
+      ">
+        Restablecer contraseña
+      </a>
+      <p style="margin-top: 20px;"><strong>Importante:</strong> este enlace estará activo solo durante 1 hora.</p>
+      <p>Si tú no solicitaste el cambio, puedes ignorar este mensaje con tranquilidad.</p>
+      <p style="margin-top: 30px;">Gracias por confiar en nosotros,</p>
+      <p><strong>El equipo de Too-Red</strong></p>
+    </div>
     `;
 
     await sendEmail(user.email, "Recuperación de contraseña", emailHtml);

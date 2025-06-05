@@ -7,7 +7,7 @@ const update = async (req, res) => {
 
     const updateData = req.body;
 
-    //Si se actualiza la contraseña, cifrarla
+    //Si se actualiza la contraseña-> cifrarla
     if (updateData.password) {
       const salt = await bcrypt.genSalt(10);
       updateData.password = await bcrypt.hash(updateData.password, salt);
@@ -15,7 +15,7 @@ const update = async (req, res) => {
       delete updateData.password;
     }
 
-    // Buscar y actualizar el usuario
+    // Buscar y actualizar usuario
     const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
       new: true, // Devuelve el documento actualizado
       runValidators: true, // Ejecuta las validaciones

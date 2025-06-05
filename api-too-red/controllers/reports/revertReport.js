@@ -17,7 +17,9 @@ const revertReport = async (req, res) => {
     }
 
     //Publicación con población usuarios en reportes
-    const publication = await Publication.findById(publicationId).populate("reports.user");
+    const publication = await Publication.findById(publicationId).populate(
+      "reports.user"
+    );
 
     if (!publication) {
       return res.status(404).json({
@@ -73,7 +75,8 @@ const revertReport = async (req, res) => {
 
     return res.status(200).json({
       status: "success",
-      message: "Reporte revertido con éxito y correo enviado al usuario que reportó.",
+      message:
+        "Reporte revertido con éxito y correo enviado al usuario que reportó.",
     });
   } catch (error) {
     return res.status(500).json({

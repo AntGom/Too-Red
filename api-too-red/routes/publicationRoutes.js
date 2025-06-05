@@ -24,7 +24,6 @@ router.delete(
   publicationController.deleteComment
 );
 
-// Rutas para etiquetas
 router.post("/:id/tag/:userId", auth, publicationController.addTag);
 router.delete("/:id/tag/:userId", auth, publicationController.removeTag);
 router.get(

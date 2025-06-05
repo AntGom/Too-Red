@@ -15,13 +15,13 @@ const followersList = async (req, res) => {
     // Filtrar registros con user válido
     const validFollows = follows.filter((f) => f.user !== null);
 
-    // Ds de los seguidores y seguidos
+    // IDs de los seguidores y seguidos
     const followUserIdsResult = await followUserIds(req.user.id);
 
     return res.status(200).send({
       status: "success",
       message: "Lista de usuarios que me siguen",
-      total: validFollows.length, // ya filtrado
+      total: validFollows.length,
       follows: validFollows,
       user_following: followUserIdsResult.following,
       user_follow_me: followUserIdsResult.followers,

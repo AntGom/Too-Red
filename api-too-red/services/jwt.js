@@ -1,12 +1,12 @@
 import moment from "moment";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
 const generateToken = (user) => {
-   const payload = {
+  const payload = {
     id: user._id,
     name: user.name,
     surname: user.surname,
@@ -14,21 +14,20 @@ const generateToken = (user) => {
     email: user.email,
     role: user.role,
     image: user.image,
-    created_at: moment().unix(), 
+    created_at: moment().unix(),
     iat: moment().unix(),
     exp: moment().add(30, "days").unix(),
-    isBanned: user.isBanned || false
+    isBanned: user.isBanned || false,
+  };
 
-   }
-
-   return jwt.sign(payload, process.env.JWT_SECRET);
+  return jwt.sign(payload, process.env.JWT_SECRET);
 };
 
 const secretKey = process.env.JWT_SECRET;
 
 const generateRecoveryToken = (email, isDeleted) => {
   const token = jwt.sign({ email, isDeleted }, secretKey, {
-    expiresIn: '1h',
+    expiresIn: "1h",
     jwtid: uuidv4(),
   });
   return token;

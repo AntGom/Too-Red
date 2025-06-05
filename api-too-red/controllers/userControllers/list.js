@@ -8,7 +8,7 @@ const list = async (req, res) => {
 
     const skip = (page - 1) * itemsPerPage;
 
-    // Añadir esta condición para excluir admins
+    // Excluir admins
     const users = await User.find({ role: { $ne: "admin" } })
       .select("-password -role -__v")
       .skip(skip)
