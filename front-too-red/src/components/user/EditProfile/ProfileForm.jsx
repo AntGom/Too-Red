@@ -26,7 +26,7 @@ const ProfileForm = ({
   };
 
   return (
-    <section className="max-w-3xl mx-auto p-6 bg-gray-100 border-2 rounded-lg mt-4 mb-8">
+    <section className="max-w-3xl mx-auto p-6 bg-gray-100 border-2 rounded-lg mt-2 md:mt-4 mb-8">
       <form onSubmit={onChange}>
         <div className="space-y-3">
           <div>
@@ -176,9 +176,7 @@ const ProfileForm = ({
           <button
             type="submit"
             disabled={loading}
-            className={`p-2 text-gray-900 font-medium rounded-lg border-2 border-red-600 hover:scale-105 transition-all duration-300 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className="w-full md:w-2/5 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium py-2.5 px-4 rounded-xl hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {loading ? "Actualizando..." : "Actualizar"}
           </button>

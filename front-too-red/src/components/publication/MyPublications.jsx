@@ -52,7 +52,7 @@ const MyPublications = () => {
 
   return (
     <section className="max-w-7xl sm:px-2 lg:px-8">
-      <h1 className="text-2xl font-bold mb-4">Mis Publicaciones</h1>
+      <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">Mis Publicaciones</h1>
 
       {publications.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-center text-gray-500 mt-20">

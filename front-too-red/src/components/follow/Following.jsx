@@ -48,8 +48,8 @@ const Following = () => {
 
   return (
     <div className="max-w-7xl">
-      <header className="mb-4">
-        <h1 className="text-xl font-bold text-gray-900 text-start">
+      <header className="mb-2">
+        <h1 className="text-xl font-bold text-gray-900 text-center">
           Usuarios que sigue {userProfile.nick}
         </h1>
       </header>
