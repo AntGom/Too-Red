@@ -54,12 +54,13 @@ const RecoverAccount = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <header className="p-4 w-3/5 border-2 border-red-600 rounded-lg text-gray-900 text-center mt-14">
+    <div className="flex flex-col h-full items-center justify-start mt-4 mx-4 md:mx-0">
+      <section className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm max-w-md w-full">
         <h1 className="text-2xl font-bold text-gray-900 text-center">
-          ¡¡Se ha recuperado la Cuenta!!
+          ¡¡Cuenta recuperada!!
         </h1>
-      </header>
+        <h2 className="text-xl font-bold text-gray-900 text-center">Nos alegra tenerte de vuelta 🎉</h2>
+      </section>
     </div>
   );
 };

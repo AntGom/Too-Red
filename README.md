@@ -1,4 +1,4 @@
-# Too-Red - Red social fullstack con mensajería en tiempo real y moderación
+# Too-Red - Red social 
 
 ![Logo Too-Red](./front-too-red/public/nuevoLogoLargo.webp)
 
@@ -20,7 +20,7 @@
 
 ## 📝 Descripción del Proyecto
 
-Too-Red es una red social completa desarrollada como proyecto final de curso. La plataforma permite a los usuarios conectar con amigos, compartir publicaciones, interactuar a través de comentarios, likes y etiquetas, además de chatear en tiempo real. La aplicación cuenta con un frontend en React y un backend en Node.js/Express con MongoDB.
+Too-Red es una red social completa y funcional. La plataforma permite a los usuarios conectar con amigos, compartir publicaciones, interactuar a través de comentarios, likes y etiquetas, además de chatear en tiempo real. La aplicación cuenta con un frontend en React y un backend en Node.js/Express con MongoDB.
 
 ## Características Principales
 
@@ -220,7 +220,7 @@ El proyecto está desplegado en:
 ## 🚀 Funcionalidades Destacadas
 
 ### 🏷️ Sistema de etiquetado de usuarios
-Implementación mejorada que permite etiquetar a usuarios en publicaciones mediante un modal dedicado:
+Permite etiquetar a usuarios en publicaciones mediante un modal dedicado:
 
 ```javascript
 const TagUserModal = ({ isOpen, onClose, onTagUsers, initialTags = [] }) => {

@@ -44,19 +44,16 @@ const RecoverPassword = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <header className="p-4 text-gray-900 text-center mt-2 w-full">
-        <h1 className="text-2xl font-bold text-gray-900 text-center">
-          Recuperar Contraseña
-        </h1>
-      </header>
-
-      <section className="border-2 border-gray-900 p-6 rounded-lg shadow-lg shadow-gray-600 w-11/12 md:w-4/5 lg:w-2/5">
-        <form onSubmit={handleRecover} className="mt-6">
+    <div className="flex flex-col justify-center items-center mt-4 mx-4 md:mx-0">
+      <section className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm max-w-md w-full">
+        <form onSubmit={handleRecover} >
+          <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            Recuperar Contraseña
+          </h1>
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-gray-900 font-semibold"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               Email
             </label>
@@ -65,12 +62,12 @@ const RecoverPassword = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Introduce tu email"
-              className="border-2 border-red-600 rounded w-full py-2 px-3"
+              className="input"
             />
           </div>
           <button
             type="submit"
-            className="text-gray-900 border-2 font-bold border-red-600 rounded py-2 px-4 hover:scale-110 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-medium py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm transition-all"
             disabled={loading}
           >
             {loading ? "Enviando..." : "Enviar"}

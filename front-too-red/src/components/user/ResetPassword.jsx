@@ -54,19 +54,16 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <header className="p-4 text-gray-900 text-center mt-2 w-full">
-        <h1 className="text-2xl font-bold text-gray-900 text-center">
-          Establecer Nueva Contraseña
-        </h1>
-      </header>
-
-      <div className="border-2 border-gray-900 p-6 rounded-lg shadow-lg shadow-gray-600 w-11/12 md:w-2/5 bg-white">
+    <div className="flex flex-col justify-center items-center mt-4 mx-4 md:mx-0">
+      <section className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm max-w-md w-full">
         <form onSubmit={handleReset}>
+          <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            Tu nueva contraseña
+          </h1>
           <div className="mb-4">
             <label
               htmlFor="newPassword"
-              className="block text-gray-900 font-semibold"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               Nueva Contraseña
             </label>
@@ -76,30 +73,30 @@ const ResetPassword = () => {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Tu nueva contraseña"
-                className="border-2 border-red-600 rounded w-full py-2 px-3"
+                className="input"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
               >
                 {showPassword ? (
-                  <EyeSlashIcon className="w-6 h-6 text-gray-700" />
+                  <EyeSlashIcon className="w-5 h-5" />
                 ) : (
-                  <EyeIcon className="w-6 h-6 text-gray-700" />
+                  <EyeIcon className="w-5 h-5" />
                 )}
               </button>
             </div>
           </div>
           <button
             type="submit"
-            className="text-gray-900 border-2 font-bold border-red-600 rounded py-2 px-2 hover:scale-110 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-medium py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm transition-all"
             disabled={loading}
           >
             {loading ? "Actualizando..." : "Establecer"}
           </button>
         </form>
-      </div>
+      </section>
     </div>
   );
 };
