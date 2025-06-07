@@ -56,7 +56,7 @@ const PrivateLayout = () => {
 
       {/* Menú deslizante pantallas pequeñas */}
       <div
-        className={`fixed top-0 right-0 z-30 bg-gray-50 h-full w-2/3 shadow-lg border-l-2 border-red-600 md:hidden
+        className={`fixed top-0 right-0 z-30 bg-gray-50 h-full w-7/12 shadow-lg border-l-2 border-red-600 md:hidden
           transform transition-transform duration-300 ease-in-out
           ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >

@@ -12,7 +12,7 @@ const UserCounters = ({ onClose }) => {
     <div className="flex flex-col justify-start gap-1.5 w-4/5 border-b border-gray-500">
       <div className="flex items-center border-b border-gray-500">
         <GlobeAltIcon className="h-6 w-6" />
-        <p className="text-xl font-bold ml-2 ">Mi Red</p>
+        <p className="text-2xl font-bold ml-2 ">Mi Red</p>
       </div>
 
       <section className=" flex flex-col gap-2">

@@ -74,8 +74,8 @@ const NewSidebar = ({ onClose }) => {
           className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={onClose}
         >
-          <PencilSquareIcon className="h-6 w-6" />
-          <p className="text-xl font-bold ml-2">Editar</p>
+          <PencilSquareIcon className="h-7 w-7" />
+          <p className="text-2xl font-bold ml-2">Editar</p>
         </NavLink>
 
         {/* Contenido adicional según el rol */}
@@ -88,16 +88,16 @@ const NewSidebar = ({ onClose }) => {
               className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
-              <FlagIcon className="h-6 w-6 font-bold" />
-              <p className="font-bold text-xl">Publicac.</p>
+              <FlagIcon className="h-7 w-7 font-bold" />
+              <p className="font-bold text-2xl">Publicac.</p>
             </NavLink>
             <NavLink
               to="/social/admin/reported-users"
               className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
-              <FlagIcon className="h-6 w-6 font-bold" />
-              <p className="font-bold text-xl">Usuarios</p>
+              <FlagIcon className="h-7 w-7 font-bold" />
+              <p className="font-bold text-2xl">Usuarios</p>
             </NavLink>
           </>
         )}
@@ -105,11 +105,11 @@ const NewSidebar = ({ onClose }) => {
         {/* Enlace a gente */}
         <NavLink
           to="/social/people"
-          className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
+          className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={onClose}
         >
-          <UserGroupIcon className="h-6 w-6" />
-          <div className="font-bold text-xl ml-2">Gente</div>
+          <UserGroupIcon className="h-7 w-7" />
+          <div className="font-bold text-2xl ml-2">Gente</div>
         </NavLink>
 
         {/* Formulario de nueva publicación */}
@@ -121,8 +121,8 @@ const NewSidebar = ({ onClose }) => {
           className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={handleOpenChat}
         >
-          <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />
-          <p className="font-bold text-xl ml-2">Chat</p>
+          <ChatBubbleLeftEllipsisIcon className="h-7 w-7" />
+          <p className="font-bold text-2xl ml-2">Chat</p>
         </NavLink>
       </section>
       {/* Botón de logout + Footer */}

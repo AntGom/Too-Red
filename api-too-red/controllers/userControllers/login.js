@@ -13,7 +13,7 @@ const login = async (req, res) => {
   }
 
   try {
-    //Buscar usuario en BBDD
+    // Buscar usuario en BBDD
     const user = await User.findOne({ email: params.email });
 
     if (!user) {
@@ -23,7 +23,15 @@ const login = async (req, res) => {
       });
     }
 
-    //Usuario baneado?
+    // Verificar si la cuenta ha sido confirmada
+    if (!user.confirmed) {
+      return res.status(403).send({
+        status: "error",
+        message: "Debes confirmar tu cuenta antes de iniciar sesión. Revisa tu correo electrónico.",
+      });
+    }
+
+    // Usuario baneado?
     if (user.isBanned) {
       return res.status(403).send({
         status: "banned",
@@ -31,7 +39,7 @@ const login = async (req, res) => {
       });
     }
 
-    //Contraseña correcta?
+    // Contraseña correcta?
     const passwordMatch = await bcrypt.compare(params.password, user.password);
 
     if (!passwordMatch) {
@@ -61,5 +69,6 @@ const login = async (req, res) => {
     });
   }
 };
+
 
 export default login;

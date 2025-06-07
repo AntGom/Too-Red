@@ -8,14 +8,14 @@ const list = async (req, res) => {
 
     const skip = (page - 1) * itemsPerPage;
 
-    // Excluir admins
-    const users = await User.find({ role: { $ne: "admin" } })
+    // Excluir admins y no confirmados
+    const users = await User.find({ role: { $ne: "admin" }, confirmed: true })
       .select("-password -role -__v")
       .skip(skip)
       .limit(itemsPerPage)
       .lean();
 
-    const total = await User.countDocuments({ role: { $ne: "admin" } });
+    const total = await User.countDocuments({ role: { $ne: "admin" }, confirmed: true });
     let followData = await getFollowUserIds(req.user.id);
 
     return res.status(200).json({
@@ -36,5 +36,6 @@ const list = async (req, res) => {
     });
   }
 };
+
 
 export default list;
