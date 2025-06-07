@@ -36,7 +36,7 @@ const NewSidebar = ({ onClose }) => {
         />
       </NavLink>
 
-      <section className="flex flex-col h-3/4 items-center justify-around mb-2">
+      <section className="flex flex-col h-3/4 items-center justify-around mb-2 md:gap-4">
         {/* Enlace al perfil */}
         <NavLink
           to={"/social/profile/" + auth._id}
