@@ -25,22 +25,18 @@ const NewSidebar = ({ onClose }) => {
   };
 
   return (
-    <aside className="flex flex-col items-center justify-around bg-gray-50 relative p-2 max-h-screen h-full overflow-y-auto">
+    <aside className="flex flex-col items-center justify-around bg-gray-50 relative p-2 h-full overflow-y-auto">
+      
+      {/* Enlace al feed */}
+      <NavLink to="/social/feed" className=" px-1 w-5/6 mt-4" onClick={onClose}>
+        <img
+          src="/nuevoLogoLargo.webp"
+          alt="Logo de Too Red"
+          className="h-12 rounded-xl w-full object-contain border-2 border-red-600 hover:scale-110 transition-all duration-300"
+        />
+      </NavLink>
 
-      <section className="flex flex-col gap-4 md:gap-3 items-center ">
-        {/* Enlace al feed */}
-        <NavLink
-          to="/social/feed"
-          className="py-4 px-1 w-5/6"
-          onClick={onClose}
-        >
-          <img
-            src="/nuevoLogoLargo.webp"
-            alt="Logo de Too Red"
-            className="h-12 rounded-xl w-full object-contain border-2 border-red-600 hover:scale-110 transition-all duration-300"
-          />
-        </NavLink>
-
+      <section className="flex flex-col h-3/4 items-center justify-around mb-2">
         {/* Enlace al perfil */}
         <NavLink
           to={"/social/profile/" + auth._id}
@@ -124,8 +120,9 @@ const NewSidebar = ({ onClose }) => {
           <ChatBubbleLeftEllipsisIcon className="h-7 w-7 md:h-6 md:w-6" />
           <p className="font-bold text-2xl md:text-xl ml-2">Chat</p>
         </NavLink>
+      </section>
 
-        {/* Botón de logout + Footer */}
+      {/* Botón de logout + Footer */}
       <div className="flex flex-col w-full  items-center justify-center border-t border-gray-500">
         <NavLink
           to="/social/logout"
@@ -137,9 +134,6 @@ const NewSidebar = ({ onClose }) => {
         </NavLink>
         <PrivateFooter />
       </div>
-      </section>
-      
-
     </aside>
   );
 };
