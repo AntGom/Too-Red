@@ -25,7 +25,7 @@ const NewSidebar = ({ onClose }) => {
   };
 
   return (
-    <aside className="flex flex-col items-center justify-between bg-gray-50 relative p-2 max-h-screen h-full overflow-y-auto">
+    <aside className="flex flex-col items-center justify-around bg-gray-50 relative p-2 max-h-screen h-full overflow-y-auto">
 
       <section className="flex flex-col gap-4 md:gap-3 items-center ">
         {/* Enlace al feed */}
@@ -74,8 +74,8 @@ const NewSidebar = ({ onClose }) => {
           className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={onClose}
         >
-          <PencilSquareIcon className="h-7 w-7" />
-          <p className="text-2xl font-bold ml-2">Editar</p>
+          <PencilSquareIcon className="h-7 w-7 md:h-6 md:w-6" />
+          <p className="text-2xl md:text-xl font-bold ml-2">Editar</p>
         </NavLink>
 
         {/* Contenido adicional según el rol */}
@@ -88,16 +88,16 @@ const NewSidebar = ({ onClose }) => {
               className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
-              <FlagIcon className="h-7 w-7 font-bold" />
-              <p className="font-bold text-2xl">Publicac.</p>
+              <FlagIcon className="h-7 w-7 md:h-6 md:w-6 font-bold" />
+              <p className="font-bold text-2xl md:text-xl">Publicac.</p>
             </NavLink>
             <NavLink
               to="/social/admin/reported-users"
               className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
-              <FlagIcon className="h-7 w-7 font-bold" />
-              <p className="font-bold text-2xl">Usuarios</p>
+              <FlagIcon className="h-7 w-7 md:h-6 md:w-6 font-bold" />
+              <p className="font-bold text-2xl md:text-xl">Usuarios</p>
             </NavLink>
           </>
         )}
@@ -108,8 +108,8 @@ const NewSidebar = ({ onClose }) => {
           className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={onClose}
         >
-          <UserGroupIcon className="h-7 w-7" />
-          <div className="font-bold text-2xl ml-2">Gente</div>
+          <UserGroupIcon className="h-7 w-7 md:h-6 md:w-6" />
+          <div className="font-bold text-2xl md:text-xl ml-2">Gente</div>
         </NavLink>
 
         {/* Formulario de nueva publicación */}
@@ -121,15 +121,15 @@ const NewSidebar = ({ onClose }) => {
           className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={handleOpenChat}
         >
-          <ChatBubbleLeftEllipsisIcon className="h-7 w-7" />
-          <p className="font-bold text-2xl ml-2">Chat</p>
+          <ChatBubbleLeftEllipsisIcon className="h-7 w-7 md:h-6 md:w-6" />
+          <p className="font-bold text-2xl md:text-xl ml-2">Chat</p>
         </NavLink>
-      </section>
-      {/* Botón de logout + Footer */}
-      <div className="flex flex-col w-full mt-4 md:mt-6 items-center justify-center border-t border-gray-500">
+
+        {/* Botón de logout + Footer */}
+      <div className="flex flex-col w-full  items-center justify-center border-t border-gray-500">
         <NavLink
           to="/social/logout"
-          className="font-bold border-2 mt-10 md:mt-4 border-red-600 rounded-lg p-1 w-fit flex items-center transition-all duration-300 hover:scale-125"
+          className="font-bold border-2 mt-4 md:mt-4 border-red-600 rounded-lg p-1 w-fit flex items-center transition-all duration-300 hover:scale-125"
           onClick={onClose}
         >
           <ArrowLeftStartOnRectangleIcon className="h-6 w-6" />
@@ -137,6 +137,8 @@ const NewSidebar = ({ onClose }) => {
         </NavLink>
         <PrivateFooter />
       </div>
+      </section>
+      
 
     </aside>
   );
