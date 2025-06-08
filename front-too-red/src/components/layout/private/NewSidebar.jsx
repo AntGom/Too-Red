@@ -81,19 +81,19 @@ const NewSidebar = ({ onClose }) => {
           <>
             <NavLink
               to="/social/admin/reported-publications"
-              className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
+              className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
               <FlagIcon className="h-7 w-7 md:h-6 md:w-6 font-bold" />
-              <p className="font-bold text-2xl md:text-xl">Publicac.</p>
+              <p className="font-bold text-xl md:text-xl">Publicac.</p>
             </NavLink>
             <NavLink
               to="/social/admin/reported-users"
-              className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
+              className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
               onClick={onClose}
             >
               <FlagIcon className="h-7 w-7 md:h-6 md:w-6 font-bold" />
-              <p className="font-bold text-2xl md:text-xl">Usuarios</p>
+              <p className="font-bold text-xl md:text-xl">Usuarios</p>
             </NavLink>
           </>
         )}
