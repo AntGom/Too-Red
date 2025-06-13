@@ -134,12 +134,21 @@ const Register = () => {
         </div>
 
         <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-medium py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-          {loading ? "Registrando..." : "Regístrate"}
-        </button>
+        type="submit"
+        disabled={loading}
+        className={`w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-medium py-2.5 px-4 rounded-lg hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm transition-all flex justify-center items-center gap-2 ${
+          loading ? "opacity-70 cursor-not-allowed" : ""
+        }`}
+      >
+        {loading ? (
+          <>
+            <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            <span>Registrando...</span>
+          </>
+        ) : (
+          "Registrar"
+        )}
+      </button>
 
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">

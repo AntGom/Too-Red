@@ -11,10 +11,12 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setAuth } = useAuth();
   const [showBanModal, setShowBanModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
 
   const loginUser = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const userToLogin = form;
 
@@ -80,6 +82,7 @@ const Login = () => {
           loginUser={loginUser}
           showPassword={showPassword}
           setShowPassword={setShowPassword}
+          loading={loading}
         />
       </div>
       <div className="text-center mt-4">
