@@ -26,13 +26,19 @@ const NewSidebar = ({ onClose }) => {
 
   return (
     <aside className="flex flex-col items-center justify-around bg-gray-50 relative p-2 h-full overflow-y-auto">
-      
       {/* Enlace al feed */}
-      <NavLink to="/social/feed" className=" px-1 w-5/6 mb-4" onClick={onClose}>
+      <NavLink to="/social/feed" className="md:px-1 md:mb-4" onClick={onClose}>
+        {/* Imagen solo para móvil */}
+        <img
+          src="/logoCorto.webp"
+          alt="Logo móvil"
+          className="h-12 rounded-xl hover:scale-110 transition-all duration-300 md:hidden"
+        />
+        {/* Imagen solo para desktop */}
         <img
           src="/nuevoLogoLargo.webp"
-          alt="Logo de Too Red"
-          className="h-12 rounded-xl w-full object-contain border-2 border-red-600 hover:scale-110 transition-all duration-300"
+          alt="Logo desktop"
+          className="h-12 rounded-xl hover:scale-110 transition-all duration-300 hidden md:block"
         />
       </NavLink>
 

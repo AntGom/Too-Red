@@ -36,9 +36,9 @@ const PrivateLayout = () => {
           className="fadeIn transition-opacity duration-300 ease-in-out"
         >
           <img
-            src={isMenuOpen ? "/logoCorto.webp" : "/nuevoLogoLargo.webp"}
+            src={isMenuOpen ? "/nuevoLogoLargo.webp" : "/nuevoLogoLargo.webp"}
             alt="Logo de la Red Social"
-            className="h-12 rounded-xl border-2 border-red-600 cursor-pointer"
+            className="h-12 cursor-pointer hover:scale-110 transition-all duration-300"
             onClick={() => navigate("/social/feed")}
           />
         </div>
