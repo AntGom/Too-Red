@@ -74,57 +74,7 @@ Too-Red es una red social completa y funcional. La plataforma permite a los usua
 
 #### Optimización de Rendimiento
 - **Sistema de caché personalizado**: Almacena datos en localStorage con tiempo de expiración
-```javascript
-export const cacheData = (key, data, expirationMinutes = 15) => {
-  try {
-    const item = {
-      data,
-      expiry: new Date().getTime() + expirationMinutes * 60 * 1000
-    };
-    localStorage.setItem(`cache_${key}`, JSON.stringify(item));
-    return true;
-  } catch (error) {
-    console.error("Error al guardar en caché:", error);
-    return false;
-  }
-};
-```
-
 - **LazyImage**: Componente personalizado para carga diferida de imágenes
-```javascript
-const LazyImage = ({
-  src,
-  alt,
-  className = "",
-  placeholderSrc = null,
-  ...rest
-}) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [imageSrc, setImageSrc] = useState(placeholderSrc || placeholder);
-  const imgRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setImageSrc(src);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px", threshold: 0.1 }
-    );
-
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [src]);
-
-  // ...resto del componente
-};
-```
-
 - **Scroll infinito**: Implementado con IntersectionObserver para cargar contenido
 - **Debounce**: Utilizado en búsquedas para limitar peticiones al servidor
 
@@ -134,36 +84,7 @@ const LazyImage = ({
 
 #### Notificaciones
 - **Sistema de Toast**: Componente personalizado para mostrar notificaciones
-```javascript
-export const ToastProvider = ({ children }) => {
-  const [toast, setToast] = useState({
-    show: false,
-    message: '',
-    type: '',
-    duration: 3000,
-  });
 
-  const showToast = useCallback(({ message, type = 'info', duration = 3000 }) => {
-    setToast({ show: true, message, type, duration });
-    
-    if (duration > 0) {
-      setTimeout(() => {
-        hideToast();
-      }, duration);
-    }
-  }, []);
-
-  const hideToast = useCallback(() => {
-    setToast((prev) => ({ ...prev, show: false }));
-  }, []);
-
-  return (
-    <ToastContext.Provider value={{ toast, showToast, hideToast }}>
-      {children}
-    </ToastContext.Provider>
-  );
-};
-```
 
 ### 🧠 Backend
 
@@ -187,26 +108,7 @@ export const ToastProvider = ({ children }) => {
 
 #### Optimización
 - **Filtrado de elementos eliminados**: Middleware personalizado para filtrar entidades borradas lógicamente
-```javascript
-const filterDeleted = (req, res, next) => {
-  
-  const originalFind = mongoose.Model.find;
-  const originalFindOne = mongoose.Model.findOne;
-  
-  //Sobrescribir find()
-  mongoose.Model.find = function (...args) {
-    const query = args[0] || {};
-    if (!query.hasOwnProperty("isDeleted")) {
-      query.isDeleted = false;
-    }
-    return originalFind.apply(this, [query, ...args.slice(1)]);
-  };
-  
-  //... resto del script
-  
-  next();
-};
-```
+
 ## 🌐 Despliegue
 
 El proyecto está desplegado en:
@@ -222,192 +124,25 @@ El proyecto está desplegado en:
 ### 🏷️ Sistema de etiquetado de usuarios
 Permite etiquetar a usuarios en publicaciones mediante un modal dedicado:
 
-```javascript
-const TagUserModal = ({ isOpen, onClose, onTagUsers, initialTags = [] }) => {
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  // ...
-
-  // Búsqueda de usuarios
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (search.length >= 2) {
-        searchUsers(search);
-      } else {
-        setSearchResults([]);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [search]);
-
-  // ...lógica para seleccionar y eliminar etiquetas
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Etiquetar usuarios">
-      {/* Interfaz del modal */}
-    </Modal>
-  );
-};
-```
-
 ### 🚩 Denuncias y moderación
 Los usuarios pueden denunciar contenido inapropiado, que será revisado por los administradores:
 
-```javascript
-const reportPublication = async (req, res) => {
-  const { id } = req.params;
-  const { reason } = req.body;
-  const userId = req.user.id;
-
-  try {
-    const publication = await Publication.findById(id);
-    if (!publication) {
-      return res.status(404).json({
-        status: "error",
-        message: "Publicación no encontrada",
-      });
-    }
-
-    // Comprobar si ya se ha denunciado
-    const alreadyReported = publication.reports.some(
-      (report) => report.user.toString() === userId
-    );
-
-    if (alreadyReported) {
-      return res.status(400).json({
-        status: "error",
-        message: "Ya has reportado esta publicación",
-      });
-    }
-
-    // Añadir denuncia y enviar email al admin
-  } catch (error) {
-    // Manejo de errores
-  }
-};
-```
 
 ### 🔐♻️ Eliminación lógica y recuperación de cuentas
 Las cuentas se marcan como eliminadas pero se mantienen 30 días antes de su eliminación física:
 
-```javascript
-const deleteUser = async (req, res) => {
-  const { id } = req.params;
-  const loggedUserId = req.user.id;
-
-  try {
-    // Actualiza el estado de eliminación lógica
-    const user = await User.findByIdAndUpdate(
-      id,
-      { isDeleted: true, deletedAt: new Date() },
-      { new: true }
-    );
-
-    // Actualiza publicaciones y follows asociados
-    await Promise.all([
-      Publication.updateMany(
-        { user: id },
-        { isDeleted: true, deletedAt: new Date() }
-      ),
-      Follow.updateMany(
-        { $or: [{ user: id }, { followed: id }] },
-        { isDeleted: true, deletedAt: new Date() }
-      ),
-    ]);
-
-    // Envía un correo de información
-    // ...
-
-    res
-      .status(200)
-      .json({ message: "Usuario eliminado correctamente (soft delete)" });
-  } catch (error) {
-    // Manejo de errores
-  }
-};
-```
 
 ### 🧨🗓️ Borrado físico programado
 Utilizando cron jobs para eliminar definitivamente las cuentas marcadas como borradas:
 
-```javascript
-// Borrado físico diario 00:00
-cron.schedule("0 0 * * *", () => {
-  console.log("Ejecutando borrado físico...");
-  deletePhysicallyAfter30Days();
-});
-
-const deletePhysicallyAfter30Days = async () => {
-  const currentDate = moment();
-  const thirtyDaysAgo = currentDate.subtract(30, "days").toDate();
-
-  try {
-    // Eliminar usuarios, publicaciones y follows tras 30 días
-    // desde su eliminación lógica
-  } catch (error) {
-    console.error("Error en el borrado físico:", error);
-  }
-};
-```
 
 ### 👥 Gestión de usuarios
 Los administradores pueden banear usuarios que infringen las normas:
 
-```javascript
-const banUser = async (req, res) => {
-  try {
-    if (req.user.role !== "admin") {
-      return res.status(403).send({ status: "error", message: "No autorizado" });
-    }
-
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).send({ status: "error", message: "Usuario no encontrado" });
-    }
-
-    user.isBanned = true;
-    await user.save();
-
-    // Enviar correo al usuario
-    // ...
-
-    return res.status(200).send({ status: "success", message: "Usuario baneado con éxito" });
-  } catch (error) {
-    return res.status(500).send({ status: "error", message: "Error del servidor" });
-  }
-};
-```
 
 ### 📩 Mensajería en tiempo real
 Implementación de chat con indicadores de lectura y estado en línea:
 
-```javascript
-io.on("connection", (socket) => {
-  socket.on("joinRoom", (userId) => {
-    if (!userId) return;
-
-    try {
-      activeUsers.set(userId, socket.id);
-      socket.join(userId);
-      
-      // Notificar usuarios online
-      io.emit("onlineUsers", Array.from(activeUsers.keys()));
-      
-      // Notificar cambio de estado
-      socket.broadcast.emit("userStatusChange", {
-        userId,
-        isOnline: true
-      });
-    } catch (error) {
-      console.error("Error en joinRoom:", error);
-    }
-  });
-
-  // Más manejadores de eventos
-});
-```
 
 ## 🏗️ Estructura del Proyecto
 
