@@ -31,17 +31,12 @@ const PrivateLayout = () => {
 
       {/* Navbar pantallas pequeñas */}
       <div className="md:hidden fixed top-0 left-0 right-0 bg-gray-50 z-20 border-b-2 border-red-600 flex mb-2 items-center justify-between px-4 py-2">
-        <div
-          key={isMenuOpen ? "open" : "closed"}
-          className="fadeIn transition-opacity duration-300 ease-in-out"
-        >
-          <img
-            src={isMenuOpen ? "/nuevoLogoLargo.webp" : "/nuevoLogoLargo.webp"}
-            alt="Logo de la Red Social"
-            className="h-12 cursor-pointer hover:scale-110 transition-all duration-300"
-            onClick={() => navigate("/social/feed")}
-          />
-        </div>
+        <img
+          src="/nuevoLogoLargo.webp"
+          alt="Logo de la Red Social"
+          className="h-12 cursor-pointer hover:scale-110 transition-all duration-300"
+          onClick={() => navigate("/social/feed")}
+        />
 
         <button
           className="text-red-600 text-2xl"

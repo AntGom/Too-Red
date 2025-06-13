@@ -25,7 +25,8 @@ const NewSidebar = ({ onClose }) => {
   };
 
   return (
-    <aside className="flex flex-col items-center justify-around bg-gray-50 relative p-2 h-full overflow-y-auto">
+    <aside className="flex flex-col items-center bg-gray-50 relative pt-2 md:p-2 h-full overflow-y-auto">
+
       {/* Enlace al feed */}
       <NavLink to="/social/feed" className="md:px-1 md:mb-4" onClick={onClose}>
         {/* Imagen solo para móvil */}
@@ -38,15 +39,16 @@ const NewSidebar = ({ onClose }) => {
         <img
           src="/nuevoLogoLargo.webp"
           alt="Logo desktop"
-          className="h-12 rounded-xl hover:scale-110 transition-all duration-300 hidden md:block"
+          className="h-14 rounded-xl hover:scale-110 transition-all duration-300 hidden md:block"
         />
       </NavLink>
 
       <section className="flex flex-col h-3/4 items-center justify-around mb-2 md:gap-4">
+      
         {/* Enlace al perfil */}
         <NavLink
           to={"/social/profile/" + auth._id}
-          className="rounded-xl m-1 w-full hover:bg-gray-200 transition-all duration-300 hover:scale-105"
+          className="rounded-xl w-full hover:bg-gray-200 transition-all duration-300 hover:scale-105"
           onClick={onClose}
         >
           <div className="flex gap-1 items-center">
@@ -73,7 +75,7 @@ const NewSidebar = ({ onClose }) => {
         {/* Editar perfil */}
         <NavLink
           to="/social/config"
-          className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
+          className="w-4/5 flex items-center -mt-4 md:-mt-0 justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={onClose}
         >
           <PencilSquareIcon className="h-7 w-7 md:h-6 md:w-6" />
