@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useContext } from "react";
 import Routing from "./router/Routing";
 import { ToastProvider, ToastContext } from "./context/ToastContext";
@@ -32,7 +33,7 @@ function MainApp() {
     };
 
     wakeUpServer();
-  }, [showToast]);
+  }, []);
 
   return (
     <div className="layout">

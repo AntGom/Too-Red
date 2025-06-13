@@ -26,11 +26,7 @@ export default function ChatWindow({
   const [selectedMedia, setSelectedMedia] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (messagesEndRef.current) {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const formatMessageTime = (timestamp) => {

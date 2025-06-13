@@ -18,7 +18,7 @@ const NewSidebar = ({ onClose }) => {
   const navigate = useNavigate();
   const { auth } = useAuth();
 
-  // Redirigir al chat+cerrar menú
+  // Redirigir a chat + cerrar menú
   const handleOpenChat = () => {
     navigate("/social/messages");
     onClose?.();
@@ -28,7 +28,7 @@ const NewSidebar = ({ onClose }) => {
     <aside className="flex flex-col items-center justify-around bg-gray-50 relative p-2 h-full overflow-y-auto">
       
       {/* Enlace al feed */}
-      <NavLink to="/social/feed" className=" px-1 w-5/6 my-4" onClick={onClose}>
+      <NavLink to="/social/feed" className=" px-1 w-5/6 mb-4" onClick={onClose}>
         <img
           src="/nuevoLogoLargo.webp"
           alt="Logo de Too Red"
