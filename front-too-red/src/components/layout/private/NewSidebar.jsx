@@ -26,9 +26,11 @@ const NewSidebar = ({ onClose }) => {
 
   return (
     <aside className="flex flex-col items-center bg-gray-50 relative pt-2 md:p-2 h-full overflow-y-auto">
-
       {/* Enlace al feed */}
-      <NavLink to="/social/feed" className="md:px-1 md:mb-4" onClick={onClose}>
+      <NavLink 
+      to="/social/feed" 
+      className="md:px-1 mb-4" 
+      onClick={onClose}>
         {/* Imagen solo para móvil */}
         <img
           src="/logoCorto.webp"
@@ -43,8 +45,7 @@ const NewSidebar = ({ onClose }) => {
         />
       </NavLink>
 
-      <section className="flex flex-col h-3/4 items-center justify-around mb-2 md:gap-4">
-      
+      <section className="flex flex-col h-3/4 items-center justify-around mb-2 md:mb-6 md:gap-4">
         {/* Enlace al perfil */}
         <NavLink
           to={"/social/profile/" + auth._id}
@@ -122,7 +123,7 @@ const NewSidebar = ({ onClose }) => {
         {/* Enlace al chat */}
         <NavLink
           to="/social/messages"
-          className="w-4/5 flex items-center justify-start g hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
+          className="w-4/5 flex items-center justify-start hover:bg-gray-200 transition-all duration-300 hover:scale-110 rounded-xl"
           onClick={handleOpenChat}
         >
           <ChatBubbleLeftEllipsisIcon className="h-7 w-7 md:h-6 md:w-6" />

@@ -18,11 +18,8 @@ function MainApp() {
 
   useEffect(() => {
     const wakeUpServer = async () => {
-      showToast({ message: "Conectando con el servidor...", type: "info" });
-
       try {
-        await fetch(Global.url + "status");
-        showToast({ message: "Servidor Activo!", type: "success" });
+        await fetch(`${Global.url}status`);
       } catch (error) {
         showToast({
           message: "No se pudo conectar con el servidor",
