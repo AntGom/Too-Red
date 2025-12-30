@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
+import softDeletePlugin from "../plugins/softDeletePlugin.js";
 
 const ReportSchema = new Schema({
   user: { type: Schema.ObjectId, ref: "User", required: true },
@@ -47,6 +48,8 @@ PublicationSchema.pre("save", function (next) {
   this.reportCount = this.reports.length;
   next();
 });
+
+PublicationSchema.plugin(softDeletePlugin);
 
 PublicationSchema.plugin(mongoosePaginate);
 

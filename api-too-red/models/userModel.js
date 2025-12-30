@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import softDeletePlugin from "../plugins/softDeletePlugin.js";
 
 const UserSchema = new Schema({
   name: { type: String, required: true },
@@ -18,6 +19,8 @@ const UserSchema = new Schema({
   isBanned: { type: Boolean, default: false },
   interests: { type: [String], default: [] },
 });
+
+UserSchema.plugin(softDeletePlugin);
 
 const User = model("User", UserSchema, "users");
 

@@ -6,7 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import publicationRoutes from "./routes/publicationRoutes.js";
 import followRoutes from "./routes/followRoutes.js";
 import messagesRoutes from "./routes/messagesRoutes.js";
-import filterDeleted from "./middlewares/filterDeleted.js";
+//import filterDeleted from "./middlewares/filterDeleted.js";
 import expressFileUpload from "express-fileupload";
 import cloudinary from "cloudinary";
 import path from "path";
@@ -62,7 +62,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
 
-app.use(filterDeleted);
+//app.use(filterDeleted);
 app.use("/api/user", userRoutes);
 app.use("/api/publication", publicationRoutes);
 app.use("/api/follow", followRoutes);

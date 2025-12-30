@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
+import softDeletePlugin from "../plugins/softDeletePlugin.js";
 
 const FollowSchema = new Schema(
   {
@@ -13,6 +14,7 @@ const FollowSchema = new Schema(
 );
 
 FollowSchema.plugin(mongoosePaginate);
+FollowSchema.plugin(softDeletePlugin);
 
 const Follow = model("Follow", FollowSchema, "follows");
 

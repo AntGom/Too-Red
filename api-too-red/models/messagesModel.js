@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import softDeletePlugin from "../plugins/softDeletePlugin.js";
 
 const MessageSchema = new Schema(
   {
@@ -18,6 +19,8 @@ const MessageSchema = new Schema(
 
 MessageSchema.index({ sender: 1, receiver: 1, createdAt: 1 }); //Optimizar búsqueda entre usuarios
 MessageSchema.index({ createdAt: 1 }); //Optimizar búsqueda por fecha
+
+MessageSchema.plugin(softDeletePlugin);
 
 const Message = model("Message", MessageSchema, "messages");
 
